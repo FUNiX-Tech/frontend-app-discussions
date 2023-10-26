@@ -1,5 +1,5 @@
 import React, {
-  useContext, useEffect, useRef,
+  useContext, useEffect, useRef, useState
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import {
-  Button, Card, Form, Spinner, StatefulButton,
+  Button, Card, Form, Spinner, StatefulButton, InputSelect
 } from '@edx/paragon';
 import { Help, Post } from '@edx/paragon/icons';
 
@@ -42,6 +42,9 @@ import { hidePostEditor } from '../data';
 import { selectThread } from '../data/selectors';
 import { createNewThread, fetchThread, updateExistingThread } from '../data/thunks';
 import messages from './messages';
+import { fetchAllCourseEnroll , fetchAllCourseTopics } from '../../courses/data/thunks';
+import { async } from 'regenerator-runtime';
+
 
 function DiscussionPostType({
   value,
@@ -158,6 +161,51 @@ function PostEditor({
     }
     dispatch(hidePostEditor());
   };
+
+ 
+  // api course specialization
+  const courseTitle = useSelector(state =>state.courseTabs.courseTitle)
+  const [courseEnroll, setCourseEnroll] = useState([])
+  const [course_id , setCourse_id ] = useState(courseId)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchAllCourseEnroll(courseId);
+        const newCourseEnroll = data.map(e => ({
+          label: e.display_name,
+          value: e.course_id
+        }));
+          if (newCourseEnroll.length == 0){
+            newCourseEnroll.push({label:courseTitle , value:courseId})
+          }
+          setCourseEnroll(newCourseEnroll);
+      } catch (error) {
+        console.error(error);  
+      }
+    };
+
+    fetchData();
+  }, []);
+  
+// course topics 
+const [nonCoursewareTopicsNew , setNonCoursewareTopicsNew ] = useState(nonCoursewareTopics)
+const [coursewareTopicsNew , setCoursewareTopicsNew] = useState(coursewareTopics)
+useEffect(()=>{
+  const fetchData = async ()=>{
+    try {
+      const topic = await fetchAllCourseTopics(course_id)
+      setNonCoursewareTopicsNew(topic.non_courseware_topics)
+      setCoursewareTopicsNew(topic.courseware_topics)
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  fetchData()
+},[course_id])
+
+
+
   // null stands for no cohort restriction ("All learners" option)
   const selectedCohort = (cohort) => (cohort === 'default' ? null : cohort);
   const submitForm = async (values, { resetForm }) => {
@@ -173,9 +221,9 @@ function PostEditor({
       const cohort = canSelectCohort(values.topic) ? selectedCohort(values.cohort) : undefined;
       // if not allowed to set cohort, always undefined, so no value is sent to backend
       await dispatchSubmit(createNewThread({
-        courseId,
+        courseId : course_id ,
         topicId: values.topic,
-        type: values.postType,
+        type: "question",
         title: values.title,
         content: values.comment,
         following: values.follow,
@@ -189,6 +237,10 @@ function PostEditor({
       editorRef.current.plugins.autosave.removeDraft();
     }
     hideEditor(resetForm);
+
+    if (course_id !== courseId){
+      window.location.href = `/discussions/${course_id}/posts`
+    }
   };
 
   useEffect(() => {
@@ -272,20 +324,28 @@ function PostEditor({
             onBlur={handleBlur}
             aria-label={intl.formatMessage(messages.postTitle)}
           >
-            <DiscussionPostType
+         <InputSelect
+            name="fruits"
+            label="Course"
+            value={courseId}
+            options={courseEnroll}
+            onChange={(e)=>setCourse_id(e)}
+          />
+
+            {/* <DiscussionPostType
               value="discussion"
               selected={values.postType === 'discussion'}
               type={intl.formatMessage(messages.discussionType)}
               icon={<Post />}
               description={intl.formatMessage(messages.discussionDescription)}
-            />
-            <DiscussionPostType
+            /> */}
+            {/* <DiscussionPostType
               value="question"
               selected={values.postType === 'question'}
               type={intl.formatMessage(messages.questionType)}
               icon={<Help />}
               description={intl.formatMessage(messages.questionDescription)}
-            />
+            /> */}
           </Form.RadioSet>
           <div className="d-flex flex-row my-4.5 justify-content-between">
             <Form.Group className="w-100 m-0">
@@ -300,16 +360,16 @@ function PostEditor({
                 floatingLabel={intl.formatMessage(messages.topicArea)}
                 disabled={inContext}
               >
-                {nonCoursewareTopics.map(topic => (
+                {nonCoursewareTopicsNew?.map(topic => (
                   <option
                     key={topic.id}
                     value={topic.id}
                   >{topic.name || intl.formatMessage(messages.unnamedSubTopics)}
                   </option>
                 ))}
-                {coursewareTopics.map(categoryObj => (
+                {coursewareTopicsNew?.map(categoryObj => (
                   <optgroup label={categoryObj.name || intl.formatMessage(messages.unnamedTopics)} key={categoryObj.id}>
-                    {categoryObj.topics.map(subtopic => (
+                    {categoryObj.topics?.map(subtopic => (
                       <option key={subtopic.id} value={subtopic.id}>
                         {subtopic.name || intl.formatMessage(messages.unnamedSubTopics)}
                       </option>
