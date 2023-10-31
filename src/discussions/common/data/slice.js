@@ -23,7 +23,12 @@ const reportSlice = createSlice({
         state.details = ''
     },
     addReports : (state, action) => {
-      state.reports.push(action.payload)
+      const existingReport = state.reports.find(report => report.id === action.payload.id);
+      if (existingReport) {
+        existingReport.type = action.payload.type;
+      } else {
+        state.reports.push(action.payload);
+      }
     }
   },
 });

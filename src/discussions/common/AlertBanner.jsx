@@ -34,14 +34,11 @@ const reportType = reports?.find(r => r.id === content.id)?.type
     <>
       {canSeeReportedBanner && (
         <Alert icon={Error} variant="danger" className="px-3 mb-2 py-10px shadow-none flex-fill">
-        {content?.reports ? (
-          <div className='d-flex' style={{ gap: '10px' }}>
+          {content.reports?.length > 0 ? <div className='d-flex' style={{ gap: '10px' }}>
             {content.reports.map(r => <span>{r}</span>)}
-          </div>
-        ) : (
-          // intl.formatMessage(messages.abuseFlaggedMessage)
-          reportType
-        )}
+          </div> : <span>{reportType}</span>}
+          {/* intl.formatMessage(messages.abuseFlaggedMessage) */}
+       
       </Alert>
       )}
       {reasonCodesEnabled && canSeeLastEditOrClosedAlert && (

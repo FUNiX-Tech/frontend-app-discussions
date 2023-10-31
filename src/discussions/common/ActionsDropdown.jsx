@@ -18,7 +18,7 @@ import { postShape } from '../posts/post/proptypes';
 import { inBlackoutDateRange, useActions } from '../utils';
 import { DiscussionContext } from './context';
 
-import { resetReport, setDetails, setType } from './data/slice';
+import { resetReport, setDetails, setType,addReports } from './data/slice';
 function ActionsDropdown({
   intl,
   commentOrPost,
