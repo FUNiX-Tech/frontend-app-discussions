@@ -1,0 +1,39 @@
+.tag-filter {
+    flex-grow: 0;
+    font-family: Roboto;
+    font-size: 0.9rem;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.05;
+    letter-spacing: normal;
+    text-align: right;
+    padding: 3px 5px 3px 5px;
+    border-radius: 2px;
+}
+
+.tag-total {
+    color: #7b7b7b;
+    background-color: #F1F2F3;
+}
+
+.tag-pin{
+    background-color: #FFE2AB;
+    padding: 2px 5px;
+    i{
+        font-size: 0.65rem;
+    }
+}
+
+.post-title{
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    padding-bottom: 10px;
+}
+
+.tag-close{
+
+    color: #D82C0D;
+    background-color: #FFF1F1;
+}

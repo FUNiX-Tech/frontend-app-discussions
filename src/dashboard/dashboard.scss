@@ -1,0 +1,10 @@
+.dashboard-item{
+    display: flex;
+    gap:10px;
+    border : 1px solid #D7D7D7;
+    padding: 16px;
+    color: #7B7B7B;
+    &:hover{
+        color :#7B7B7B
+    }
+}

@@ -23,8 +23,8 @@ function CourseTabsNavigation({
   }, [courseId]);
 
   return (
-    <div id="courseTabsNavigation" className={classNames('course-tabs-navigation', className)}>
-      <div className="container-fluid">
+    <div id="courseTabsNavigation" className={classNames('course-tabs-navigation', className)} >
+      <div className="container" style={{maxWidth:'700px'}}>
         {!!tabs.length
           && (
           <Tabs

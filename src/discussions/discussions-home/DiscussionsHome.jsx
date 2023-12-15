@@ -29,6 +29,8 @@ import InformationBanner from './InformationsBanner';
 import HeaderLearning from '../../header/HeaderLearning';
 import Courses from '../courses/Courses';
 import EmptyCourses from '../empty-posts/EmptyCourses';
+import Dashboard from '../../dashboard/Dashboard';
+import ActionNavbar from '../../dashboard/ActionNavbar';
 
 
 
@@ -54,6 +56,7 @@ export default function DiscussionsHome() {
     category,
     learnerUsername,
   } = params;
+  
   const inContext = new URLSearchParams(location.search).get('inContext') !== null;
   // Display the content area if we are currently viewing/editing a post or creating one.
   const displayContentArea = postId || postEditorVisible || (learnerUsername && postId);
@@ -103,10 +106,14 @@ export default function DiscussionsHome() {
         <div className={styling}>
 
         {!inContext && <CourseTabsNavigation activeTab="discussion" courseId={courseId} />}
-        <div
+        <div>
+            <ActionNavbar />
+        </div>
+        {/* <div
           className={classNames('header-action-bar', { 'shadow-none border-light-300 border-bottom': inContext })}
           ref={postActionBarRef}
         >
+          <div>Dashboard</div>
           <div
             className={classNames('d-flex flex-row justify-content-between navbar ', {
               'pl-4 pr-2.5 py-1.5': inContext,
@@ -117,7 +124,7 @@ export default function DiscussionsHome() {
           </div>
           {isFeedbackBannerVisible && <InformationBanner />}
           <BlackoutInformationBanner />
-        </div>
+        </div>  */}
         {!inContext && (
           <Route
             path={[Routes.POSTS.PATH, Routes.TOPICS.CATEGORY]}
@@ -125,15 +132,15 @@ export default function DiscussionsHome() {
           />
         )}
 
-        <div className="d-flex flex-row" >
+        <div >
           <DiscussionSidebar displaySidebar={displaySidebar} postActionBarRef={postActionBarRef} />
           {displayContentArea && <DiscussionContent />}
-          <Route path={Routes.COURSES.PATH} >
-              <div style={{minWidth:'29rem'}}>
-                  <Courses />
-              </div>
+          <Route path={Routes.DASHBOARD.PATH} >
+            <div>
+                <Dashboard courseId={courseId}  courseTitle={courseTitle}/>
+            </div>
          </Route>
-          {!displayContentArea && (
+          {/* {!displayContentArea && (
             <Switch>
               <Route path={Routes.TOPICS.PATH} component={EmptyTopics} />
               <Route
@@ -147,7 +154,7 @@ export default function DiscussionsHome() {
               {isRedirectToLearners && <Route path={Routes.LEARNERS.PATH} component={EmptyLearners} /> }
               <Route path={Routes.COURSES.PATH} component={EmptyCourses} />
             </Switch>
-          )}
+          )} */}
         </div>
         </div>
       </main>

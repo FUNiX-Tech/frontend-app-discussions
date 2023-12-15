@@ -555,3 +555,26 @@ html:root {
     cursor: pointer;
   }
 }
+
+
+.btn-primary-custom {
+  border: none;
+  background-color: #0086ff !important;
+  border-radius: 6px;
+  padding: 6px 16px;
+  color: white;
+  &:hover {
+    background-color: #0b70df !important;
+  }
+  span {
+    size: 13px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+}
+
+a{
+  &:hover{
+    text-decoration: none;
+  }
+}

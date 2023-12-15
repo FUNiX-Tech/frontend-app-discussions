@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
@@ -18,15 +18,19 @@ import messages from './messages';
 import PostFooter from './PostFooter';
 import { PostAvatar } from './PostHeader';
 import { postShape } from './proptypes';
+import PostActionsBar from '../post-actions-bar/PostActionsBar';
+import { ActionsDropdown } from '../../common';
+import { ContentActions } from '../../../data/constants';
+import { Hyperlink, useToggle } from '@edx/paragon';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeThread , updateExistingThread } from '../data/thunks';
+import { selectModerationSettings } from '../../data/selectors';
+import iconComment from '../assets/comment.svg'
+import iconLike from '../assets/like.svg'
+import './post.scss'
+import PostContent from './PostContent';
 
 
-
-
-function decodeHTMLString(htmlString) {
-  const textarea = document.createElement('textarea');
-  textarea.innerHTML = htmlString;
-  return textarea.value;
-}
 
 
 function PostLink({
@@ -51,14 +55,90 @@ function PostLink({
     category,
     learnerUsername,
   });
+  console.log('======', post)
+
   const showAnsweredBadge = post.hasEndorsed && post.type === ThreadType.QUESTION;
   const authorLabelColor = AvatarOutlineAndLabelColors[post.authorLabel];
   const canSeeReportedBadge = post.abuseFlagged || post.abuseFlaggedCount;
   const read = post.read || (!post.read && post.commentCount !== post.unreadCommentCount);
-  const previewBodyDecode = decodeHTMLString(post.previewBody )
+  
+  const reportSelector = useSelector(state=>state.report)
+  const { reasonCodesEnabled } = useSelector(selectModerationSettings);
+  const dispatch = useDispatch();
+
+  const [isDeleting, showDeleteConfirmation, hideDeleteConfirmation] = useToggle(false);
+
+  const actionHandlers = {
+    [ContentActions.EDIT_CONTENT]: () => history.push({
+      ...location,
+      pathname: `${location.pathname}/edit`,
+    }),
+    [ContentActions.DELETE]: showDeleteConfirmation,
+    [ContentActions.CLOSE]: () => {
+      if (post.closed) {
+        dispatch(updateExistingThread(post.id, { closed: false }));
+      } else if (reasonCodesEnabled) {
+        showClosePostModal();
+      } else {
+        dispatch(updateExistingThread(post.id, { closed: true }));
+      }
+    },
+    [ContentActions.COPY_LINK]: () => { navigator.clipboard.writeText(postURL.href); },
+    [ContentActions.PIN]: () => dispatch(updateExistingThread(post.id, { pinned: !post.pinned })),
+    [ContentActions.REPORT]: () => dispatch(updateExistingThread(post.id, { flagged: !post.abuseFlagged , report:reportSelector})),
+  };
+  
+
   return (
     <>
-      <Link
+   <div className=' border-top'>
+
+      <div className='row py-1'>
+
+        <div className='col-2 d-flex flex-column'>
+            <span className='d-flex' >
+              <img src={iconLike}  />
+              <span className='tag-filter'>{post.voteCount}</span>
+            </span>
+
+            <span className='d-flex' >
+              <img src={iconComment}  />
+              <span className='tag-filter'>{post.commentCount -1}</span>
+            </span>
+        </div>
+
+        <div className='col'>
+            <div className='d-flex justify-content-between'>
+                <div className='d-flex ' style={{gap:'8px'}}>
+                  {post.pinned &&  <div><span className='tag-filter tag-pin'><i class="bi bi-pin-angle"></i></span></div>}
+                  {post.closed &&  <div><span className='tag-filter  tag-close'>Đã đóng</span></div> }
+
+                  <div><span className='tag-filter tag-total'>Tổng quan</span></div>
+                  {post.pinned && <div><span className='tag-filter tag-total'>Đang theo dõi</span></div>}
+                </div>
+                <div>
+                    {/* <PostActionsBar /> */}
+                    <ActionsDropdown commentOrPost={post} actionHandlers={actionHandlers}   />
+                </div>
+            </div>
+            <div className='d-flex flex-column'>
+                <span className='post-title'>{post.title}</span>
+                <span>
+                    <PostContent previewBody={post.previewBody} renderedBody={post.renderedBody}/>
+                    {/* <span>{previewBodyDecode}</span>
+                    {previewBodyDecode.length == 145 && <span onClick={handlerBodyContent}> Xem them </span>} */}
+                    
+                    
+                </span>
+            </div>
+        </div>
+
+        <div>
+
+        </div>
+      </div>
+   </div>
+      {/* <Link
         className={
           classNames('discussion-post p-0 text-decoration-none text-gray-900', {
             'border-bottom border-light-400': showDivider,
@@ -137,7 +217,7 @@ function PostLink({
           </div>
         </div>
         {!showDivider && post.pinned && <div className="pt-1 bg-light-500 border-top border-light-700" />}
-      </Link>
+      </Link> */}
     </>
   );
 }
