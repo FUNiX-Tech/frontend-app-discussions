@@ -111,7 +111,7 @@ export default function DiscussionsHome() {
 
         {!inContext && <CourseTabsNavigation activeTab="discussion" courseId={courseId} />}
         <div>
-            <ActionNavbar />
+          <ActionNavbar courseTitle={courseTitle} />
         </div>
         {/* <div
           className={classNames('header-action-bar', { 'shadow-none border-light-300 border-bottom': inContext })}

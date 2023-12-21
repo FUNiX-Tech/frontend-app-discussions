@@ -8,24 +8,37 @@ import {
   import {Link} from 'react-router-dom';
 
 import { ALL_ROUTES } from "../data/constants";
+import vectorIcon from './assets/Vector.svg'
+import dashboardIcon from './assets/dashboard.svg'
+import dashboardActiveIcon from './assets/dashboardActive.svg'
+import './dashboard.scss'
 
 
 
-const ActionNavbar = ()=>{
+const ActionNavbar = ({courseTitle})=>{
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const { params } = useRouteMatch(ALL_ROUTES);
+    const { params, url } = useRouteMatch(ALL_ROUTES);
     const {
         courseId,
       } = params;
+    
+    //   console.log(ALL_ROUTES)
 
     return (
         <div className="container py-4" style={{ maxWidth:'700px'}}>
            <div className="d-flex justify-content-between">
-                <div>
-                    <Link to={`/${courseId}/dashboard`}>Dashboard</Link>
+                <div className="action-navbar-link">
+                    <Link to={`/${courseId}/dashboard`}>
+                        
+                        <img src ={url == `/${courseId}` ? dashboardActiveIcon  :  dashboardIcon} alt='dashboard' width='16px' height='16px' />
+                        <span>Dashboard</span>
+                    </Link>
+                    {url.includes('posts') && <Link to=''><img src={vectorIcon} alt="vector" />
+                        <span>{courseTitle}</span>
+                    </Link>}
                 </div>
                 <div>
                     <button className="btn-primary-custom " onClick={handleShow} >

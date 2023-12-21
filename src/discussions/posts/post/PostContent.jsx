@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const PostContent = ({ previewBody, renderedBody }) => {
   const [showContent, setShowContent] = useState(false);
@@ -10,9 +11,7 @@ const PostContent = ({ previewBody, renderedBody }) => {
   return (
     <div>
       <span dangerouslySetInnerHTML={{ __html: showContent ? renderedBody : previewBody }} />
-      {previewBody.length === 140 && (
-        <span style={{cursor:'pointer'}} className="text-info" onClick={toggleShowContent}>{showContent ? 'Ẩn bớt' : 'Xem thêm'}</span>
-      )}
+      <Link to >Xem them</Link>
     </div>
   );
 };

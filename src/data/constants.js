@@ -212,7 +212,7 @@ export const PostsPages = {
   posts: `${BASE_PATH}/posts`,
   'my-posts': `${BASE_PATH}/my-posts`,
   learners: `${BASE_PATH}/learners/:learnerUsername/posts`,
-  dashboard : `${BASE_PATH}/dashboard`
+  dashboard : `${BASE_PATH}/dashboard`,
 
 };
 
