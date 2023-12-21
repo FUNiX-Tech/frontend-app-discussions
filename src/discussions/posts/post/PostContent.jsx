@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const PostContent = ({ previewBody, renderedBody }) => {
+const PostContent = ({courseId, postId, previewBody, renderedBody }) => {
   const [showContent, setShowContent] = useState(false);
 
   const toggleShowContent = () => {
@@ -11,7 +11,7 @@ const PostContent = ({ previewBody, renderedBody }) => {
   return (
     <div>
       <span dangerouslySetInnerHTML={{ __html: showContent ? renderedBody : previewBody }} />
-      <Link to >Xem them</Link>
+      <Link to={`/${courseId}/posts/${postId}`} >Xem them</Link>
     </div>
   );
 };

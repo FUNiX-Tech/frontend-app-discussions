@@ -124,7 +124,7 @@ function PostLink({
             <div className='d-flex flex-column'>
                 <span className='post-title'>{post.title}</span>
                 <span>
-                    <PostContent previewBody={post.previewBody} renderedBody={post.renderedBody}/>
+                    <PostContent courseId={post.courseId} postId={post.id} previewBody={post.previewBody} renderedBody={post.renderedBody}/>
                     {/* <span>{previewBodyDecode}</span>
                     {previewBodyDecode.length == 145 && <span onClick={handlerBodyContent}> Xem them </span>} */}
                     
