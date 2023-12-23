@@ -1,0 +1,22 @@
+name: Deploy to AWS
+on:
+  push:
+    branches:
+      - "staging"
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Re deploy MFE
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.STAG_IP }}
+          username: openedx
+          key: ${{ secrets.STAG_KEY }}
+          port: 22
+          command_timeout: 100m
+          script: |
+            whoami
+            export PATH='/home/openedx/.local/bin:/home/openedx/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
+            docker pull docker push 848839979695.dkr.ecr.ap-southeast-1.amazonaws.com/mfe:15.0.7
+            echo -e "y\n\n\n\n\n\ny" | tutor local launch
