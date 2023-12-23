@@ -18,5 +18,5 @@ jobs:
           script: |
             whoami
             export PATH='/home/openedx/.local/bin:/home/openedx/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
-            docker pull docker push 848839979695.dkr.ecr.ap-southeast-1.amazonaws.com/mfe:15.0.7
+            docker pull 848839979695.dkr.ecr.ap-southeast-1.amazonaws.com/mfe:15.0.7
             echo -e "y\n\n\n\n\n\ny" | tutor local launch
