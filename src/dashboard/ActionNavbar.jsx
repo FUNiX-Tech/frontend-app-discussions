@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Modal} from 'react-bootstrap'
 import { PostEditor } from "../discussions/posts";
 import { useRouteMatch } from 'react-router';
@@ -10,19 +10,29 @@ import dashboardIcon from './assets/dashboard.svg'
 import dashboardActiveIcon from './assets/dashboardActive.svg'
 import './dashboard.scss'
 import PostEditorCustom from "../discussions/posts/post-editor/PostEditorCustom";
+import { useSelector } from "react-redux";
 
 
 
 const ActionNavbar = ({courseTitle})=>{
     const [isOpen, open, close] = useToggle(false);
-
+    const [title , setTitle] = useState('')
     
     const { params, url } = useRouteMatch(ALL_ROUTES);
     const {
-        courseId,
+        courseId,postId
       } = params;
-    
-    //   console.log(ALL_ROUTES)
+
+      const threads = useSelector(state=>state.threads.threadsById)
+     
+    useEffect(()=>{
+        if (postId && threads[postId]){
+            const post  = threads[postId] 
+            setTitle(post.title ? post.title :'')
+        }
+   
+    },[postId, threads])
+   
 
     return (
         <div className="container py-4" style={{ maxWidth:'700px'}}>
@@ -36,6 +46,9 @@ const ActionNavbar = ({courseTitle})=>{
                     {url.includes('posts') && <Link to=''><img src={vectorIcon} alt="vector" />
                         <span>{courseTitle}</span>
                     </Link>}
+                    {postId && <Link to=''><img src={vectorIcon} alt="vector" />
+                        <span>{title}</span>
+                    </Link> }
                 </div>
                 <div>
                     <button className="btn-primary-custom " onClick={open}  >
