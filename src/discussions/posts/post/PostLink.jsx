@@ -55,7 +55,7 @@ function PostLink({
     category,
     learnerUsername,
   });
-  console.log('======', post)
+  // console.log('======', post)
 
   const showAnsweredBadge = post.hasEndorsed && post.type === ThreadType.QUESTION;
   const authorLabelColor = AvatarOutlineAndLabelColors[post.authorLabel];

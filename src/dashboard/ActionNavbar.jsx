@@ -1,25 +1,22 @@
 import { useState } from "react"
 import { Modal} from 'react-bootstrap'
 import { PostEditor } from "../discussions/posts";
-import {  useParams } from 'react-router-dom';
-import {
-    Route, Switch, useLocation, useRouteMatch, matchPath
-  } from 'react-router';
-  import {Link} from 'react-router-dom';
-
+import { useRouteMatch } from 'react-router';
+import {Link} from 'react-router-dom';
+import {ModalLayer , useToggle} from '@edx/paragon'
 import { ALL_ROUTES } from "../data/constants";
 import vectorIcon from './assets/Vector.svg'
 import dashboardIcon from './assets/dashboard.svg'
 import dashboardActiveIcon from './assets/dashboardActive.svg'
 import './dashboard.scss'
+import PostEditorCustom from "../discussions/posts/post-editor/PostEditorCustom";
 
 
 
 const ActionNavbar = ({courseTitle})=>{
-    const [show, setShow] = useState(false);
+    const [isOpen, open, close] = useToggle(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    
     const { params, url } = useRouteMatch(ALL_ROUTES);
     const {
         courseId,
@@ -41,13 +38,12 @@ const ActionNavbar = ({courseTitle})=>{
                     </Link>}
                 </div>
                 <div>
-                    <button className="btn-primary-custom " onClick={handleShow} >
+                    <button className="btn-primary-custom " onClick={open}  >
                         <span>Add New Post</span>
                     </button>
-
-                    <Modal show={show} onHide={handleClose}>
-                                 <PostEditor course_ = {courseId} />
-                    </Modal>
+                    <ModalLayer isOpen={isOpen} onClose={close}>
+                        <PostEditorCustom />
+                    </ModalLayer>
  
                 
                 </div>

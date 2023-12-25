@@ -169,7 +169,7 @@ function PostEditor({
   // api course specialization
   const courseTitle = useSelector(state =>state.courseTabs.courseTitle)
   const [courseEnroll, setCourseEnroll] = useState([])
-  console.log(course_)
+  
   const [course_id , setCourse_id ] = useState(courseId || course_)
   useEffect(() => {
     const fetchData = async () => {
