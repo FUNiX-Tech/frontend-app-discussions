@@ -3,14 +3,14 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Badge, Icon, Truncate } from '@edx/paragon';
 import { CheckCircle } from '@edx/paragon/icons';
-
+import { getConfig } from '@edx/frontend-platform';
 import { PushPin } from '../../../components/icons';
-import { AvatarOutlineAndLabelColors, Routes, ThreadType } from '../../../data/constants';
+import { ALL_ROUTES, AvatarOutlineAndLabelColors, Routes, ThreadType } from '../../../data/constants';
 import AuthorLabel from '../../common/AuthorLabel';
 import { DiscussionContext } from '../../common/context';
 import { discussionsPath, isPostPreviewAvailable } from '../../utils';
@@ -55,8 +55,8 @@ function PostLink({
     category,
     learnerUsername,
   });
-  // console.log('======', post)
 
+  const history = useHistory()
   const showAnsweredBadge = post.hasEndorsed && post.type === ThreadType.QUESTION;
   const authorLabelColor = AvatarOutlineAndLabelColors[post.authorLabel];
   const canSeeReportedBadge = post.abuseFlagged || post.abuseFlaggedCount;
@@ -67,11 +67,12 @@ function PostLink({
   const dispatch = useDispatch();
 
   const [isDeleting, showDeleteConfirmation, hideDeleteConfirmation] = useToggle(false);
+  const {url} = useRouteMatch(ALL_ROUTES)
+  const postURL = new URL(`${getConfig().PUBLIC_PATH}${post.courseId}/posts/${post.id}`, window.location.origin);
 
   const actionHandlers = {
     [ContentActions.EDIT_CONTENT]: () => history.push({
-      ...location,
-      pathname: `${location.pathname}/edit`,
+      pathname: `${url}/${post.id}/edit`,
     }),
     [ContentActions.DELETE]: showDeleteConfirmation,
     [ContentActions.CLOSE]: () => {
@@ -83,7 +84,7 @@ function PostLink({
         dispatch(updateExistingThread(post.id, { closed: true }));
       }
     },
-    [ContentActions.COPY_LINK]: () => { navigator.clipboard.writeText(postURL.href); },
+    [ContentActions.COPY_LINK]: () => { navigator.clipboard.writeText(postURL); },
     [ContentActions.PIN]: () => dispatch(updateExistingThread(post.id, { pinned: !post.pinned })),
     [ContentActions.REPORT]: () => dispatch(updateExistingThread(post.id, { flagged: !post.abuseFlagged , report:reportSelector})),
   };
