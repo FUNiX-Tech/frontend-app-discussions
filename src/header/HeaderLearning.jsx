@@ -40,7 +40,7 @@ const HeaderLearning = ({
           className={`d-flex align-items-center course-title-lockup`}
         >
           <span className={`d-block header-2`}>
-            {`${courseTitle}`}
+            {`${courseTitle ? courseTitle : '' }`}
           </span>
         </div>
         <div className="actions d-flex align-items-center">
