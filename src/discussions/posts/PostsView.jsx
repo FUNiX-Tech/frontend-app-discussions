@@ -15,8 +15,8 @@ import PostFilterBar from './post-filter-bar/PostFilterBar';
 import PostsList from './PostsList';
 
 function AllPostsList() {
-  const posts = useSelector(selectAllThreads);
-
+  const posts = useSelector(selectAllThreads).filter((element) => element !== undefined);
+  
   return (<div className='container ' style={{maxWidth:'700px'}}>
       <div >
      <PostsList posts={posts} topics={null} />

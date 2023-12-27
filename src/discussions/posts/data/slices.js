@@ -68,6 +68,7 @@ const threadsSlice = createSlice({
       state.status = RequestStatus.IN_PROGRESS;
     },
     fetchThreadsSuccess: (state, { payload }) => {
+      // console.log('======payload=====', payload)
       if (state.author !== payload.author) {
         state.pages = [];
         state.author = payload.author;
@@ -78,13 +79,14 @@ const threadsSlice = createSlice({
         state.pages[payload.page - 1] = payload.ids;
       }
       state.status = RequestStatus.SUCCESSFUL;
-      state.threadsById = { ...state.threadsById, ...payload.threadsById };
+      state.threadsById = payload.threadsById;
       state.threadsInTopic = mergeThreadsInTopics(state.threadsInTopic, payload.threadsInTopic);
       state.avatars = { ...state.avatars, ...payload.avatars };
       state.nextPage = (payload.page < payload.pagination.numPages) ? payload.page + 1 : null;
       state.totalPages = payload.pagination.numPages;
       state.totalThreads = payload.pagination.count;
       state.textSearchRewrite = payload.textSearchRewrite;
+      state.page = payload.page
     },
     fetchThreadsFailed: (state) => {
       state.status = RequestStatus.FAILED;

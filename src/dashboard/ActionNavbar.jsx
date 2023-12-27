@@ -43,7 +43,7 @@ const ActionNavbar = ({courseTitle})=>{
                         <img src ={url == `/${courseId}` ? dashboardActiveIcon  :  dashboardIcon} alt='dashboard' width='16px' height='16px' />
                         <span>Dashboard</span>
                     </Link>
-                    {url.includes('posts') && <Link to=''><img src={vectorIcon} alt="vector" />
+                    {url.includes('posts') && <Link to={`/${courseId}/posts`}><img src={vectorIcon} alt="vector" />
                         <span>{courseTitle}</span>
                     </Link>}
                     {postId && <Link to=''><img src={vectorIcon} alt="vector" />
