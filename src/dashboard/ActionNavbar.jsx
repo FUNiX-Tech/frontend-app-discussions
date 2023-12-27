@@ -31,7 +31,7 @@ const ActionNavbar = ({courseTitle})=>{
             const post  = threads[postId] 
             setTitle(post.title ? post.title :'')
         }
-   
+    
     },[postId, threads])
    
     const handlerClose = ()=>{
@@ -40,7 +40,7 @@ const ActionNavbar = ({courseTitle})=>{
 
     return (
         <div className="container py-4" style={{ maxWidth:'700px'}}>
-           <div className="d-flex justify-content-between">
+           <div className="d-flex justify-content-between" style={{height:'37px'}}>
                 <div className="action-navbar-link">
                     <Link to={`/${courseId}/dashboard`}>
                         <img src ={url == `/${courseId}` ? dashboardActiveIcon  :  dashboardIcon} alt='dashboard' width='16px' height='16px' />
@@ -55,12 +55,15 @@ const ActionNavbar = ({courseTitle})=>{
                     </Link> }
                 </div>
                 <div>
-                    <button className="btn-primary-custom " onClick={open}  >
+                    {!postId && <>
+                        <button className="btn-primary-custom " onClick={open}  >
                         <span>Tạo bài đăng</span>
                     </button>
                     <ModalLayer isOpen={isOpen} onClose={close}>
                         <PostEditorCustom onClose={handlerClose} />
                     </ModalLayer>
+                    </> }
+                    
  
                 
                 </div>

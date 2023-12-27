@@ -34,6 +34,7 @@ function PostFooter({
   intl,
   preview,
   showNewCountLabel,
+  onShowComment
 }) {
   const dispatch = useDispatch();
   const userHasModerationPrivileges = useSelector(selectUserHasModerationPrivileges);
@@ -48,6 +49,7 @@ function PostFooter({
         voted={post.voted}
         preview={preview}
       />
+      <button onClick={onShowComment}>Xem them</button>
       {/* <IconButtonWithTooltip
         id={`follow-${post.id}-tooltip`}
         tooltipPlacement="top"

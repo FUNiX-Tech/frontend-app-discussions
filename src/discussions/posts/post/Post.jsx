@@ -25,6 +25,7 @@ function Post({
   post,
   preview,
   intl,
+  onShowComment
 }) {
   const location = useLocation();
   const history = useHistory();
@@ -95,7 +96,7 @@ function Post({
         </div>
       )}
       <div className="mb-3">
-        <PostFooter post={post} preview={preview} />
+        <PostFooter onShowComment={onShowComment} post={post} preview={preview} />
       </div>
       <ClosePostReasonModal
         isOpen={isClosing}

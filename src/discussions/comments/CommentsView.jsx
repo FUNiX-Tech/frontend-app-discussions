@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
@@ -135,11 +135,15 @@ DiscussionCommentsView.propTypes = {
 
 function CommentsView({ intl }) {
   const [isLoading, submitDispatch] = useDispatchWithState();
+  const [showReponse , setShowReponse] = useState(false)
   const { postId } = useParams();
   const thread = usePost(postId);
   const history = useHistory();
   const location = useLocation();
   const isOnDesktop = useIsOnDesktop();
+  const handlerShowReponse = ()=>{
+    setShowReponse(true)
+  }
   const {
     courseId, learnerUsername, category, topicId, page, inContext,
   } = useContext(DiscussionContext);
@@ -194,7 +198,7 @@ function CommentsView({ intl }) {
         )
       )}
       <div className='container' style={{maxWidth:'700px'}}>
-        <Post post={thread} />
+        <Post post={thread} onShowComment={handlerShowReponse} />
         {!thread.closed && <ResponseEditor postId={postId} /> }
 
 
@@ -207,7 +211,7 @@ function CommentsView({ intl }) {
           isClosed={thread.closed}
         />
       )}
-      {thread.type === ThreadType.QUESTION && (
+      {thread.type === ThreadType.QUESTION && showReponse && (
         <>
           <DiscussionCommentsView
             postId={postId}
