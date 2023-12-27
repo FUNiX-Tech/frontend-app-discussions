@@ -33,6 +33,9 @@ const ActionNavbar = ({courseTitle})=>{
    
     },[postId, threads])
    
+    const handlerClose = ()=>{
+        close()
+    }
 
     return (
         <div className="container py-4" style={{ maxWidth:'700px'}}>
@@ -55,7 +58,7 @@ const ActionNavbar = ({courseTitle})=>{
                         <span>Add New Post</span>
                     </button>
                     <ModalLayer isOpen={isOpen} onClose={close}>
-                        <PostEditorCustom />
+                        <PostEditorCustom onClose={handlerClose} />
                     </ModalLayer>
  
                 

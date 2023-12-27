@@ -46,7 +46,7 @@ import React, {
   import { useRouteMatch } from 'react-router-dom';
 import { ALL_ROUTES } from '../../../data/constants';
 
-const PostEditorCustom = ({editExisting,course_})=>{
+const PostEditorCustom = ({editExisting, onClose})=>{
     const intl = useIntl();
     const { authenticatedUser } = useContext(AppContext);
     const dispatch = useDispatch();
@@ -197,6 +197,7 @@ const PostEditorCustom = ({editExisting,course_})=>{
           anonymousToPeers: allowAnonymousToPeers ? values.anonymousToPeers : undefined,
           cohort,
         }));
+        onClose()
       }
       /* istanbul ignore if: TinyMCE is mocked so this cannot be easily tested */
       if (editorRef.current) {
