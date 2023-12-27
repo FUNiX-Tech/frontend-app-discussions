@@ -152,8 +152,8 @@ export default function DiscussionsHome() {
         </div>
         </div>
       </main>
-      {/* {!inContext && <Footer />} */}
-      {!inContext &&  <Footer />}
+
+      {/* {!inContext &&  <Footer />} */}
     </DiscussionContext.Provider>
   );
 }
