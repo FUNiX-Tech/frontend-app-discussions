@@ -330,7 +330,7 @@ useEffect(()=>{
           >
          <InputSelect
             name="fruits"
-            label="Course"
+            label={intl.formatMessage(messages.titleCouse)}
             value={courseId}
             options={courseEnroll}
             onChange={(e)=>setCourse_id(e)}

@@ -294,7 +294,7 @@ const PostEditorCustom = ({editExisting, onClose})=>{
           >
          <InputSelect
             name="course"
-            label="Course"
+            label={intl.formatMessage(messages.titleCouse)}
             value={courseId}
             options={courseEnroll}
             onChange={(e)=>setCourse_id(e)}
