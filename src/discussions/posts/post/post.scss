@@ -1,7 +1,7 @@
 .tag-filter {
     flex-grow: 0;
-    font-family: Roboto;
-    font-size: 0.9rem;
+    // font-family: Roboto;
+    font-size: 0.8rem;
     font-weight: normal;
     font-stretch: normal;
     font-style: normal;
@@ -36,4 +36,17 @@
 
     color: #D82C0D;
     background-color: #FFF1F1;
+}
+
+.time-post {
+    display: flex;
+    gap:10px;
+    span{
+        font-weight: 400;
+        font-size: 11px;
+        line-height: 11.55px;
+        display: flex;
+        gap:3px;
+        align-items: center;
+    }
 }

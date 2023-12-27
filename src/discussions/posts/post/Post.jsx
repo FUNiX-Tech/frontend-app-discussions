@@ -65,7 +65,8 @@ function Post({
   );
 
   return (
-    <div className="d-flex flex-column w-100 mw-100" data-testid={`post-${post.id}`}>
+    <div className="d-flex flex-column w-100 mw-100 border-top" data-testid={`post-${post.id}`}>
+ 
       <DeleteConfirmation
         isOpen={isDeleting}
         title={intl.formatMessage(messages.deletePostTitle)}
@@ -79,7 +80,7 @@ function Post({
       />
       <AlertBanner content={post} />
       <PostHeader post={post} actionHandlers={actionHandlers} />
-      <div className="d-flex mt-4 mb-2 text-break font-style-normal text-primary-500">
+      <div className="d-flex">
         <HTMLLoader htmlNode={post.renderedBody} id="post" />
       </div>
       {topicContext && topic && (

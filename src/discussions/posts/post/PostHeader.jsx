@@ -43,14 +43,14 @@ export function PostAvatar({
 
   return (
     <div className={avatarSpacing}>
-      {post.type === ThreadType.QUESTION && (
+      {/* {post.type === ThreadType.QUESTION && (
         <Icon
           src={read ? Issue : Question}
           className={classNames('position-absolute bg-white rounded-circle question-icon-size', {
             'question-icon-position': fromPostLink,
           })}
         />
-      )}
+      )} */}
       <Avatar
         className={classNames('border-0', {
           [`outline-${outlineColor}`]: outlineColor,
@@ -58,10 +58,10 @@ export function PostAvatar({
           'mt-3 ml-2': post.type === ThreadType.QUESTION && fromPostLink,
           'avarat-img-position': post.type === ThreadType.QUESTION,
         })}
-        style={{
-          height: avatarSize,
-          width: avatarSize,
-        }}
+        // style={{
+        //   height: avatarSize,
+        //   width: avatarSize,
+        // }}
         alt={post.author}
         src={authorAvatars?.imageUrlSmall}
       />
@@ -91,9 +91,42 @@ function PostHeader({
   const showAnsweredBadge = preview && post.hasEndorsed && post.type === ThreadType.QUESTION;
   const authorLabelColor = AvatarOutlineAndLabelColors[post.authorLabel];
   const hasAnyAlert = useAlertBannerVisible(post);
+  const authorAvatars = useSelector(selectAuthorAvatars(post.author));
 
   return (
-    <div className={classNames('d-flex flex-fill mw-100', { 'mt-2': hasAnyAlert && !preview })}>
+    <>
+    <div className='pt-2'>
+   
+      <div className='d-flex justify-content-between'>
+                <div className='d-flex ' style={{gap:'8px'}}>
+                <Avatar
+                 className={classNames('border-0', {
+                  [`outline-${authorLabelColor}`]: authorLabelColor,
+                  'outline-anonymous': !authorLabelColor,
+                  
+                })}
+                  alt={post.author}
+                  src={authorAvatars?.imageUrlSmall}
+                  style={{height:'20px' , width:'20px'}}
+                />
+                <span>{post.author}</span>
+                  {post.pinned &&  <div><span className='tag-filter tag-pin'><i class="bi bi-pin-angle"></i></span></div>}
+                  {post.closed &&  <div><span className='tag-filter  tag-close'>Đã đóng</span></div> }
+
+                  <div><span className='tag-filter tag-total'>Tổng quan</span></div>
+                  {post.pinned && <div><span className='tag-filter tag-total'>Đang theo dõi</span></div>}
+                </div>
+                <div>
+                    {/* <PostActionsBar /> */}
+                    <ActionsDropdown commentOrPost={post} actionHandlers={actionHandlers}   />
+                </div>
+            </div>
+    </div>
+    <span className='post-title'>{post.title}</span>
+
+
+
+    {/* <div className={classNames('d-flex flex-fill mw-100', { 'mt-2': hasAnyAlert && !preview })}>
       <div className="flex-shrink-0">
         <PostAvatar post={post} authorLabel={post.authorLabel} />
       </div>
@@ -124,7 +157,8 @@ function PostHeader({
             <ActionsDropdown commentOrPost={post} actionHandlers={actionHandlers} />
           </div>
         )}
-    </div>
+    </div> */}
+    </>
   );
 }
 

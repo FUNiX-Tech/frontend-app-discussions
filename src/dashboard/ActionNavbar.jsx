@@ -6,6 +6,7 @@ import {Link} from 'react-router-dom';
 import {ModalLayer , useToggle} from '@edx/paragon'
 import { ALL_ROUTES } from "../data/constants";
 import vectorIcon from './assets/Vector.svg'
+import rightIcon from './assets/Right.svg'
 import dashboardIcon from './assets/dashboard.svg'
 import dashboardActiveIcon from './assets/dashboardActive.svg'
 import './dashboard.scss'
@@ -42,11 +43,11 @@ const ActionNavbar = ({courseTitle})=>{
            <div className="d-flex justify-content-between">
                 <div className="action-navbar-link">
                     <Link to={`/${courseId}/dashboard`}>
-                        
                         <img src ={url == `/${courseId}` ? dashboardActiveIcon  :  dashboardIcon} alt='dashboard' width='16px' height='16px' />
-                        <span>Dashboard</span>
+                        <span>Đại sảnh</span>
                     </Link>
-                    {url.includes('posts') && <Link to={`/${courseId}/posts`}><img src={vectorIcon} alt="vector" />
+                    {url.includes('posts') && <Link to={`/${courseId}/posts`}>
+                        {postId ? <img src={rightIcon} alt="right" style={{padding:'0px'}} /> : <img src={vectorIcon} alt="vector" />}
                         <span>{courseTitle}</span>
                     </Link>}
                     {postId && <Link to=''><img src={vectorIcon} alt="vector" />
@@ -55,7 +56,7 @@ const ActionNavbar = ({courseTitle})=>{
                 </div>
                 <div>
                     <button className="btn-primary-custom " onClick={open}  >
-                        <span>Add New Post</span>
+                        <span>Tạo bài đăng</span>
                     </button>
                     <ModalLayer isOpen={isOpen} onClose={close}>
                         <PostEditorCustom onClose={handlerClose} />

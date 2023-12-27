@@ -13,8 +13,8 @@ function DiscussionContent() {
   const postEditorVisible = useSelector((state) => state.threads.postEditorVisible);
 
   return (
-    <div className="d-flex bg-light-400 flex-column w-75 w-xs-100 w-xl-75 align-items-center">
-      <div className="d-flex flex-column w-100">
+    <div className='container' style={{maxWidth:'700px'}}>
+      <div className="d-flex flex-column ">
         {postEditorVisible ? (
           <Route path={Routes.POSTS.NEW_POST}>
             <PostEditor />

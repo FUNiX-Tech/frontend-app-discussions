@@ -1,19 +1,20 @@
 // eslint-disable-next-line no-unused-vars
 export default function timeLocale(number, index, totalSec) {
   return [
-    ['just now', 'right now'],
-    ['%ss', 'in %s seconds'],
-    ['1m', 'in 1 minute'],
-    ['%sm', 'in %s minutes'],
-    ['1h', 'in 1 hour'],
-    ['%sh', 'in %s hours'],
-    ['1d', 'in 1 day'],
-    ['%sd', 'in %s days'],
-    ['1w', 'in 1 week'],
-    ['%sw', 'in %s weeks'],
-    ['4w', 'in 1 month'],
-    [`${number * 4}w`, 'in %s months'],
-    ['1y', 'in 1 year'],
-    ['%sy', 'in %s years'],
+    ['vừa xong', 'một lúc'],
+    ['%s giây trước', 'trong %s giây'],
+    ['1 phút trước', 'trong 1 phút'],
+    ['%s phút trước', 'trong %s phút'],
+    ['1 giờ trước', 'trong 1 giờ'],
+    ['%s giờ trước', 'trong %s giờ'],
+    ['1 ngày trước', 'trong 1 ngày'],
+    ['%s ngày trước', 'trong %s ngày'],
+    ['1 tuần trước', 'trong 1 tuần'],
+    ['%s tuần trước', 'trong %s tuần'],
+    ['1 tháng trước', 'trong 1 tháng'],
+    ['%s tháng trước', 'trong %s tháng'],
+    ['1 năm trước', 'trong 1 năm'],
+    ['%s năm trước', 'trong %s năm'],
   ][index];
 }
+

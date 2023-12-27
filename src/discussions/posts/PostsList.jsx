@@ -101,16 +101,14 @@ function PostsList({ posts, topics, intl }) {
      {postInstances(unpinnedPosts)}
       {posts?.length === 0 && loadingStatus === RequestStatus.SUCCESSFUL && <NoResults />}
       <div className='container-btn-page'>
-        {numberPage > 1 &&
-         <Button className='btn-number-page'  onClick={() => loadThreads(topics, (numberPage -1))} >
+        
+         <Button disabled={numberPage == 1} className='btn-number-page'  onClick={() => loadThreads(topics, (numberPage -1))} >
           <img src={leftIcon} alt='left' />
-        </Button> }
+        </Button> 
            {btnNumberPages}
-        {numberPage < totalPages && 
-          <Button className='btn-number-page' style={{padding:'0'}} onClick={() => loadThreads(topics, nextPage)} >
+          <Button disabled={numberPage == totalPages}  className='btn-number-page' style={{padding:'0'}} onClick={() => loadThreads(topics, nextPage)} >
           <img src={rightIcon} alt='right' />
         </Button>
-        }
       </div>
       {/* {loadingStatus === RequestStatus.IN_PROGRESS ? (
         <div className="d-flex justify-content-center p-4">

@@ -657,6 +657,9 @@ a{
       background: none !important;
       color :#7B7B7B !important;
     }
+    &:disabled {
+      cursor:not-allowed;
+    }
    
     
     

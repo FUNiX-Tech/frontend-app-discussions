@@ -193,15 +193,12 @@ function CommentsView({ intl }) {
           />
         )
       )}
-      <div className={classNames('discussion-comments d-flex flex-column card', {
-        'm-4 p-4.5': !inContext,
-        'p-4 rounded-0 border-0 mb-4': inContext,
-      })}
-      >
+      <div className='container' style={{maxWidth:'700px'}}>
         <Post post={thread} />
         {!thread.closed && <ResponseEditor postId={postId} /> }
-      </div>
-      {thread.type === ThreadType.DISCUSSION && (
+
+
+        {thread.type === ThreadType.DISCUSSION && (
         <DiscussionCommentsView
           postId={postId}
           intl={intl}
@@ -228,6 +225,8 @@ function CommentsView({ intl }) {
           />
         </>
       )}
+      </div>
+  
     </>
   );
 }

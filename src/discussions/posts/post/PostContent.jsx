@@ -11,7 +11,7 @@ const PostContent = ({courseId, postId, previewBody, renderedBody }) => {
   return (
     <div>
       <span dangerouslySetInnerHTML={{ __html: showContent ? renderedBody : previewBody }} />
-      <Link to={`/${courseId}/posts/${postId}`} >Xem them</Link>
+      <Link className="p-2" to={`/${courseId}/posts/${postId}`} >xem thêm</Link>
     </div>
   );
 };
