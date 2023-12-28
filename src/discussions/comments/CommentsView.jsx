@@ -211,7 +211,7 @@ function CommentsView({ intl }) {
           isClosed={thread.closed}
         />
       )}
-      {thread.type === ThreadType.QUESTION && showReponse && (
+      {thread.type === ThreadType.QUESTION  && (
         <>
           <DiscussionCommentsView
             postId={postId}

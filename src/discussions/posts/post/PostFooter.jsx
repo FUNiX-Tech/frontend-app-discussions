@@ -49,7 +49,7 @@ function PostFooter({
         voted={post.voted}
         preview={preview}
       />
-      <button onClick={onShowComment}>Xem them</button>
+      {/* <button onClick={onShowComment}>Xem them</button> */}
       {/* <IconButtonWithTooltip
         id={`follow-${post.id}-tooltip`}
         tooltipPlacement="top"
