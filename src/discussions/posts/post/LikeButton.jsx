@@ -6,6 +6,7 @@ import { Icon, IconButtonWithTooltip } from '@edx/paragon';
 
 import { ThumbUpFilled, ThumbUpOutline } from '../../../components/icons';
 import messages from './messages';
+import likeIcon from './assets/like.svg'
 
 function LikeButton({
   count,
@@ -23,7 +24,8 @@ function LikeButton({
   };
 
   return (
-    <div className="d-flex align-items-center mr-4 text-primary-500">
+    <div className="d-flex align-items-center">
+ 
       <IconButtonWithTooltip
         id={`like-${count}-tooltip`}
         tooltipPlacement="top"

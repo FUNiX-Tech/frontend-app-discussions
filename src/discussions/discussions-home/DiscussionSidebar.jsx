@@ -19,6 +19,8 @@ import { LearnerPostsView, LearnersView } from '../learners';
 import { PostsView } from '../posts';
 import { TopicsView } from '../topics';
 import Courses from '../courses/Courses';
+import Dashboard from '../../dashboard/Dashboard';
+import DiscussionContent from './DiscussionContent';
 
 
 export default function DiscussionSidebar({ displaySidebar, postActionBarRef }) {
@@ -52,13 +54,19 @@ export default function DiscussionSidebar({ displaySidebar, postActionBarRef }) 
         'd-flex overflow-auto': displaySidebar,
         'w-100': !isOnDesktop,
         'sidebar-desktop-width': isOnDesktop && !isOnXLDesktop,
-        'w-25 sidebar-XL-width': isOnXLDesktop,
+        ' sidebar-XL-width': isOnXLDesktop,
         'min-content-height': !inContext,
         'none' : isCourseUrl
       })}
       data-testid="sidebar"
     >
       <Switch>
+      <Route path={Routes.DASHBOARD.PATH} component={Dashboard} />
+      <Route path={Routes.COMMENTS.PATH} >
+          <div className='container'>
+            <DiscussionContent />
+          </div>
+      </Route>
         <Route
           path={[Routes.POSTS.PATH, Routes.POSTS.ALL_POSTS, Routes.TOPICS.CATEGORY, Routes.POSTS.MY_POSTS]}
           component={PostsView}

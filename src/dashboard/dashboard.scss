@@ -1,0 +1,33 @@
+.dashboard-item{
+    display: flex;
+    gap:10px;
+    border : 1px solid #D7D7D7;
+    padding: 16px;
+    color: #7B7B7B;
+    &:hover{
+        color :#7B7B7B
+    }
+}
+
+.action-navbar-link{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+   
+    a {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 21px;
+        color:  #7B7B7B;
+        display: flex;
+        gap: 8px;
+        
+    }
+    a:first-child {
+ 
+    }
+    a:last-child {
+        color : #007AE6ed;
+        
+    }
+}

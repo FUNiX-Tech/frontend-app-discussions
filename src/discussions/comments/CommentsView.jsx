@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames';
@@ -135,11 +135,15 @@ DiscussionCommentsView.propTypes = {
 
 function CommentsView({ intl }) {
   const [isLoading, submitDispatch] = useDispatchWithState();
+  const [showReponse , setShowReponse] = useState(false)
   const { postId } = useParams();
   const thread = usePost(postId);
   const history = useHistory();
   const location = useLocation();
   const isOnDesktop = useIsOnDesktop();
+  const handlerShowReponse = ()=>{
+    setShowReponse(true)
+  }
   const {
     courseId, learnerUsername, category, topicId, page, inContext,
   } = useContext(DiscussionContext);
@@ -193,15 +197,12 @@ function CommentsView({ intl }) {
           />
         )
       )}
-      <div className={classNames('discussion-comments d-flex flex-column card', {
-        'm-4 p-4.5': !inContext,
-        'p-4 rounded-0 border-0 mb-4': inContext,
-      })}
-      >
-        <Post post={thread} />
+      <div className='container' style={{maxWidth:'700px'}}>
+        <Post post={thread} onShowComment={handlerShowReponse} />
         {!thread.closed && <ResponseEditor postId={postId} /> }
-      </div>
-      {thread.type === ThreadType.DISCUSSION && (
+
+
+        {thread.type === ThreadType.DISCUSSION && (
         <DiscussionCommentsView
           postId={postId}
           intl={intl}
@@ -210,7 +211,7 @@ function CommentsView({ intl }) {
           isClosed={thread.closed}
         />
       )}
-      {thread.type === ThreadType.QUESTION && (
+      {thread.type === ThreadType.QUESTION  && (
         <>
           <DiscussionCommentsView
             postId={postId}
@@ -228,6 +229,8 @@ function CommentsView({ intl }) {
           />
         </>
       )}
+      </div>
+  
     </>
   );
 }

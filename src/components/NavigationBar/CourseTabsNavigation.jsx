@@ -23,6 +23,7 @@ function CourseTabsNavigation({
   }, [courseId]);
 
   return (
+
     <div id="courseTabsNavigation" className={classNames('course-tabs-navigation mb-3', className)}>
       <div className="sub-header-container">
         {!!tabs.length

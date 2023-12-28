@@ -15,9 +15,13 @@ import PostFilterBar from './post-filter-bar/PostFilterBar';
 import PostsList from './PostsList';
 
 function AllPostsList() {
-  const posts = useSelector(selectAllThreads);
-
-  return <PostsList posts={posts} topics={null} />;
+  const posts = useSelector(selectAllThreads).filter((element) => element !== undefined);
+  
+  return (<div className='container ' style={{maxWidth:'700px'}}>
+      <div >
+     <PostsList posts={posts} topics={null} />
+  </div>
+  </div>);
 }
 
 function TopicPostsList({ topicId }) {
@@ -88,8 +92,8 @@ function PostsView() {
           textSearchRewrite={textSearchRewrite}
         />
       )}
-      <PostFilterBar />
-      <div className="border-bottom border-light-400" />
+      {/* <PostFilterBar /> */}
+      {/* <div className="border-bottom border-light-400" /> */}
       <div className="list-group list-group-flush flex-fill" role="list" onKeyDown={e => handleKeyDown(e)}>
         {postsListComponent}
       </div>

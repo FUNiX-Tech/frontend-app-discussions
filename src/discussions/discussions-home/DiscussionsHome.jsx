@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import {
-  Route, Switch, useLocation, useRouteMatch, matchPath
+  Route, Switch, useLocation, useRouteMatch, matchPath ,Redirect
 } from 'react-router';
 
 // import Footer from '@edx/frontend-component-footer';
@@ -12,12 +12,12 @@ import { getConfig } from '@edx/frontend-platform';
 
 import { PostActionsBar } from '../../components';
 import { CourseTabsNavigation } from '../../components/NavigationBar';
-import { ALL_ROUTES, DiscussionProvider, Routes } from '../../data/constants';
+import { ALL_ROUTES, DiscussionProvider, RequestStatus, Routes } from '../../data/constants';
 import { DiscussionContext } from '../common/context';
 import {
   useCourseDiscussionData, useIsOnDesktop, useRedirectToThread, useShowLearnersTab, useSidebarVisible,
 } from '../data/hooks';
-import { selectDiscussionProvider } from '../data/selectors';
+import { selectDiscussionProvider, selectconfigLoadingStatus } from '../data/selectors';
 import { EmptyLearners, EmptyPosts, EmptyTopics } from '../empty-posts';
 import messages from '../messages';
 import { BreadcrumbMenu, LegacyBreadcrumbMenu, NavigationBar } from '../navigation';
@@ -29,7 +29,14 @@ import InformationBanner from './InformationsBanner';
 import HeaderLearning from '../../header/HeaderLearning';
 import Courses from '../courses/Courses';
 import EmptyCourses from '../empty-posts/EmptyCourses';
+
+import Dashboard from '../../dashboard/Dashboard';
+import ActionNavbar from '../../dashboard/ActionNavbar';
+
 import Footer from '../../footer/Footer';
+import { PostsView } from '../posts';
+import { TopicsView } from '../topics';
+
 
 
 
@@ -55,6 +62,7 @@ export default function DiscussionsHome() {
     category,
     learnerUsername,
   } = params;
+  
   const inContext = new URLSearchParams(location.search).get('inContext') !== null;
   // Display the content area if we are currently viewing/editing a post or creating one.
   const displayContentArea = postId || postEditorVisible || (learnerUsername && postId);
@@ -78,15 +86,10 @@ export default function DiscussionsHome() {
     }
   }, [path]);
 
-  const [show , setShow] = useState(false)
-  const [styling, setStyling] = useState('css-yeymkw')
-  const isShowChatGPT = useSelector(state =>state.header.isShowGlobalChatGPT)
-  
-  useEffect(() => {
-    setStyling(show ? (isShowChatGPT ? 'css-14u8e49' : 'css-jygthk') : (isShowChatGPT ? 'css-1mjee9h' : 'css-yeymkw'));
-  }, [show, isShowChatGPT]);
 
 
+  const configStatus = useSelector(selectconfigLoadingStatus);
+  const isCourseUrl = Boolean(matchPath(location.pathname, { path: Routes.COURSES.ALL }))
   return (
     <DiscussionContext.Provider value={{
       page,
@@ -101,23 +104,11 @@ export default function DiscussionsHome() {
       {/* {!inContext && <Header courseOrg={org} courseNumber={courseNumber} courseTitle={courseTitle} />} */}
       {!inContext && <HeaderLearning  courseOrg={org} courseNumber={courseNumber} courseTitle={courseTitle}/>}
       <main className="container-fluid d-flex flex-column p-0 w-100" id="main" tabIndex="-1">
-        <div className={styling}>
+        <div >
 
         {!inContext && <CourseTabsNavigation activeTab="discussion" courseId={courseId} />}
-        <div
-          className={classNames('header-action-bar', { 'shadow-none border-light-300 border-bottom': inContext })}
-          ref={postActionBarRef}
-        >
-          <div
-            className={classNames('d-flex flex-row justify-content-between navbar ', {
-              'pl-4 pr-2.5 py-1.5': inContext,
-            })}
-          >
-            {!inContext && <Route path={Routes.DISCUSSIONS.PATH} component={NavigationBar} />}
-            <PostActionsBar inContext={inContext} />
-          </div>
-          {isFeedbackBannerVisible && <InformationBanner />}
-          <BlackoutInformationBanner />
+        <div>
+          <ActionNavbar courseTitle={courseTitle} />
         </div>
         {!inContext && (
           <Route
@@ -126,29 +117,34 @@ export default function DiscussionsHome() {
           />
         )}
 
-        <div className="d-flex flex-row" >
-          <DiscussionSidebar displaySidebar={displaySidebar} postActionBarRef={postActionBarRef} />
-          {displayContentArea && <DiscussionContent />}
-          <Route path={Routes.COURSES.PATH} >
-              <div style={{minWidth:'29rem'}}>
-                  <Courses />
-              </div>
-         </Route>
-          {!displayContentArea && (
-            <Switch>
-              <Route path={Routes.TOPICS.PATH} component={EmptyTopics} />
+        <div >
+
+          <Switch>
+              <Route path={Routes.COMMENTS.PATH} >
+                    <div className='container'>
+                      <DiscussionContent />
+                    </div>
+              </Route>
               <Route
-                path={Routes.POSTS.MY_POSTS}
-                render={routeProps => <EmptyPosts {...routeProps} subTitleMessage={messages.emptyMyPosts} />}
-              />
-              <Route
-                path={[Routes.POSTS.PATH, Routes.POSTS.ALL_POSTS, Routes.LEARNERS.POSTS]}
-                render={routeProps => <EmptyPosts {...routeProps} subTitleMessage={messages.emptyAllPosts} />}
-              />
-              {isRedirectToLearners && <Route path={Routes.LEARNERS.PATH} component={EmptyLearners} /> }
-              <Route path={Routes.COURSES.PATH} component={EmptyCourses} />
-            </Switch>
+                    path={[Routes.POSTS.PATH, Routes.POSTS.ALL_POSTS, Routes.TOPICS.CATEGORY, Routes.POSTS.MY_POSTS]}
+                    component={PostsView}
+                  />
+
+              <Route path={Routes.DASHBOARD.PATH} >
+                    <Dashboard />
+              </Route>
+              {configStatus === RequestStatus.SUCCESSFUL && !isCourseUrl && (
+                <Redirect
+                    from={Routes.DISCUSSIONS.PATH}
+                    to={{
+                      ...location,
+                      pathname: Routes.POSTS.ALL_POSTS,
+                    }}
+            />
           )}
+
+          </Switch>
+         
         </div>
         </div>
       </main>

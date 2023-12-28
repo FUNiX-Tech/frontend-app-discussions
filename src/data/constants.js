@@ -142,6 +142,9 @@ export const Routes = {
   DISCUSSIONS: {
     PATH: BASE_PATH,
   },
+  DASHBOARD :{
+    PATH: `${BASE_PATH}/dashboard`
+  },
   LEARNERS: {
     PATH: `${BASE_PATH}/learners`,
     POSTS: `${BASE_PATH}/learners/:learnerUsername/posts(/:postId)?`,
@@ -209,6 +212,8 @@ export const PostsPages = {
   posts: `${BASE_PATH}/posts`,
   'my-posts': `${BASE_PATH}/my-posts`,
   learners: `${BASE_PATH}/learners/:learnerUsername/posts`,
+  dashboard : `${BASE_PATH}/dashboard`,
+
 };
 
 export const ALL_ROUTES = []
@@ -217,6 +222,8 @@ export const ALL_ROUTES = []
   .concat(Routes.TOPICS.PATH)
   .concat([Routes.POSTS.ALL_POSTS, Routes.POSTS.MY_POSTS])
   .concat([Routes.LEARNERS.POSTS, Routes.LEARNERS.PATH])
-  .concat([Routes.DISCUSSIONS.PATH]);
+  .concat([Routes.DISCUSSIONS.PATH])
+  .concat([Routes.DASHBOARD.PATH]);
+
 
 export const MAX_UPLOAD_FILE_SIZE = 1024;

@@ -222,7 +222,7 @@ header {
 }
 
 .min-content-height {
-  min-height: 80vh;
+  min-height: 70vh;
 }
 
 .header-action-bar {
@@ -556,6 +556,26 @@ html:root {
   }
 }
 
+
+
+.btn-primary-custom {
+  border: none;
+  background-color: #0086ff !important;
+  border-radius: 6px;
+  padding: 6px 16px;
+  color: white;
+  &:hover {
+    background-color: #0b70df !important;
+  }
+  span {
+    size: 13px;
+    line-height: 20px;
+    font-weight: 600;
+  }
+}
+
+
+
 // css course clone udacity
 
 html:root {
@@ -610,4 +630,41 @@ html:root {
   letter-spacing: normal;
   text-align: left;
   color: var(--color-text-default);
+
+}
+
+a{
+  &:hover{
+    text-decoration: none;
+  }
+}
+
+.container-btn-page{
+  display: flex;
+  gap:10px;
+  justify-content: flex-end;
+  align-items: center;
+  .btn-primary:focus::before {
+    border: none !important;
+  }
+  .btn-number-page{
+    // background-color: #007AE6;
+    border: none !important;
+    background-color: #fff;
+    color :#7B7B7B ;
+    &:active {
+      border: none !important;
+      background: none !important;
+      color :#7B7B7B !important;
+    }
+    &:disabled {
+      cursor:not-allowed;
+    }
+   
+    
+    
+  }
+  .active {
+    background-color: #007AE6 !important;
+  }
 }

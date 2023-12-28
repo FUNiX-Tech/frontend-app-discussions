@@ -136,6 +136,10 @@ const messages = defineMessages({
     defaultMessage: 'Thread not found',
     description: 'message to show on screen if the request thread is not found in course',
   },
+  titleCouse : {
+    id: 'discussion.title.course',
+    defaultMessage : "Course"
+  }
 });
 
 export default messages;

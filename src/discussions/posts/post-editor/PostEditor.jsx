@@ -43,7 +43,7 @@ import { selectThread } from '../data/selectors';
 import { createNewThread, fetchThread, updateExistingThread } from '../data/thunks';
 import messages from './messages';
 import { fetchAllCourseEnroll , fetchAllCourseTopics } from '../../courses/data/thunks';
-import { async } from 'regenerator-runtime';
+
 
 
 function DiscussionPostType({
@@ -84,6 +84,8 @@ DiscussionPostType.propTypes = {
 
 function PostEditor({
   editExisting,
+  course_
+
 }) {
   const intl = useIntl();
   const { authenticatedUser } = useContext(AppContext);
@@ -97,6 +99,7 @@ function PostEditor({
     courseId,
     postId,
   } = useParams();
+
   const topicId = useCurrentDiscussionTopic();
   const nonCoursewareTopics = useSelector(selectNonCoursewareTopics);
   const nonCoursewareIds = useSelector(selectNonCoursewareIds);
@@ -166,7 +169,8 @@ function PostEditor({
   // api course specialization
   const courseTitle = useSelector(state =>state.courseTabs.courseTitle)
   const [courseEnroll, setCourseEnroll] = useState([])
-  const [course_id , setCourse_id ] = useState(courseId)
+  
+  const [course_id , setCourse_id ] = useState(courseId || course_)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -238,9 +242,9 @@ useEffect(()=>{
     }
     hideEditor(resetForm);
 
-    if (course_id !== courseId){
-      window.location.href = `/discussions/${course_id}/posts`
-    }
+    // if (course_id !== courseId){
+    //   window.location.href = `/discussions/${course_id}/posts`
+    // }
   };
 
   useEffect(() => {
@@ -326,7 +330,7 @@ useEffect(()=>{
           >
          <InputSelect
             name="fruits"
-            label="Course"
+            label={intl.formatMessage(messages.titleCouse)}
             value={courseId}
             options={courseEnroll}
             onChange={(e)=>setCourse_id(e)}
