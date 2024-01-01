@@ -50,9 +50,11 @@ function Post({
     [ContentActions.CLOSE]: () => {
       if (post.closed) {
         dispatch(updateExistingThread(post.id, { closed: false }));
-      } else if (reasonCodesEnabled) {
-        showClosePostModal();
-      } else {
+      } 
+      // else if (reasonCodesEnabled) {
+      //   showClosePostModal();
+      // } 
+      else {
         dispatch(updateExistingThread(post.id, { closed: true }));
       }
     },
