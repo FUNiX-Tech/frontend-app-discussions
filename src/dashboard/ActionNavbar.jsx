@@ -12,6 +12,7 @@ import dashboardActiveIcon from './assets/dashboardActive.svg'
 import './dashboard.scss'
 import PostEditorCustom from "../discussions/posts/post-editor/PostEditorCustom";
 import { useSelector } from "react-redux";
+import { Search } from "../components";
 
 
 
@@ -67,7 +68,9 @@ const ActionNavbar = ({courseTitle})=>{
  
                 
                 </div>
+           
            </div>
+           <Search />
         </div>
     )
 }

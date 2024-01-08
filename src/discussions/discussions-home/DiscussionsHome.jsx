@@ -10,7 +10,7 @@ import {
 import { LearningHeader as Header } from '@edx/frontend-component-header';
 import { getConfig } from '@edx/frontend-platform';
 
-import { PostActionsBar } from '../../components';
+import { PostActionsBar, Search } from '../../components';
 import { CourseTabsNavigation } from '../../components/NavigationBar';
 import { ALL_ROUTES, DiscussionProvider, RequestStatus, Routes } from '../../data/constants';
 import { DiscussionContext } from '../common/context';
@@ -109,6 +109,7 @@ export default function DiscussionsHome() {
         {!inContext && <CourseTabsNavigation activeTab="discussion" courseId={courseId} />}
         <div>
           <ActionNavbar courseTitle={courseTitle} />
+          
         </div>
         {!inContext && (
           <Route

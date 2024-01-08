@@ -24,7 +24,6 @@ function ClosePostReasonModal({
   const [reasonCode, setReasonCode] = useState(null);
 
   const { postCloseReasons } = useSelector(selectModerationSettings);
-  console.log('=====postCloseReasons======', useSelector(state=>state))
   const onChange = event => {
     if (event.target.value) {
       setReasonCode(event.target.value);
