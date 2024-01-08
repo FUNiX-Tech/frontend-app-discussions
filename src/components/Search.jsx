@@ -4,7 +4,7 @@ import camelCase from 'lodash/camelCase';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Icon, SearchField } from '@edx/paragon';
+import { Icon, SearchField, messages } from '@edx/paragon';
 import { Search as SearchIcon } from '@edx/paragon/icons';
 
 import { DiscussionContext } from '../discussions/common/context';
@@ -12,8 +12,11 @@ import { setUsernameSearch } from '../discussions/learners/data';
 import { setSearchQuery } from '../discussions/posts/data';
 import postsMessages from '../discussions/posts/post-actions-bar/messages';
 import { setFilter as setTopicFilter } from '../discussions/topics/data/slices';
+import './search.scss'
+import iconClose from '../assets/close.svg'
+import iconSearch from '../assets/fe_search.svg'
 
-function Search({ intl }) {
+function Search({ intl, close }) {
   const [previousSearchValue, setPreviousSearchValue] = useState('');
   const dispatch = useDispatch();
   const { page } = useContext(DiscussionContext);
@@ -57,27 +60,50 @@ function Search({ intl }) {
     setPreviousSearchValue(query);
   };
 
-  useEffect(() => onClear(), [page]);
+  const handlerCloseSearch = ()=>{
+    close()
+    if (currentValue){
+      dispatch(setSearchQuery(''));
+    dispatch(setTopicFilter(''));
+    dispatch(setUsernameSearch(''));
+    }
+    
+   
+
+   
+    
+  }
+
+  // useEffect(() => onClear(), [page]);
   return (
     <>
-      <SearchField.Advanced
+   
+     <div className='row justify-content-center align-items-center'>
+     <div className='col'>
+     <SearchField.Advanced
         onClear={onClear}
         onChange={onChange}
         onSubmit={onSubmit}
         value={currentValue}
+        className='search-field'
       >
+        <span className="ml-2">
+          <img src={iconSearch} alt='search' />
+        </span>
         <SearchField.Label />
         <SearchField.Input
           style={{ paddingRight: '1rem' }}
-          placeholder={intl.formatMessage(postsMessages.search, { page: camelCase(page) })}
+          placeholder={intl.formatMessage(postsMessages.searchTitle)}
         />
-        <span className="mt-auto mb-auto mr-2.5 pointer-cursor-hover">
-          <Icon
-            src={SearchIcon}
-            onClick={() => onSubmit(searchValue)}
-          />
-        </span>
+
       </SearchField.Advanced>
+     </div>
+     <div className='col-0.5'>
+     <button className='btn' onClick={handlerCloseSearch}>
+        <span> <img src={iconClose} alt='close' /> </span>
+      </button>
+     </div>
+     </div>
     </>
   );
 }

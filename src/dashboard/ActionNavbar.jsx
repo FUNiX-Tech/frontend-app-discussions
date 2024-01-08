@@ -44,10 +44,13 @@ const ActionNavbar = ({courseTitle})=>{
     const handlerSearch = ()=>{
         setIsSearch(true)
     }
+    const hanlderCloseSearch = ()=>{
+        setIsSearch(false)
+    }
 
     return (
-        <div className="container py-4" style={{ maxWidth:'700px'}}>
-           <div className="d-flex justify-content-between" style={{height:'37px'}}>
+        <div className="container py-4" style={{ maxWidth:'700px', minHeight:'92px'}}>
+          {!isSearch ?  <div className="d-flex justify-content-between" style={{height:'37px'}}>
                 <div className="action-navbar-link">
                     <Link to={`/${courseId}/dashboard`}>
                         <img src ={url == `/${courseId}` ? dashboardActiveIcon  :  dashboardIcon} alt='dashboard' width='16px' height='16px' />
@@ -74,14 +77,10 @@ const ActionNavbar = ({courseTitle})=>{
                     <ModalLayer isOpen={isOpen} onClose={close}>
                         <PostEditorCustom onClose={handlerClose} />
                     </ModalLayer>
-                    </div> }
-                    
- 
-                
+                    </div> }        
                 </div>
            
-           </div>
-         {isSearch && <Search />}
+           </div> : !postId && <Search close={hanlderCloseSearch} />}
         </div>
     )
 }

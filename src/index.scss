@@ -206,6 +206,7 @@ header {
 #courseTabsNavigation {
   font-size: 18px;
   font-family: Inter, Helvetica Neue, Arial, sans-serif;
+  margin-bottom: 0px !important;
 
   // .container-xl {
   //   padding-left: 31px;
@@ -667,4 +668,11 @@ a{
   .active {
     background-color: #007AE6 !important;
   }
+}
+.text-no-result{
+  font-family: Roboto arial sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color : #2c3744
 }

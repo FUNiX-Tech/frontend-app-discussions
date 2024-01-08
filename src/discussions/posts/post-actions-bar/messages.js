@@ -21,6 +21,10 @@ const messages = defineMessages({
     }`,
     description: 'Placeholder text in search box',
   },
+  searchTitle: {
+    id: "discussions.posts.actionBar.searchTitle" , 
+    defaultMessage: "Search"
+  },
   searchInfo: {
     id: 'discussions.actionBar.searchInfo',
     defaultMessage: 'Showing {count} results for "{text}"',

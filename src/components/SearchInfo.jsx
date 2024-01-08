@@ -17,9 +17,12 @@ function SearchInfo({
   textSearchRewrite,
 }) {
   return (
-    <div className="d-flex flex-row border-bottom border-light-400">
-      <Icon src={Search} className="justify-content-start ml-3.5 mr-2 mb-2 mt-2.5" />
-      <Button variant="" size="inline" className="text-justify p-2">
+  <div className='container' style={{maxWidth:'700px'}}>
+        <div className="d-flex flex-row border-bottom border-light-400">
+          <span className='text-no-result'>
+            {intl.formatMessage(messages.searchInfo, { count, text })}
+          </span>
+      {/* <Button variant="" size="inline" className="text-justify p-2">
         {loadingStatus === RequestStatus.SUCCESSFUL && (
           textSearchRewrite ? intl.formatMessage(messages.searchRewriteInfo, {
             searchString: text,
@@ -29,11 +32,12 @@ function SearchInfo({
             : intl.formatMessage(messages.searchInfo, { count, text })
         )}
         {loadingStatus !== RequestStatus.SUCCESSFUL && intl.formatMessage(messages.searchInfoSearching)}
-      </Button>
-      <Button variant="link" size="inline" className="ml-auto mr-3" onClick={onClear} style={{ minWidth: '26%' }}>
+      </Button> */}
+      {/* <Button variant="link" size="inline" className="ml-auto mr-3" onClick={onClear} style={{ minWidth: '26%' }}>
         {intl.formatMessage(messages.clearSearch)}
-      </Button>
+      </Button> */}
     </div>
+  </div>
   );
 }
 

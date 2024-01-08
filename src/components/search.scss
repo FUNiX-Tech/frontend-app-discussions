@@ -1,0 +1,11 @@
+.search-field{
+    border-radius: 4px;
+    border: 1px solid #D7D7D7 !important;
+    &::before {
+        content: none !important;
+    }
+    &::after {
+        content:  none !important;
+    }
+    
+}
