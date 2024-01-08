@@ -13,12 +13,14 @@ import './dashboard.scss'
 import PostEditorCustom from "../discussions/posts/post-editor/PostEditorCustom";
 import { useSelector } from "react-redux";
 import { Search } from "../components";
+import iconSearch from '../../src/assets/fe_search.svg'
 
 
 
 const ActionNavbar = ({courseTitle})=>{
     const [isOpen, open, close] = useToggle(false);
     const [title , setTitle] = useState('')
+    const [isSearch, setIsSearch] = useState(false) 
     
     const { params, url } = useRouteMatch(ALL_ROUTES);
     const {
@@ -39,6 +41,10 @@ const ActionNavbar = ({courseTitle})=>{
         close()
     }
 
+    const handlerSearch = ()=>{
+        setIsSearch(true)
+    }
+
     return (
         <div className="container py-4" style={{ maxWidth:'700px'}}>
            <div className="d-flex justify-content-between" style={{height:'37px'}}>
@@ -56,21 +62,26 @@ const ActionNavbar = ({courseTitle})=>{
                     </Link> }
                 </div>
                 <div>
-                    {!postId && <>
+                    {!postId && <div>
+                        <button onClick={handlerSearch} className="btn">
+                                <span>
+                                    <img src={iconSearch} alt='search' />
+                                </span>
+                        </button>
                         <button className="btn-primary-custom " onClick={open}  >
                         <span>Tạo bài đăng</span>
                     </button>
                     <ModalLayer isOpen={isOpen} onClose={close}>
                         <PostEditorCustom onClose={handlerClose} />
                     </ModalLayer>
-                    </> }
+                    </div> }
                     
  
                 
                 </div>
            
            </div>
-           <Search />
+         {isSearch && <Search />}
         </div>
     )
 }

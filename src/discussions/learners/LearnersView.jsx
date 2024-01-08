@@ -60,14 +60,14 @@ function LearnersView({ intl }) {
     <div className="d-flex flex-column border-right border-light-400">
       {!usernameSearch && <LearnerFilterBar /> }
       <div className="border-bottom border-light-400" />
-      {/* {usernameSearch && (
+      {usernameSearch && (
         <SearchInfo
           text={usernameSearch}
           count={learners.length}
           loadingStatus={loadingStatus}
           onClear={() => dispatch(setUsernameSearch(''))}
         />
-      )} */}
+      )}
       <div className="list-group list-group-flush learner" role="list">
         {courseConfigLoadingStatus === RequestStatus.SUCCESSFUL && !learnersTabEnabled && (
         <Redirect

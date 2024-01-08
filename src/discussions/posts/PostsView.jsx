@@ -83,7 +83,7 @@ function PostsView() {
 
   return (
     <div className="discussion-posts d-flex flex-column h-100">
-      {/* {searchString && (
+      {searchString && (
         <SearchInfo
           count={resultsFound}
           text={searchString}
@@ -91,7 +91,7 @@ function PostsView() {
           onClear={() => dispatch(setSearchQuery(''))}
           textSearchRewrite={textSearchRewrite}
         />
-      )} */}
+      )}
       {/* <PostFilterBar /> */}
       {/* <div className="border-bottom border-light-400" /> */}
       <div className="list-group list-group-flush flex-fill" role="list" onKeyDown={e => handleKeyDown(e)}>

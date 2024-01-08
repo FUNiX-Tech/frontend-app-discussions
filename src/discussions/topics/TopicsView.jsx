@@ -108,14 +108,14 @@ function TopicsView() {
 
   return (
     <div className="discussion-topics d-flex flex-column h-100" data-testid="topics-view">
-      {/* {topicFilter && (
+      {topicFilter && (
         <SearchInfo
           text={topicFilter}
           count={filteredTopicsCount}
           loadingStatus={loadingStatus}
           onClear={() => dispatch(setFilter(''))}
         />
-      )} */}
+      )}
       <div className="list-group list-group-flush flex-fill" role="list" onKeyDown={e => handleKeyDown(e)}>
         <CourseWideTopics />
         {provider === DiscussionProvider.OPEN_EDX && <CoursewareTopics />}
