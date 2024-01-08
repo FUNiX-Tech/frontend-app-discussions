@@ -1,20 +1,21 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
-export const LOADING = 'loading';
-export const LOADED = 'loaded';
-export const FAILED = 'failed';
-export const DENIED = 'denied';
+export const LOADING = "loading";
+export const LOADED = "loaded";
+export const FAILED = "failed";
+export const DENIED = "denied";
 
 const slice = createSlice({
-  name: 'courseTabs',
+  name: "courseTabs",
   initialState: {
-    courseStatus: 'loading',
+    courseStatus: "loading",
     courseId: null,
     tabs: [],
     courseTitle: null,
     courseNumber: null,
     org: null,
+    courseInRun: null,
   },
   reducers: {
     fetchTabDenied: (state, { payload }) => {
@@ -38,6 +39,9 @@ const slice = createSlice({
       state.courseNumber = payload.courseNumber;
       state.org = payload.org;
     },
+    setCourseInRun: (state, { payload }) => {
+      state.courseInRun = payload;
+    },
   },
 });
 
@@ -46,6 +50,7 @@ export const {
   fetchTabFailure,
   fetchTabRequest,
   fetchTabSuccess,
+  setCourseInRun,
 } = slice.actions;
 
 export const courseTabsReducer = slice.reducer;
