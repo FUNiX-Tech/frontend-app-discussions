@@ -62,7 +62,7 @@ const ActionNavbar = ({courseTitle})=>{
 
                     {url.includes('posts') && <Link to={`/${courseId}/posts`}>
                         {postId ? <img src={rightIcon} alt="right" style={{padding:'0px'}} /> : <img src={vectorIcon} alt="vector" />}
-                        <span>{courseTitle}</span>
+                       {postId ? <span>...</span> :  <span>{courseTitle}</span>}
                     </Link>}
 
                     {postId && <Link to=''><img src={vectorIcon} alt="vector" />
