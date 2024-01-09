@@ -89,7 +89,7 @@ function ActionsDropdown({
         isOpen={isOpen}
         // placement={inContext ? 'left' : 'auto-start'}
         hasArrow
-        placement='auto-start'
+        placement='right'
       >
         <div
           className="bg-white p-1 shadow d-flex flex-column"
