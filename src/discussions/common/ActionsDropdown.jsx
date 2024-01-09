@@ -74,7 +74,7 @@ function ActionsDropdown({
     
     dispatch(resetReport())
   }
-// console.log('============', actions)
+console.log('============', actions)
   return (
     <>
       <IconButton
@@ -102,7 +102,7 @@ function ActionsDropdown({
         >
    
           {actions.map(action => {
-            if (action.id !== 'copy-link'){
+            if (action.id !== 'copy-link' && action.id !== "reopen"){
               return (
                 <div key={action.id}>
 
