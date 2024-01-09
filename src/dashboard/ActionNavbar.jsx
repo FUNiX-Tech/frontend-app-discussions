@@ -33,6 +33,7 @@ const ActionNavbar = ({courseTitle})=>{
         if (postId && threads[postId]){
             const post  = threads[postId] 
             setTitle(post.title ? post.title :'')
+            setIsSearch(false)
         }
     
     },[postId, threads])
