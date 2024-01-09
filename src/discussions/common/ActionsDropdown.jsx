@@ -79,6 +79,7 @@ function ActionsDropdown({
         iconAs={Icon}
         disabled={disabled}
         size="sm"
+        className='action-dropdown'
         ref={setTarget}
       />
       <ModalPopup
