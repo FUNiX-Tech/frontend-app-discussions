@@ -68,7 +68,7 @@ function Post({
   );
 
   return (
-    <div className="d-flex flex-column w-100 mw-100 border-top" data-testid={`post-${post.id}`}>
+    <div className="d-flex flex-column w-100 mw-100 card px-3 py-2" data-testid={`post-${post.id}`}>
  
       <DeleteConfirmation
         isOpen={isDeleting}

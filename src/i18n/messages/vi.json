@@ -12,7 +12,7 @@
     "discussions.comments.comment.visibility": "This post is visible to {group, select,\n         null {Everyone}\n         other {{group}}\n    }.",
     "discussions.comments.comment.postedTime": "{postType, select,\n      discussion {Discussion}\n      question {Question}\n      other {{postType}}\n    } posted {relativeTime} by",
     "discussions.comments.comment.commentTime": "Posted {relativeTime}",
-    "discussions.comments.comment.answer": "Answer",
+    "discussions.comments.comment.answer": "Câu trả lời tiêu biểu",
     "discussions.comments.comment.answeredlabel": "Marked as answered by",
     "discussions.comments.comment.endorsed": "Endorsed",
     "discussions.comments.comment.endorsedlabel": "Endorsed by",

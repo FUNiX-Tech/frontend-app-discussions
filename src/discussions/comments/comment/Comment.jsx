@@ -81,7 +81,7 @@ function Comment({
           }}
         />
         <EndorsedAlertBanner postType={postType} content={comment} />
-        <div className="d-flex flex-column p-4.5">
+        <div className="d-flex flex-column px-3 py-2">
           <AlertBanner content={comment} />
           <CommentHeader comment={comment} actionHandlers={actionHandlers} postType={postType} />
           {isEditing
@@ -133,7 +133,7 @@ function Comment({
               />
             ) : (
               <>
-                {(!isClosedPost && !inBlackoutDateRange(blackoutDateRange))
+                {/* {(!isClosedPost && !inBlackoutDateRange(blackoutDateRange))
                   && (
                     <Button
                       className="d-flex flex-grow mt-3 py-2 font-size-14"
@@ -145,7 +145,7 @@ function Comment({
                     >
                       {intl.formatMessage(messages.addComment)}
                     </Button>
-                  )}
+                  )} */}
               </>
 
             )

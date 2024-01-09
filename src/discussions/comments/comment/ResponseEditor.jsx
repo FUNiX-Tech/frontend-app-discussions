@@ -17,6 +17,9 @@ function ResponseEditor({
   postId,
   intl,
   addWrappingDiv,
+  showReponse,
+  handlerHideReponse
+  
 }) {
   const { inContext } = useContext(DiscussionContext);
   const [addingResponse, setAddingResponse] = useState(false);
@@ -27,28 +30,18 @@ function ResponseEditor({
 
   const blackoutDateRange = useSelector(selectBlackoutDate);
 
-  return addingResponse
+  return showReponse
     ? (
-      <div className={classNames({ 'bg-white p-4 mb-4 rounded': addWrappingDiv })}>
+      <div className='pt-3'>
         <CommentEditor
           comment={{ threadId: postId }}
           edit={false}
-          onCloseEditor={() => setAddingResponse(false)}
+          onCloseEditor={() => handlerHideReponse()}
         />
       </div>
     )
     : !inBlackoutDateRange(blackoutDateRange) && (
-      <div className={classNames({ 'mb-4': addWrappingDiv }, 'actions d-flex')}>
-        <Button
-          variant="primary"
-          className={classNames('px-2.5 py-2 font-size-14', { 'w-100': inContext })}
-          onClick={() => setAddingResponse(true)}
-          style={{
-            lineHeight: '20px',
-          }}
-        >
-          {intl.formatMessage(messages.addResponse)}
-        </Button>
+      <div className=''>
       </div>
     );
 }

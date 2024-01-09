@@ -12,6 +12,9 @@ import { commentShape } from '../comments/comment/proptypes';
 import messages from '../comments/messages';
 import AuthorLabel from './AuthorLabel';
 import timeLocale from './time-locale';
+import iconUnicon from '../../assets/Union.svg'
+
+
 
 function EndorsedAlertBanner({
   intl,
@@ -23,22 +26,19 @@ function EndorsedAlertBanner({
   const classes = isQuestion ? 'bg-success-500 text-white' : 'bg-dark-500 text-white';
   const iconClass = isQuestion ? CheckCircle : Verified;
 
+ 
   return (
     content.endorsed && (
       <Alert
         variant="plain"
-        className={`px-3 mb-0 py-10px align-items-center shadow-none ${classes}`}
+        className={`px-3 mb-0 py-10px align-items-center shadow-none container-answer ${classes}`}
         style={{ borderRadius: '0.375rem 0.375rem 0 0' }}
-        icon={iconClass}
+        // icon={iconClass}
       >
-        <div className="d-flex justify-content-between flex-wrap">
-          <strong className="lead">{intl.formatMessage(
-            isQuestion
-              ? messages.answer
-              : messages.endorsed,
-          )}
-          </strong>
-          <span className="d-flex align-items-center mr-1 flex-wrap">
+        <div className="d-flex flex-wrap mark-answer">
+          <img src={iconUnicon} alt='unicon' />
+          <span className="lead">{intl.formatMessage(messages.answer)}</span>
+          {/* <span className="d-flex align-items-center mr-1 flex-wrap">
             <span className="mr-1">
               {intl.formatMessage(
                 isQuestion
@@ -53,7 +53,7 @@ function EndorsedAlertBanner({
               alert={content.endorsed}
             />
             {intl.formatMessage(messages.time, { time: timeago.format(content.endorsedAt, 'time-locale') })}
-          </span>
+          </span> */}
         </div>
       </Alert>
     )

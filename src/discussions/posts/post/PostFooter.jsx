@@ -27,6 +27,8 @@ import messages from './messages';
 import { postShape } from './proptypes';
 import clockIcon from './assets/ph_clock-bold.svg'
 import commentIcon from './assets/comment.svg'
+import viewCommentIcon from '../../posts/assets/comment.svg'
+
 
 
 function PostFooter({
@@ -39,16 +41,26 @@ function PostFooter({
   const dispatch = useDispatch();
   const userHasModerationPrivileges = useSelector(selectUserHasModerationPrivileges);
   timeago.register('time-locale', timeLocale);
-  console.log('=====', post)
- 
+
+const handlerReponse = ()=>{
+  onShowComment()
+}
   return (
-    <div className="d-flex align-items-center">
+    <div className="d-flex align-items-center" style={{gap:'8px'}}>
       <LikeButton
         count={post.voteCount}
         onClick={() => dispatch(updateExistingThread(post.id, { voted: !post.voted }))}
         voted={post.voted}
         preview={preview}
       />
+      <div className='d-flex align-items-end' onClick={handlerReponse}>
+        <span>
+          <img src={viewCommentIcon} alt='comment' />
+        </span>
+          <span className='tag-filter'>
+          {post.commentCount -1}
+          </span>
+      </div>
       {/* <button onClick={onShowComment}>Xem them</button> */}
       {/* <IconButtonWithTooltip
         id={`follow-${post.id}-tooltip`}
@@ -107,10 +119,10 @@ function PostFooter({
           </>
         )}
         <div className='time-post '>
-          <span title={post.createdAt} className="text-gray-700">
+          {/* <span title={post.createdAt} className="text-gray-700">
             <img src={commentIcon} alt='comment' />
              <span> {timeago.format(post.updatedAt, 'time-locale')}</span>
-          </span>
+          </span> */}
           <span title={post.createdAt} className="text-gray-700">
           <img src={clockIcon} alt='comment' />
            <span> {timeago.format(post.createdAt, 'time-locale')}</span>

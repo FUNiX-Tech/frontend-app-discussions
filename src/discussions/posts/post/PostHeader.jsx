@@ -110,10 +110,7 @@ function PostHeader({
                   style={{height:'20px' , width:'20px'}}
                 />
                 <span>{post.author}</span>
-                  {post.pinned &&  <div><span className='tag-filter tag-pin'><i class="bi bi-pin-angle"></i></span></div>}
                   {post.closed &&  <div><span className='tag-filter  tag-close'>Đã đóng</span></div> }
-
-                  <div><span className='tag-filter tag-total'>Tổng quan</span></div>
                   {post.pinned && <div><span className='tag-filter tag-total'>Đang theo dõi</span></div>}
                 </div>
                 <div>

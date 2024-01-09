@@ -52,8 +52,8 @@ function CommentHeader({
           alt={comment.author}
           src={authorAvatars?.imageUrlSmall}
           style={{
-            width: '32px',
-            height: '32px',
+            width: '18px',
+            height: '18px',
           }}
         />
         <AuthorLabel

@@ -82,16 +82,16 @@ function DiscussionCommentsView({
 
   return (
     <>
-      {((hasMorePages && isLoading) || !isLoading)
+      {/* {((hasMorePages && isLoading) || !isLoading)
       && (
       <div className="mx-4 text-primary-700" role="heading" aria-level="2" style={{ lineHeight: '28px' }}>
         {endorsed === EndorsementStatus.ENDORSED
           ? intl.formatMessage(messages.endorsedResponseCount, { num: sortedComments.length })
           : intl.formatMessage(messages.responseCount, { num: sortedComments.length })}
       </div>
-      )}
+      )} */}
 
-      <div className="mx-4" role="list">
+      <div className="" role="list">
         {sortedComments.map(comment => (
           <Comment comment={comment} key={comment.id} postType={postType} isClosedPost={isClosed} />
         ))}
@@ -143,6 +143,9 @@ function CommentsView({ intl }) {
   const isOnDesktop = useIsOnDesktop();
   const handlerShowReponse = ()=>{
     setShowReponse(true)
+  }
+  const handlerHideReponse = ()=>{
+    setShowReponse(false)
   }
   const {
     courseId, learnerUsername, category, topicId, page, inContext,
@@ -199,7 +202,7 @@ function CommentsView({ intl }) {
       )}
       <div className='container' style={{maxWidth:'700px'}}>
         <Post post={thread} onShowComment={handlerShowReponse} />
-        {!thread.closed && <ResponseEditor postId={postId} /> }
+        {!thread.closed && <ResponseEditor postId={postId} showReponse={showReponse} handlerHideReponse={handlerHideReponse} /> }
 
 
         {thread.type === ThreadType.DISCUSSION && (
