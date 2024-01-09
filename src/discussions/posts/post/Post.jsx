@@ -51,9 +51,9 @@ function Post({
       if (post.closed) {
         dispatch(updateExistingThread(post.id, { closed: false }));
       } 
-      else if (reasonCodesEnabled) {
-        showClosePostModal();
-      } 
+      // else if (reasonCodesEnabled) {
+      //   showClosePostModal();
+      // } 
       else {
         dispatch(updateExistingThread(post.id, { closed: true }));
       }
@@ -66,7 +66,7 @@ function Post({
   const getTopicCategoryName = topicData => (
     topicData.usageKey ? getTopicSubsection(topicData.usageKey)?.displayName : topicData.categoryId
   );
-    console.log('=========', post)
+    // console.log('=========', post)
   return (
     <div className="d-flex flex-column w-100 mw-100 card px-3 py-2" data-testid={`post-${post.id}`}>
  

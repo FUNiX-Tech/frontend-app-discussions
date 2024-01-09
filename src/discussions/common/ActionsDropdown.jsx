@@ -17,7 +17,12 @@ import messages from '../messages';
 import { postShape } from '../posts/post/proptypes';
 import { inBlackoutDateRange, useActions } from '../utils';
 import { DiscussionContext } from './context';
-
+import iconEdit from '../../assets/edit.svg'
+import iconTrash from '../../assets/trash.svg'
+import iconReport from '../../assets/report.svg'
+import iconClose from '../../assets/closePost.svg'
+import iconUnpin from '../../assets/notPin.svg'
+import iconPin from '../../assets/ghim.svg'
 
 import { resetReport, setDetails, setType, addReports } from './data/slice';
 function ActionsDropdown({
@@ -69,7 +74,7 @@ function ActionsDropdown({
     
     dispatch(resetReport())
   }
-
+// console.log('============', actions)
   return (
     <>
       <IconButton
@@ -100,8 +105,7 @@ function ActionsDropdown({
             if (action.id !== 'copy-link'){
               return (
                 <div key={action.id}>
-                  {action.action === ContentActions.DELETE
-                  && <Dropdown.Divider />}
+
                  <Dropdown.Item
                     as={Button}
                     variant="tertiary"
@@ -117,7 +121,14 @@ function ActionsDropdown({
                     }}
                     className="d-flex justify-content-start py-1.5 mr-4"
                   >
-                    <Icon src={action.icon} className="mr-1" /> {intl.formatMessage(action.label)}
+                    {/* <Icon src={action.icon} className="mr-1" /> */}
+                    {action.id =='edit' && <img src={iconEdit} alt='edit' />}
+                    {action.id =='delete' && <img src={iconTrash} alt='remove' />}
+                    {action.id =="report" && <img src={iconReport} alt='report' />}
+                    {action.id =="close" && <img src={iconClose} alt='close' />}
+                    {action.id =="unpin" && <img src={iconUnpin} alt='unpin' />}
+                    {action.id =="pin" && <img src={iconPin} alt='pin' />}
+                    <span style={{color : `${action.id =='delete' ? '#D82C0D' : ''}`}}> {intl.formatMessage(action.label)}</span>
                   </Dropdown.Item>
                   
                 </div>
