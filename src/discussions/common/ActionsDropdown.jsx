@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,6 +36,7 @@ function ActionsDropdown({
   const actions = useActions(commentOrPost);
   const { inContext } = useContext(DiscussionContext);
   const handleActions = (action) => {
+
     const actionFunction = actionHandlers[action];
     if (actionFunction) {
       actionFunction();
@@ -74,7 +75,13 @@ function ActionsDropdown({
     
     dispatch(resetReport())
   }
-console.log('============', actions)
+// console.log('============', actions)
+const [isDelete , setIsDelete] = useState(false)
+useEffect(()=>{
+  if (isOpen){
+    setIsDelete(false)
+  }
+},[isOpen])
   return (
     <>
       <IconButton
@@ -100,12 +107,10 @@ console.log('============', actions)
           className="bg-white p-1 shadow d-flex flex-column"
           data-testid="actions-dropdown-modal-popup"
         >
-   
           {actions.map(action => {
-            if (action.id !== 'copy-link' && action.id !== "reopen"){
+            if (action.id !== 'copy-link' && action.id !== "reopen" && action.id !== 'delete'){
               return (
                 <div key={action.id}>
-
                  <Dropdown.Item
                     as={Button}
                     variant="tertiary"
@@ -123,7 +128,7 @@ console.log('============', actions)
                   >
                     {/* <Icon src={action.icon} className="mr-1" /> */}
                     {action.id =='edit' && <img src={iconEdit} alt='edit' />}
-                    {action.id =='delete' && <img src={iconTrash} alt='remove' />}
+                    {/* {action.id =='delete' && <img src={iconTrash} alt='remove' />} */}
                     {action.id =="report" && <img src={iconReport} alt='report' />}
                     {action.id =="close" && <img src={iconClose} alt='close' />}
                     {action.id =="unpin" && <img src={iconUnpin} alt='unpin' />}
@@ -131,10 +136,36 @@ console.log('============', actions)
                     <span style={{color : `${action.id =='delete' ? '#D82C0D' : ''}`}}> {intl.formatMessage(action.label)}</span>
                   </Dropdown.Item>
                   
+                
                 </div>
               )
             }
           })}
+            {!isDelete ? <div>
+              <Dropdown.Item 
+                      as={Button}
+                    variant="tertiary"
+                    size="inline" onClick={()=>setIsDelete(true)}
+                    className="d-flex justify-content-start py-1.5 mr-4" > 
+                      <img src={iconTrash} alt='remove' />
+                      <span style={{color : ` #D82C0D`}}> {intl.formatMessage(messages.deleteAction)}</span>
+                    </Dropdown.Item> 
+              </div>
+                    : 
+                    <div className='d-flex'>
+              <Dropdown.Item as={Button}
+                    variant="tertiary"
+                    size="inline" 
+                    onClick={()=>handleActions('delete')}>
+                      <span style={{color : ` #D82C0D`}}>Chắc chắc</span>
+                    </Dropdown.Item>
+              <Dropdown.Item  as={Button}
+                    variant="tertiary"
+                    size="inline"
+                    onClick={()=>setIsDelete(false)}
+                    >Không</Dropdown.Item>
+            </div>
+            }
         </div>
       </ModalPopup>
 

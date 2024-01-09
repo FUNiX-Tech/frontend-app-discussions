@@ -59,7 +59,7 @@ function Comment({
       await dispatch(editComment(comment.id, { endorsed: !comment.endorsed }, ContentActions.ENDORSE));
       await dispatch(fetchThread(comment.threadId, courseId));
     },
-    [ContentActions.DELETE]: showDeleteConfirmation,
+    [ContentActions.DELETE]: ()=>dispatch(removeThread(post.id)),
     [ContentActions.REPORT]: () => dispatch(editComment(comment.id, { flagged: !comment.abuseFlagged , report: reportSelector })),
   };
 

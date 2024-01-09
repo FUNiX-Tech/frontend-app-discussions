@@ -76,7 +76,7 @@ function PostLink({
     [ContentActions.EDIT_CONTENT]: () => history.push({
       pathname: `${url}/${post.id}/edit`,
     }),
-    [ContentActions.DELETE]: showDeleteConfirmation,
+    [ContentActions.DELETE]: ()=>dispatch(removeThread(post.id)),
     [ContentActions.CLOSE]: () => {
       if (post.closed) {
         dispatch(updateExistingThread(post.id, { closed: false }));

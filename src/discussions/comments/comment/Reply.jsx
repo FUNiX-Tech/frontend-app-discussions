@@ -38,7 +38,7 @@ function Reply({
       { endorsed: !reply.endorsed },
       ContentActions.ENDORSE,
     )),
-    [ContentActions.DELETE]: showDeleteConfirmation,
+    [ContentActions.DELETE]: ()=>dispatch(removeThread(post.id)),
     [ContentActions.REPORT]: () => dispatch(editComment(reply.id, { flagged: !reply.abuseFlagged ,  report: reportSelector})),
   };
   const authorAvatars = useSelector(selectAuthorAvatars(reply.author));

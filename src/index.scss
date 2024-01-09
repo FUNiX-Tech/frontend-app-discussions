@@ -722,11 +722,14 @@ a{
 
 .dropdown-item{
   
-  // &:focus {
-  //   background: none !important;
-  // }
+  &:focus {
+    background: none !important;
+  }
   &::before{
     content: none !important;
+  }
+  &:hover{
+    background: #f0eeed !important;
   }
 }
 
