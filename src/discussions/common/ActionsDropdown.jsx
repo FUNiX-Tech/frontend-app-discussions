@@ -23,6 +23,8 @@ import iconReport from '../../assets/report.svg'
 import iconClose from '../../assets/closePost.svg'
 import iconUnpin from '../../assets/notPin.svg'
 import iconPin from '../../assets/ghim.svg'
+import iconFollowing from '../../assets/following.svg'
+import iconUnfollwing from '../../assets/unfollowing.svg'
 
 import { resetReport, setDetails, setType, addReports } from './data/slice';
 function ActionsDropdown({
@@ -166,6 +168,21 @@ useEffect(()=>{
                     >Không</Dropdown.Item>
             </div>
             }
+            <Dropdown.Item as={Button}                    
+                   variant="tertiary"
+                   className="d-flex justify-content-start py-1.5 mr-4" 
+                    size="inline"  onClick={()=>{
+              close()
+              handleActions('following')
+            }} >
+               {commentOrPost.following ? <>
+                <img src={iconUnfollwing} alt='unfollowing' />
+                <span>Bỏ theo dõi</span>
+               </> : <>
+               <img src={iconFollowing} alt='following' />
+               <span>Theo dõi</span>
+                  </>}
+            </Dropdown.Item>
         </div>
       </ModalPopup>
 

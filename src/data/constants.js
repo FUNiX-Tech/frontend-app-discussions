@@ -55,6 +55,7 @@ export const ContentActions = {
   CHANGE_TOPIC: 'topic_id',
   CHANGE_TYPE: 'type',
   VOTE: 'voted',
+  FOLLOWING : 'following',
 };
 
 /**

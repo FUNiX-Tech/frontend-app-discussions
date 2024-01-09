@@ -716,7 +716,17 @@ a{
     border-radius: 5px !important;
     color:  #576F8A !important;
   }
-  
+  &:focus{
+    border: none !important;
+    border-radius: 5px !important;
+    box-shadow: none !important;
+  }
+  &::before {
+    content: none !important;
+  }
+  &::after{
+    content: none !important;
+  }
 
 }
 

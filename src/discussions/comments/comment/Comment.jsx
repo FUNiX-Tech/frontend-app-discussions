@@ -12,7 +12,7 @@ import { ContentActions } from '../../../data/constants';
 import { AlertBanner, DeleteConfirmation, EndorsedAlertBanner } from '../../common';
 import { DiscussionContext } from '../../common/context';
 import { selectBlackoutDate } from '../../data/selectors';
-import { fetchThread } from '../../posts/data/thunks';
+import { fetchThread, updateExistingThread } from '../../posts/data/thunks';
 import { inBlackoutDateRange } from '../../utils';
 import CommentIcons from '../comment-icons/CommentIcons';
 import { selectCommentCurrentPage, selectCommentHasMorePages, selectCommentResponses } from '../data/selectors';
@@ -54,6 +54,7 @@ function Comment({
   }, [comment.id]);
 
   const actionHandlers = {
+    [ContentActions.FOLLOWING] : ()=>dispatch(updateExistingThread(comment.id, {following: !comment.following})),
     [ContentActions.EDIT_CONTENT]: () => setEditing(true),
     [ContentActions.ENDORSE]: async () => {
       await dispatch(editComment(comment.id, { endorsed: !comment.endorsed }, ContentActions.ENDORSE));

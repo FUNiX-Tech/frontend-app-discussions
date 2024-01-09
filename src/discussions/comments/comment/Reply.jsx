@@ -32,6 +32,7 @@ function Reply({
     // add report 
     const reportSelector = useSelector(state=>state.report)
   const actionHandlers = {
+    [ContentActions.FOLLOWING] : ()=>dispatch(updateExistingThread(reply.id, {following: !reply.following})),
     [ContentActions.EDIT_CONTENT]: () => setEditing(true),
     [ContentActions.ENDORSE]: () => dispatch(editComment(
       reply.id,
