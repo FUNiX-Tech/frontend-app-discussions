@@ -715,7 +715,17 @@ a{
     background: #F1F2F3 !important;
     border-radius: 5px !important;
     color:  #576F8A !important;
-    ;
   }
+  
 
+}
+
+.dropdown-item{
+  
+  // &:focus {
+  //   background: none !important;
+  // }
+  &::before{
+    content: none !important;
+  }
 }

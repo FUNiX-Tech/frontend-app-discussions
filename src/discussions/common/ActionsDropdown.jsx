@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 import {
-  Button, Dropdown, Icon, IconButton, ModalPopup, useToggle,Modal, InputSelect , InputText
+  Button, Dropdown, Icon, IconButton, ModalPopup, useToggle,Modal, InputSelect , InputText , DropdownButton
 } from '@edx/paragon';
 import { MoreHoriz } from '@edx/paragon/icons';
 
@@ -82,40 +82,48 @@ function ActionsDropdown({
         className='action-dropdown'
         ref={setTarget}
       />
+
       <ModalPopup
         onClose={close}
         positionRef={target}
         isOpen={isOpen}
-        placement={inContext ? 'left' : 'auto-start'}
+        // placement={inContext ? 'left' : 'auto-start'}
+        hasArrow
+        placement='auto-start'
       >
         <div
           className="bg-white p-1 shadow d-flex flex-column"
           data-testid="actions-dropdown-modal-popup"
         >
-          {actions.map(action => (
-            <React.Fragment key={action.id}>
-              {action.action === ContentActions.DELETE
-              && <Dropdown.Divider />}
-             <Dropdown.Item
-                as={Button}
-                variant="tertiary"
-                size="inline"
-                // onClick={() => {
-                //   close();
-                //   handleActions(action);
-                // }}
-                onClick={() => {
-                  close();
-                  const actionHandler = action.id !== 'report' ? handleActions : handlerModalReport;
-                  actionHandler(action.action);
-                }}
-                className="d-flex justify-content-start py-1.5 mr-4"
-              >
-                <Icon src={action.icon} className="mr-1" /> {intl.formatMessage(action.label)}
-              </Dropdown.Item>
-              
-            </React.Fragment>
-          ))}
+   
+          {actions.map(action => {
+            if (action.id !== 'copy-link'){
+              return (
+                <div key={action.id}>
+                  {action.action === ContentActions.DELETE
+                  && <Dropdown.Divider />}
+                 <Dropdown.Item
+                    as={Button}
+                    variant="tertiary"
+                    size="inline"
+                    // onClick={() => {
+                    //   close();
+                    //   handleActions(action);
+                    // }}
+                    onClick={() => {
+                      close();
+                      const actionHandler = action.id !== 'report' ? handleActions : handlerModalReport;
+                      actionHandler(action.action);
+                    }}
+                    className="d-flex justify-content-start py-1.5 mr-4"
+                  >
+                    <Icon src={action.icon} className="mr-1" /> {intl.formatMessage(action.label)}
+                  </Dropdown.Item>
+                  
+                </div>
+              )
+            }
+          })}
         </div>
       </ModalPopup>
 
