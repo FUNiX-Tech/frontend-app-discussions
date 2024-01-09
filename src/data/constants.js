@@ -143,7 +143,7 @@ export const Routes = {
     PATH: BASE_PATH,
   },
   DASHBOARD :{
-    PATH: `${BASE_PATH}/dashboard`
+    PATH: `${BASE_PATH}/dashboard` 
   },
   LEARNERS: {
     PATH: `${BASE_PATH}/learners`,
@@ -163,6 +163,7 @@ export const Routes = {
     PATH: `${BASE_PATH}/topics/:topicId`,
     MY_POSTS: `${BASE_PATH}/my-posts(/:postId)?`,
     ALL_POSTS: `${BASE_PATH}/posts(/:postId)?`,
+    CREATE_POSTS : `${BASE_PATH}/create-post`,
     NEW_POST: [
       `${BASE_PATH}/topics/:topicId/posts/:postId`,
       `${BASE_PATH}/topics/:topicId`,
@@ -220,7 +221,7 @@ export const ALL_ROUTES = []
   .concat([Routes.TOPICS.CATEGORY_POST, Routes.TOPICS.CATEGORY])
   .concat(Routes.COMMENTS.PATH)
   .concat(Routes.TOPICS.PATH)
-  .concat([Routes.POSTS.ALL_POSTS, Routes.POSTS.MY_POSTS])
+  .concat([Routes.POSTS.ALL_POSTS, Routes.POSTS.MY_POSTS, Routes.POSTS.CREATE_POSTS])
   .concat([Routes.LEARNERS.POSTS, Routes.LEARNERS.PATH])
   .concat([Routes.DISCUSSIONS.PATH])
   .concat([Routes.DASHBOARD.PATH]);

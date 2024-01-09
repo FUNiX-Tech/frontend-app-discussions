@@ -8,6 +8,7 @@ import { injectIntl } from '@edx/frontend-platform/i18n';
 import { Routes } from '../../data/constants';
 import { CommentsView } from '../comments';
 import { PostEditor } from '../posts';
+import PostEditorCustom from '../posts/post-editor/PostEditorCustom';
 
 function DiscussionContent() {
   const postEditorVisible = useSelector((state) => state.threads.postEditorVisible);
@@ -22,7 +23,7 @@ function DiscussionContent() {
         ) : (
           <Switch>
             <Route path={Routes.POSTS.EDIT_POST}>
-              <PostEditor editExisting />
+              <PostEditorCustom editExisting />
             </Route>
             <Route path={Routes.COMMENTS.PATH}>
               <CommentsView />

@@ -36,6 +36,7 @@ import ActionNavbar from '../../dashboard/ActionNavbar';
 import Footer from '../../footer/Footer';
 import { PostsView } from '../posts';
 import { TopicsView } from '../topics';
+import PostEditorCustom from '../posts/post-editor/PostEditorCustom';
 
 
 
@@ -120,7 +121,8 @@ export default function DiscussionsHome() {
 
         <div >
 
-          <Switch>
+         <div className='container' style={{maxWidth:'700px', minHeight:'700px'}}>
+         <Switch>
               <Route path={Routes.COMMENTS.PATH} >
                     <div className='container'>
                       <DiscussionContent />
@@ -134,6 +136,10 @@ export default function DiscussionsHome() {
               <Route path={Routes.DASHBOARD.PATH} >
                     <Dashboard />
               </Route>
+              <Route path={Routes.POSTS.CREATE_POSTS} >
+                   <PostEditorCustom />
+                    
+              </Route>
               {configStatus === RequestStatus.SUCCESSFUL && !isCourseUrl && (
                 <Redirect
                     from={Routes.DISCUSSIONS.PATH}
@@ -144,7 +150,9 @@ export default function DiscussionsHome() {
             />
           )}
 
+
           </Switch>
+         </div>
          
         </div>
         </div>

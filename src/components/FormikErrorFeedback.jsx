@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { getIn, useFormikContext } from 'formik';
 
 import { Form, TransitionReplace } from '@edx/paragon';
+import iconWarning from '../assets/Warning.svg'
 
 function FormikErrorFeedback({ name }) {
   const {
@@ -12,13 +13,16 @@ function FormikErrorFeedback({ name }) {
   } = useFormikContext();
   const fieldTouched = getIn(touched, name);
   const fieldError = getIn(errors, name);
-
+  
   return (
     <TransitionReplace>
       {fieldTouched && fieldError
         ? (
-          <Form.Control.Feedback type="invalid" hasIcon={false} key={`${name}-error-feedback`}>
-            {fieldError}
+          <Form.Control.Feedback className='err-text' type="invalid" hasIcon={false} key={`${name}-error-feedback`}>
+            <span>
+              <img src={iconWarning} alt='warning' width="16px" height="16px"/>
+            </span>
+            <span> {fieldError}</span>
           </Form.Control.Feedback>
         )
         : (

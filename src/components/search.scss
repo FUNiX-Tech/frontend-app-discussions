@@ -9,3 +9,26 @@
     }
     
 }
+
+.container-editor {
+
+}
+
+.container-tooltip{
+    position: absolute;
+    z-index: 99;
+    left: -33%;
+    width: 184px;
+    background: #2C3744;
+    color :#D7D7D7;
+    border-radius: 4px;
+    padding: 5px 6px 5px 6px;
+    font-size: 12px;
+    height: 234px;
+    ul {
+       padding-left:20px;
+    }
+
+  
+}
+

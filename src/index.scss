@@ -575,6 +575,21 @@ html:root {
   }
 }
 
+.btn-primary-custom-outline {
+  background: none !important;
+  border: 1px solid #0086ff;
+  border-radius: 6px;
+  padding: 6px 16px;
+  &:hover {
+    background-color: #eff7ff !important;
+  }
+  span {
+    color: #0086ff;
+    line-height: 20px;
+    font-weight: 600;
+    size: 16px;
+  }
+}
 
 
 // css course clone udacity
@@ -675,4 +690,22 @@ a{
   font-size: 16px;
   line-height: 24px;
   color : #2c3744
+}
+
+.tox-tinymce{
+  min-height:380px !important ;
+}
+
+.err-text{
+  background: #FFF5F5;
+  margin-top: 10px;
+  display: flex;
+  padding: 0px 5px;
+  align-items: center;
+  gap: 5px;
+  span { 
+    font-size: 12px;
+    color :#D82C0D;
+  }
+
 }

@@ -1,0 +1,15 @@
+const TootlipText = ()=>{
+    
+
+    return <div>
+        <span>Phần nội dung nên là:</span>
+        <ul>
+            <li>Xác định mục tiêu viết là duy trì môi trường tích cực và xây dựng cộng đồng.</li>
+            <li>Sử dụng ngôn ngữ và cách diễn đạt phù hợp, tránh sử dụng từ ngữ gây xúc phạm hay thiếu tôn trọng.</li>
+            <li>Đảm bảo hình ảnh và video tuân theo quy tắc và không chứa nội dung không phù hợp.</li>
+        </ul>
+
+    </div>
+}
+
+export default TootlipText
