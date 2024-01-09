@@ -73,7 +73,7 @@ function CourseTabsNavigation({
                 ? `${getConfig().LMS_BASE_URL}${
                     courseInRun.courseRun.resumeUrl
                   }`
-                : "#";
+                : url;
               const href = index === 0 ? resumeUrl : url;
               return (
                 <a
