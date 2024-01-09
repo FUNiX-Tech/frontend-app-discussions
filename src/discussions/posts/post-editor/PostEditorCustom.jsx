@@ -46,9 +46,11 @@ import React, {
   import { useRouteMatch } from 'react-router-dom';
 import { ALL_ROUTES } from '../../../data/constants';
 import { history } from "@edx/frontend-platform";
+import { TootlipTextTitle } from '../../../components/TooltipText';
 
 const PostEditorCustom = ({editExisting, onClose})=>{
     const intl = useIntl();
+    const [showTooltip, setShowTooltip] = useState(false);
     const { authenticatedUser } = useContext(AppContext);
     const dispatch = useDispatch();
     const editorRef = useRef(null);
@@ -262,7 +264,7 @@ const PostEditorCustom = ({editExisting, onClose})=>{
   
     const postEditorId = `post-editor-${editExisting ? postId : 'new'}`;
   
-
+   
     return (
         <Formik
       enableReinitialize
@@ -280,35 +282,11 @@ const PostEditorCustom = ({editExisting, onClose})=>{
         resetForm,
       }) => (
         <Form className="post-form" onSubmit={handleSubmit}>
-          {/* <h3 className="mb-1">
-            {editExisting
-              ? intl.formatMessage(messages.editPostHeading)
-              : intl.formatMessage(messages.addPostHeading)}
-          </h3> */}
-         
-          {/* <div className="d-flex flex-row justify-content-between">
-            {canSelectCohort(values.topic) && (
-              <Form.Group className="w-100 ml-3 mb-0">
-                <Form.Control
-                  className="m-0"
-                  name="cohort"
-                  as="select"
-                  value={values.cohort}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-describedby="cohortAreaInput"
-                  floatingLabel={intl.formatMessage(messages.cohortVisibility)}
-                >
-                  <option value="default">{intl.formatMessage(messages.cohortVisibilityAllLearners)}</option>
-                  {cohorts.map(cohort => (
-                    <option key={cohort.id} value={cohort.id}>{cohort.name}</option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            )}
-          </div> */}
-         
-          <div className="d-flex flex-row mb-4 justify-content-between">
+         <div className="d-flex flex-row mb-4 justify-content-between">
+          <div className='container-editor position-relative w-100' >
+          {showTooltip && <div className='container-tooltip' style={{height:'112px'}}>
+              <TootlipTextTitle />
+            </div>}
             <Form.Group
               className="w-100 m-0"
               isInvalid={isFormikFieldInvalid('title', {
@@ -321,13 +299,20 @@ const PostEditorCustom = ({editExisting, onClose})=>{
                 name="title"
                 type="text"
                 onChange={handleChange}
-                onBlur={handleBlur}
+                onBlur={(e)=>{
+                  handleBlur(e)
+                  setShowTooltip(false)
+                }}
+                onFocus={(e)=>{
+                  setShowTooltip(true)
+                }}
                 aria-describedby="titleInput"
                 floatingLabel={intl.formatMessage(messages.postTitle)}
                 value={values.title}
               />
               <FormikErrorFeedback name="title" />
             </Form.Group>
+          </div>
             {canDisplayEditReason && (
               <Form.Group
                 className="w-100 ml-3 mb-0"

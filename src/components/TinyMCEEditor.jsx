@@ -66,7 +66,11 @@ const setup = (editor) => {
     setShowTooltip(true)
    
   });
-
+  editor.on('blur', () => {
+    setShowTooltip(false);
+  });
+  
+  
 };
 
 
@@ -111,7 +115,7 @@ const setup = (editor) => {
 
   return (
     <div className='container-editor position-relative'>
-    {/*  */}
+
      {showTooltip && props.isPost && <div className='container-tooltip'>
       <TootlipText />
     </div>}

@@ -1,3 +1,15 @@
+export const TootlipTextTitle = ()=>{
+    return <div>
+        <span>Một tựa đề hay sẽ nên là:</span>
+        <ul>
+            <li>Ngắn gọn và súc tích</li>
+            <li>Chứa Đựng Ý Tưởng Đặc Sắc</li>
+            <li>Tự Tin và Chân Thực</li>
+            <li>Tạo Nên Một Câu Chuyện</li>
+        </ul>
+    </div>
+}
+
 const TootlipText = ()=>{
     
 
