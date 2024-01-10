@@ -34,28 +34,19 @@ function CourseTabsNavigation({
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const url = `${getConfig().LMS_BASE_URL}/api/learner_home/init`;
-        const { data } = await getAuthenticatedHttpClient().get(url);
+        // const data = await fetchDashboard();
 
-        const lesson_url = window.location.href;
-
-        const regex = /course-v1:([^/]+)/;
-        const course_id = lesson_url.match(regex)[0];
-        const course = data.courses.find(
-          (course) => course.courseRun.courseId === course_id
-        );
-        if (course) {
-          dispatch(setCourseInRun(course));
-        }
+        const url = `${
+          getConfig().LMS_BASE_URL
+        }/api/course_home/outline/${courseId}`;
+        const response = await getAuthenticatedHttpClient().get(url);
+        dispatch(setCourseInRun(response.data.resume_course));
       } catch (error) {
         console.log(error);
       }
     };
     fetchCourse();
-    return () => {
-      fetchCourse();
-    };
-  }, [dispatch]);
+  }, []);
 
   return (
     <div
@@ -69,11 +60,7 @@ function CourseTabsNavigation({
             aria-label={intl.formatMessage(messages.courseMaterial)}
           >
             {tabs.map(({ url, title, slug }, index) => {
-              const resumeUrl = courseInRun?.courseRun.resumeUrl
-                ? `${getConfig().LMS_BASE_URL}${
-                    courseInRun.courseRun.resumeUrl
-                  }`
-                : url;
+              const resumeUrl = courseInRun ? courseInRun.url : url;
               const href = index === 0 ? resumeUrl : url;
               return (
                 <a
