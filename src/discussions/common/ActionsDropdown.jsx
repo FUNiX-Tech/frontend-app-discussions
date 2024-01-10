@@ -59,9 +59,9 @@ function ActionsDropdown({
   const blackoutDateRange = useSelector(selectBlackoutDate);
 
   // Find and remove edit action if in blackout date range.
-  // if (inBlackoutDateRange(blackoutDateRange) || !isUserCreated) {
-  //   actions.splice(actions.findIndex(action => action.id === 'edit'), 1);
-  // }
+  if (inBlackoutDateRange(blackoutDateRange)) {
+    actions.splice(actions.findIndex(action => action.id === 'edit'), 1);
+  }
  
 //   if (authenticatedUser.administrator ){
 //     actions.splice(actions.findIndex(action => action.id === 'report'), 1);
@@ -72,6 +72,7 @@ function ActionsDropdown({
 // console.log(actions);
 // console.log('===========', authenticatedUser)
 // console.log('===========isUserCreated=====', commentOrPost.author ,authenticatedUser.username)
+
   // model report 
   const [modelReport , setModalReport] = useState(false)
   const typeReport = [intl.formatMessage(messages.duplicationReport), intl.formatMessage(messages.inappropriateReport)]
@@ -104,6 +105,11 @@ useEffect(()=>{
     setIsDelete(false)
   }
 },[isOpen])
+
+if (isUserCreated){
+  actions.splice(actions.findIndex(action => action.id === 'report'), 1)
+}
+
   return (
     <>
       <IconButton
