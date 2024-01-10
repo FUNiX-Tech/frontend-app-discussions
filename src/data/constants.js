@@ -56,6 +56,7 @@ export const ContentActions = {
   CHANGE_TYPE: 'type',
   VOTE: 'voted',
   FOLLOWING : 'following',
+  BEST: 'best' ,
 };
 
 /**

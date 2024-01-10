@@ -73,6 +73,7 @@ function PostLink({
   const postURL = new URL(`${getConfig().PUBLIC_PATH}${post.courseId}/posts/${post.id}`, window.location.origin);
 
   const actionHandlers = {
+    [ContentActions.BEST] : ()=>dispatch(updateExistingThread(post.id , {best : !post.best})),
     [ContentActions.FOLLOWING] : ()=>dispatch(updateExistingThread(post.id, {following: !post.following})),
     [ContentActions.EDIT_CONTENT]: () => history.push({
       pathname: `${url}/${post.id}/edit`,
@@ -91,17 +92,18 @@ function PostLink({
     [ContentActions.PIN]: () => dispatch(updateExistingThread(post.id, { pinned: !post.pinned })),
     [ContentActions.REPORT]: () => dispatch(updateExistingThread(post.id, { flagged: !post.abuseFlagged , report:reportSelector})),
   };
-
+// console.log('==========', post.best)
 
   return (
     <>
    <div className=' card d-flex flex-column justify-content-around px-3 position-relative' style={{height:'174px'}}>
       <div className='d-flex align-items-center justify-content-between'>
         <div >
-          {post.hasEndorsed && <div className='tag-mark-answer '>
+
+          {post.best && <div className='tag-mark-answer '>
               <img src={iconUnion} alt='answer' width='16px' height='16px'/>
             </div>}
-          <div className='d-flex' style={{gap:'8px', marginLeft:`${post.hasEndorsed ? '58px' : '0px'}`}}>
+          <div className='d-flex' style={{gap:'8px', marginLeft:`${post.best ? '58px' : '0px'}`}}>
             {post.closed && <img src={iconClose} alt='close' />}
             {post.pinned && <img src={iconPin} alt='pin' width='16px' height='16px' />}
             <div><span className='tag-filter tag-total'>Tổng quan</span></div>

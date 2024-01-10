@@ -39,11 +39,12 @@ function ActionsDropdown({
   const [isOpen, open, close] = useToggle(false);
   const [target, setTarget] = useState(null);
   const actions = useActions(commentOrPost);
-  
+//  console.log('==========', commentOrPost)
   const authenticatedUser = getAuthenticatedUser();
 
   const isUserCreated = commentOrPost.author === authenticatedUser.username
   const handleActions = (action) => {
+
     const actionFunction = actionHandlers[action];
     if (actionFunction) {
       actionFunction();
@@ -132,6 +133,18 @@ useEffect(()=>{
           className="bg-white p-1 shadow d-flex flex-column"
           data-testid="actions-dropdown-modal-popup"
         >
+          {!commentOrPost.threadId && <Dropdown.Item  onClick={()=> {
+               close()
+            handleActions('best')}}>
+              
+           { authenticatedUser.administrator  && (!commentOrPost.best   ? <>
+            <img src={iconMarkAnswered} alt='mark_answered' />
+            <span>Chọn bài hay nhất</span>
+           </>  : <>
+           <img src={iconUMarkAnswered} alt='un_mark_answered' />
+           <span>Bỏ bài hay nhất</span>
+           </>)}
+          </Dropdown.Item> }
           {actions.map(action => {
             if (action.id !== 'copy-link' && action.id !== "reopen" && action.id !== 'delete'){
               return (

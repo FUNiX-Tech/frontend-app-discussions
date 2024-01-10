@@ -42,6 +42,7 @@ function Post({
   const postURL = new URL(`${getConfig().PUBLIC_PATH}${courseId}/posts/${post.id}`, window.location.origin);
 
   const actionHandlers = {
+   
     [ContentActions.FOLLOWING] : ()=>dispatch(updateExistingThread(post.id, {following: !post.following})),
     [ContentActions.EDIT_CONTENT]: () => history.push({
       ...location,
