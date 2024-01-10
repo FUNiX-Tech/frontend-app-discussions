@@ -36,6 +36,7 @@ function ActionsDropdown({
   const [isOpen, open, close] = useToggle(false);
   const [target, setTarget] = useState(null);
   const actions = useActions(commentOrPost);
+  console.log(commentOrPost)
   const { inContext } = useContext(DiscussionContext);
   const handleActions = (action) => {
 
@@ -168,7 +169,8 @@ useEffect(()=>{
                     >Không</Dropdown.Item>
             </div>
             }
-            <Dropdown.Item as={Button}                    
+            {commentOrPost.authorLabel !== 'Staff' && 
+             <Dropdown.Item as={Button}                    
                    variant="tertiary"
                    className="d-flex justify-content-start py-1.5 mr-4" 
                     size="inline"  onClick={()=>{
@@ -182,7 +184,8 @@ useEffect(()=>{
                <img src={iconFollowing} alt='following' />
                <span>Theo dõi</span>
                   </>}
-            </Dropdown.Item>
+            </Dropdown.Item> }
+           
         </div>
       </ModalPopup>
 

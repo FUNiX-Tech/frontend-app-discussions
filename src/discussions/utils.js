@@ -74,12 +74,12 @@ export function checkPermissions(content, action) {
  *    e.g. for {pinned:false} the action will show up if the content/post has post.pinned==false
  */
 export const ACTIONS_LIST = [
-  {
-    id: 'copy-link',
-    action: ContentActions.COPY_LINK,
-    icon: InsertLink,
-    label: messages.copyLink,
-  },
+  // {
+  //   id: 'copy-link',
+  //   action: ContentActions.COPY_LINK,
+  //   icon: InsertLink,
+  //   label: messages.copyLink,
+  // },
   {
     id: 'edit',
     action: ContentActions.EDIT_CONTENT,
