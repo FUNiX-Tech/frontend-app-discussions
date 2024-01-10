@@ -40,13 +40,8 @@ function ActionsDropdown({
   const [target, setTarget] = useState(null);
   const actions = useActions(commentOrPost);
   
-  // console.log('====useActions(commentOrPost)========', useActions(commentOrPost))
-  console.log('====actions=======', actions)
-  // console.log('=====commentOrPost=======', commentOrPost)
-  // const { inContext } = useContext(DiscussionContext);
   const authenticatedUser = getAuthenticatedUser();
-  // console.log(commentOrPost.author === authenticatedUser.username)
-  // console.log('========', authenticatedUser)
+
   const isUserCreated = commentOrPost.author === authenticatedUser.username
   const handleActions = (action) => {
     const actionFunction = actionHandlers[action];

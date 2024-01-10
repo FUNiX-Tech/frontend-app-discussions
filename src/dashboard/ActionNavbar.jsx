@@ -15,6 +15,8 @@ import { useSelector } from "react-redux";
 import { Search } from "../components";
 import iconSearch from '../../src/assets/fe_search.svg'
 import { history } from "@edx/frontend-platform";
+import PostFilterBar from "../discussions/posts/post-filter-bar/PostFilterBar";
+import PostFilterBarCustom from "../discussions/posts/post-filter-bar/PostFilterBarCustom";
 
 
 
@@ -23,7 +25,8 @@ const ActionNavbar = ({courseTitle})=>{
 
     const [title , setTitle] = useState('')
     const [isSearch, setIsSearch] = useState(false) 
-    
+    const [target, setTarget] = useState(null);
+
     const { params, url } = useRouteMatch(ALL_ROUTES);
     const {
         courseId,postId
@@ -53,9 +56,9 @@ const ActionNavbar = ({courseTitle})=>{
     }
 
     return (
-        <div className="container py-4" style={{ maxWidth:'700px', minHeight:'92px'}}>
-          {!isSearch ?  <div className="d-flex justify-content-between" style={{height:'37px'}}>
-                <div className="action-navbar-link">
+        <div    className="container py-4 position-relative" style={{ maxWidth:'700px', height:'92px'}}>
+          {!isSearch ?  <div ref={setTarget} className="d-flex justify-content-between">
+                <div className="action-navbar-link"  style={{height:'37px'}}>
                     <Link to={`/${courseId}/dashboard`}>
                         <img src ={url == `/${courseId}` ? dashboardActiveIcon  :  dashboardIcon} alt='dashboard' width='16px' height='16px' />
                     </Link>
@@ -68,29 +71,38 @@ const ActionNavbar = ({courseTitle})=>{
                     {postId && <Link to=''><img src={vectorIcon} alt="vector" />
                         <span>{title}</span>
                     </Link> }
-
+                    
                     {url.includes('create-post') && <Link to={`/${courseId}/posts`}>
                         {postId ? <img src={rightIcon} alt="right" style={{padding:'0px'}} /> : <img src={vectorIcon} alt="vector" />}
                         <span>Tạo thảo luận mới</span>
                     </Link>}
                 </div>
                 <div>
-                    {!postId && <div>
-                        <button onClick={handlerSearch} className="btn">
-                                <span>
-                                    <img src={iconSearch} alt='search' />
-                                </span>
+               
+                    {!postId && <div className="d-flex align-items-center">
+                      <div>
+                         {/* <PostFilterBar /> */}
+                         <PostFilterBarCustom target={target} />
+                      </div>
+                        <div>
+                            <button onClick={handlerSearch} className="btn">
+                                    <span>
+                                        <img src={iconSearch} alt='search' />
+                                    </span>
+                            </button>
+                        <button className="btn-primary-custom " onClick={handlerCreatePost}  >
+                            <span>Tạo bài đăng</span>
                         </button>
-                    <button className="btn-primary-custom " onClick={handlerCreatePost}  >
-                        <span>Tạo bài đăng</span>
-                    </button>
-                    {/* <ModalLayer isOpen={isOpen} onClose={close}>
-                        <PostEditorCustom onClose={handlerClose} />
-                    </ModalLayer> */}
+                    
+                        </div>
+
                     </div> }        
                 </div>
            
-           </div> : !postId && <Search close={hanlderCloseSearch} />}
+           </div> : !postId && <><Search close={hanlderCloseSearch} />
+                    </>}
+
+           
         </div>
     )
 }
