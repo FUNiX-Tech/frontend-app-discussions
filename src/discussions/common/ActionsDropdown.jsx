@@ -59,10 +59,13 @@ function ActionsDropdown({
   if (inBlackoutDateRange(blackoutDateRange) || !isUserCreated) {
     actions.splice(actions.findIndex(action => action.id === 'edit'), 1);
   }
-  if (authenticatedUser.administrator || isUserCreated){
+  if (authenticatedUser.administrator ){
     actions.splice(actions.findIndex(action => action.id === 'report'), 1);
   }
-  console.log('=========', commentOrPost)
+if (isUserCreated) {
+  actions.splice(actions.findIndex(action => action.id === 'report'), 1);
+}
+console.log(actions);
   // model report 
   const [modelReport , setModalReport] = useState(false)
   const typeReport = [intl.formatMessage(messages.duplicationReport), intl.formatMessage(messages.inappropriateReport)]
