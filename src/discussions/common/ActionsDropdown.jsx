@@ -59,10 +59,10 @@ function ActionsDropdown({
   if (inBlackoutDateRange(blackoutDateRange) || !isUserCreated) {
     actions.splice(actions.findIndex(action => action.id === 'edit'), 1);
   }
-  if (authenticatedUser.administrator){
+  if (authenticatedUser.administrator || isUserCreated){
     actions.splice(actions.findIndex(action => action.id === 'report'), 1);
   }
-  console.log('=========', actions)
+  console.log('=========', commentOrPost)
   // model report 
   const [modelReport , setModalReport] = useState(false)
   const typeReport = [intl.formatMessage(messages.duplicationReport), intl.formatMessage(messages.inappropriateReport)]
@@ -150,13 +150,11 @@ useEffect(()=>{
                     {action.id == "unanswer" || action.id == 'unendorse' && <img src={iconUMarkAnswered} alt='un_mark_answered' />}
                     <span style={{color : `${action.id =='delete' ? '#D82C0D' : ''}`}}> {intl.formatMessage(action.label)}</span>
                   </Dropdown.Item>
-                  
-                
                 </div>
               )
             }
           })}
-            {!isDelete ? <div>
+            {authenticatedUser.administrator && (!isDelete ? <div>
               <Dropdown.Item 
                       as={Button}
                     variant="tertiary"
@@ -179,8 +177,7 @@ useEffect(()=>{
                     size="inline"
                     onClick={()=>setIsDelete(false)}
                     >Không</Dropdown.Item>
-            </div>
-            }
+            </div>)}
             {!authenticatedUser.administrator  && 
              <Dropdown.Item as={Button}                    
                    variant="tertiary"
