@@ -17,6 +17,7 @@ import messages from '../messages';
 import { postShape } from '../posts/post/proptypes';
 import { inBlackoutDateRange, useActions } from '../utils';
 import { DiscussionContext } from './context';
+import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import iconEdit from '../../assets/edit.svg'
 import iconTrash from '../../assets/trash.svg'
 import iconReport from '../../assets/report.svg'
@@ -25,6 +26,8 @@ import iconUnpin from '../../assets/notPin.svg'
 import iconPin from '../../assets/ghim.svg'
 import iconFollowing from '../../assets/following.svg'
 import iconUnfollwing from '../../assets/unfollowing.svg'
+import iconUMarkAnswered from '../../assets/unMarkAnswered.svg'
+import iconMarkAnswered from '../../assets/markAnswered.svg'
 
 import { resetReport, setDetails, setType, addReports } from './data/slice';
 function ActionsDropdown({
@@ -36,8 +39,11 @@ function ActionsDropdown({
   const [isOpen, open, close] = useToggle(false);
   const [target, setTarget] = useState(null);
   const actions = useActions(commentOrPost);
-  console.log(commentOrPost)
-  const { inContext } = useContext(DiscussionContext);
+  // const { inContext } = useContext(DiscussionContext);
+  const authenticatedUser = getAuthenticatedUser();
+  // console.log(commentOrPost.author === authenticatedUser.username)
+  // console.log('========', authenticatedUser)
+  const isUserCreated = commentOrPost.author === authenticatedUser.username
   const handleActions = (action) => {
 
     const actionFunction = actionHandlers[action];
@@ -48,11 +54,15 @@ function ActionsDropdown({
     }
   };
   const blackoutDateRange = useSelector(selectBlackoutDate);
+
   // Find and remove edit action if in blackout date range.
-  if (inBlackoutDateRange(blackoutDateRange)) {
+  if (inBlackoutDateRange(blackoutDateRange) || !isUserCreated) {
     actions.splice(actions.findIndex(action => action.id === 'edit'), 1);
   }
-
+  if (authenticatedUser.administrator){
+    actions.splice(actions.findIndex(action => action.id === 'report'), 1);
+  }
+  console.log('=========', actions)
   // model report 
   const [modelReport , setModalReport] = useState(false)
   const typeReport = [intl.formatMessage(messages.duplicationReport), intl.formatMessage(messages.inappropriateReport)]
@@ -136,6 +146,8 @@ useEffect(()=>{
                     {action.id =="close" && <img src={iconClose} alt='close' />}
                     {action.id =="unpin" && <img src={iconUnpin} alt='unpin' />}
                     {action.id =="pin" && <img src={iconPin} alt='pin' />}
+                    {action.id == 'answer' && <img src={iconMarkAnswered} alt='mark_answered' />}
+                    {action.id == "unanswer" && <img src={iconUMarkAnswered} alt='un_mark_answered' />}
                     <span style={{color : `${action.id =='delete' ? '#D82C0D' : ''}`}}> {intl.formatMessage(action.label)}</span>
                   </Dropdown.Item>
                   
@@ -169,7 +181,7 @@ useEffect(()=>{
                     >Không</Dropdown.Item>
             </div>
             }
-            {commentOrPost.authorLabel !== 'Staff' && 
+            {!authenticatedUser.administrator  && 
              <Dropdown.Item as={Button}                    
                    variant="tertiary"
                    className="d-flex justify-content-start py-1.5 mr-4" 
