@@ -74,12 +74,12 @@ export function checkPermissions(content, action) {
  *    e.g. for {pinned:false} the action will show up if the content/post has post.pinned==false
  */
 export const ACTIONS_LIST = [
-  // {
-  //   id: 'copy-link',
-  //   action: ContentActions.COPY_LINK,
-  //   icon: InsertLink,
-  //   label: messages.copyLink,
-  // },
+  {
+    id: 'copy-link',
+    action: ContentActions.COPY_LINK,
+    icon: InsertLink,
+    label: messages.copyLink,
+  },
   {
     id: 'edit',
     action: ContentActions.EDIT_CONTENT,
@@ -185,12 +185,11 @@ export function useActions(content) {
         .every(condition => condition === true)
       : true
   );
+  console.log('========', ACTIONS_LIST.filter(({action,conditions = null}) => {
+    return checkPermissions(content, action) && checkConditions(content, conditions)
+  }))
 
   return ACTIONS_LIST.filter(({action,conditions = null}) => {
-    console.log('====action========', action)
-    console.log('======conditions======', conditions)
-    console.log('===checkPermissions===', checkPermissions(content, action))
-    console.log('===checkConditions===', checkConditions(content, conditions))
     return checkPermissions(content, action) && checkConditions(content, conditions)
   });
 }
