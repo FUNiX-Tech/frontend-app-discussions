@@ -187,6 +187,8 @@ export function useActions(content) {
   );
 
   return ACTIONS_LIST.filter(({action,conditions = null}) => {
+    console.log('====action========', action)
+    console.log('======conditions======', conditions)
     console.log('===checkPermissions===', checkPermissions(content, action))
     console.log('===checkConditions===', checkConditions(content, conditions))
     return checkPermissions(content, action) && checkConditions(content, conditions)
