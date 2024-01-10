@@ -40,7 +40,7 @@ function ActionsDropdown({
   const [target, setTarget] = useState(null);
   const actions = useActions(commentOrPost);
   
-  console.log('====useActions(commentOrPost)========', useActions(commentOrPost))
+  // console.log('====useActions(commentOrPost)========', useActions(commentOrPost))
   console.log('====actions=======', actions)
   // console.log('=====commentOrPost=======', commentOrPost)
   // const { inContext } = useContext(DiscussionContext);
@@ -59,9 +59,9 @@ function ActionsDropdown({
   const blackoutDateRange = useSelector(selectBlackoutDate);
 
   // Find and remove edit action if in blackout date range.
-  if (inBlackoutDateRange(blackoutDateRange) || !isUserCreated) {
-    actions.splice(actions.findIndex(action => action.id === 'edit'), 1);
-  }
+  // if (inBlackoutDateRange(blackoutDateRange) || !isUserCreated) {
+  //   actions.splice(actions.findIndex(action => action.id === 'edit'), 1);
+  // }
  
 //   if (authenticatedUser.administrator ){
 //     actions.splice(actions.findIndex(action => action.id === 'report'), 1);
