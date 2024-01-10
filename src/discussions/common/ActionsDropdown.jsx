@@ -66,6 +66,8 @@ if (isUserCreated) {
   actions.splice(actions.findIndex(action => action.id === 'report'), 1);
 }
 console.log(actions);
+console.log('===========', authenticatedUser)
+console.log('===========isUserCreated=====', isUserCreated)
   // model report 
   const [modelReport , setModalReport] = useState(false)
   const typeReport = [intl.formatMessage(messages.duplicationReport), intl.formatMessage(messages.inappropriateReport)]
