@@ -39,13 +39,16 @@ function ActionsDropdown({
   const [isOpen, open, close] = useToggle(false);
   const [target, setTarget] = useState(null);
   const actions = useActions(commentOrPost);
+  
+  // console.log('====useActions(commentOrPost)========', useActions(commentOrPost))
+  console.log('====actions=======', actions)
+  // console.log('=====commentOrPost=======', commentOrPost)
   // const { inContext } = useContext(DiscussionContext);
   const authenticatedUser = getAuthenticatedUser();
   // console.log(commentOrPost.author === authenticatedUser.username)
   // console.log('========', authenticatedUser)
   const isUserCreated = commentOrPost.author === authenticatedUser.username
   const handleActions = (action) => {
-
     const actionFunction = actionHandlers[action];
     if (actionFunction) {
       actionFunction();
@@ -56,18 +59,23 @@ function ActionsDropdown({
   const blackoutDateRange = useSelector(selectBlackoutDate);
 
   // Find and remove edit action if in blackout date range.
-  if (inBlackoutDateRange(blackoutDateRange) || !isUserCreated) {
+  if (inBlackoutDateRange(blackoutDateRange)) {
     actions.splice(actions.findIndex(action => action.id === 'edit'), 1);
   }
-  if (authenticatedUser.administrator ){
-    actions.splice(actions.findIndex(action => action.id === 'report'), 1);
+ 
+
+  if (isUserCreated || authenticatedUser.administrator  ){
+    actions.splice(actions.findIndex(action => action.id === 'report'), 1)
   }
-if (isUserCreated) {
-  actions.splice(actions.findIndex(action => action.id === 'report'), 1);
-}
-console.log(actions);
-console.log('===========', authenticatedUser)
-console.log('===========isUserCreated=====', isUserCreated)
+  if(!isUserCreated){
+    const indexOfEdit = actions.findIndex(action => action.id === 'edit');
+    if (indexOfEdit !== -1) {
+      actions.splice(indexOfEdit, 1);
+    }
+  }
+  
+
+
   // model report 
   const [modelReport , setModalReport] = useState(false)
   const typeReport = [intl.formatMessage(messages.duplicationReport), intl.formatMessage(messages.inappropriateReport)]
@@ -100,6 +108,10 @@ useEffect(()=>{
     setIsDelete(false)
   }
 },[isOpen])
+
+
+
+
   return (
     <>
       <IconButton
