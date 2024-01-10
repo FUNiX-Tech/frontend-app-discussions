@@ -39,8 +39,8 @@ function ActionsDropdown({
   const [isOpen, open, close] = useToggle(false);
   const [target, setTarget] = useState(null);
   const actions = useActions(commentOrPost);
-  console.log('============', actions)
-  console.log('=====commentOrPost=======', commentOrPost)
+  // console.log('============', actions)
+  // console.log('=====commentOrPost=======', commentOrPost)
   // const { inContext } = useContext(DiscussionContext);
   const authenticatedUser = getAuthenticatedUser();
   // console.log(commentOrPost.author === authenticatedUser.username)
@@ -62,12 +62,12 @@ function ActionsDropdown({
     actions.splice(actions.findIndex(action => action.id === 'edit'), 1);
   }
 
-  // if (authenticatedUser.administrator ){
-  //   actions.splice(actions.findIndex(action => action.id === 'report'), 1);
-  // }
-// if (isUserCreated) {
-//   actions.splice(actions.findIndex(action => action.id === 'report'), 1);
-// }
+  if (authenticatedUser.administrator ){
+    actions.splice(actions.findIndex(action => action.id === 'report'), 1);
+  }
+if (isUserCreated) {
+  actions.splice(actions.findIndex(action => action.id === 'report'), 1);
+}
 // console.log(actions);
 // console.log('===========', authenticatedUser)
 // console.log('===========isUserCreated=====', commentOrPost.author ,authenticatedUser.username)

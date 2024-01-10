@@ -186,12 +186,11 @@ export function useActions(content) {
       : true
   );
 
-  return ACTIONS_LIST.filter(
-    ({
-      action,
-      conditions = null,
-    }) => checkPermissions(content, action) && checkConditions(content, conditions),
-  );
+  return ACTIONS_LIST.filter(({action,conditions = null}) => {
+    console.log('===checkPermissions===', checkPermissions(content, action))
+    console.log('===checkConditions===', checkConditions(content, conditions))
+    return checkPermissions(content, action) && checkConditions(content, conditions)
+  });
 }
 
 export const formikCompatibleHandler = (formikHandler, name) => (value) => formikHandler({
