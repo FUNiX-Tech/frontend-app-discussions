@@ -40,7 +40,6 @@ function CourseTabsNavigation({
           getConfig().LMS_BASE_URL
         }/api/course_home/outline/${courseId}`;
         const response = await getAuthenticatedHttpClient().get(url);
-        console.log(response);
         dispatch(setCourseInRun(response.data.resume_course));
       } catch (error) {
         console.log(error);
