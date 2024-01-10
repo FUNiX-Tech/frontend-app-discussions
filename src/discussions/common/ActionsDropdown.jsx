@@ -41,6 +41,7 @@ function ActionsDropdown({
   const actions = useActions(commentOrPost);
   
   console.log('====useActions(commentOrPost)========', useActions(commentOrPost))
+  console.log('====actions=======', actions)
   // console.log('=====commentOrPost=======', commentOrPost)
   // const { inContext } = useContext(DiscussionContext);
   const authenticatedUser = getAuthenticatedUser();
@@ -48,7 +49,6 @@ function ActionsDropdown({
   // console.log('========', authenticatedUser)
   const isUserCreated = commentOrPost.author === authenticatedUser.username
   const handleActions = (action) => {
-
     const actionFunction = actionHandlers[action];
     if (actionFunction) {
       actionFunction();
@@ -62,7 +62,7 @@ function ActionsDropdown({
   if (inBlackoutDateRange(blackoutDateRange) || !isUserCreated) {
     actions.splice(actions.findIndex(action => action.id === 'edit'), 1);
   }
-  console.log('===========', actions)
+ 
 //   if (authenticatedUser.administrator ){
 //     actions.splice(actions.findIndex(action => action.id === 'report'), 1);
 //   }
