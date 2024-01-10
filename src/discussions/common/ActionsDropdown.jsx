@@ -62,12 +62,12 @@ function ActionsDropdown({
   if (authenticatedUser.administrator ){
     actions.splice(actions.findIndex(action => action.id === 'report'), 1);
   }
-if (isUserCreated) {
-  actions.splice(actions.findIndex(action => action.id === 'report'), 1);
-}
-console.log(actions);
+// if (isUserCreated) {
+//   actions.splice(actions.findIndex(action => action.id === 'report'), 1);
+// }
+// console.log(actions);
 console.log('===========', authenticatedUser)
-console.log('===========isUserCreated=====', isUserCreated)
+console.log('===========isUserCreated=====', commentOrPost.author ,authenticatedUser.username)
   // model report 
   const [modelReport , setModalReport] = useState(false)
   const typeReport = [intl.formatMessage(messages.duplicationReport), intl.formatMessage(messages.inappropriateReport)]
