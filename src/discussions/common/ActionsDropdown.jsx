@@ -106,9 +106,10 @@ useEffect(()=>{
   }
 },[isOpen])
 
-if (isUserCreated){
+if (isUserCreated || authenticatedUser.administrator  ){
   actions.splice(actions.findIndex(action => action.id === 'report'), 1)
 }
+if ()
 
   return (
     <>
