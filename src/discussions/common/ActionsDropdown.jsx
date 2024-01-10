@@ -146,8 +146,8 @@ useEffect(()=>{
                     {action.id =="close" && <img src={iconClose} alt='close' />}
                     {action.id =="unpin" && <img src={iconUnpin} alt='unpin' />}
                     {action.id =="pin" && <img src={iconPin} alt='pin' />}
-                    {action.id == 'answer' && <img src={iconMarkAnswered} alt='mark_answered' />}
-                    {action.id == "unanswer" && <img src={iconUMarkAnswered} alt='un_mark_answered' />}
+                    {action.id == 'answer' || action.id == 'endorse' && <img src={iconMarkAnswered} alt='mark_answered' />}
+                    {action.id == "unanswer" || action.id == 'unendorse' && <img src={iconUMarkAnswered} alt='un_mark_answered' />}
                     <span style={{color : `${action.id =='delete' ? '#D82C0D' : ''}`}}> {intl.formatMessage(action.label)}</span>
                   </Dropdown.Item>
                   
