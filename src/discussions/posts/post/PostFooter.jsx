@@ -128,7 +128,7 @@ const handlerReponse = ()=>{
            <span> {timeago.format(post.createdAt, 'time-locale')}</span>
           </span>
         </div>
-        {!preview && post.closed
+        {/* {!preview && post.closed
           && (
             <OverlayTrigger
               overlay={(
@@ -146,7 +146,7 @@ const handlerReponse = ()=>{
                 className="ml-3"
               />
             </OverlayTrigger>
-          )}
+          )} */}
       </div>
     </div>
   );

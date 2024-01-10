@@ -65,7 +65,7 @@ function CommentHeader({
       </div>
       <div className="d-flex align-items-center">
 
-        {actionIcons && (
+        {/* {actionIcons && (
         <span className="btn-icon btn-icon-sm mr-1 align-items-center">
           <Icon
             data-testid="check-icon"
@@ -79,7 +79,7 @@ function CommentHeader({
             size="sm"
           />
         </span>
-        )}
+        )} */}
 
         <ActionsDropdown
           commentOrPost={{
