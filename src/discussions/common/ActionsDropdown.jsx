@@ -39,7 +39,8 @@ function ActionsDropdown({
   const [isOpen, open, close] = useToggle(false);
   const [target, setTarget] = useState(null);
   const actions = useActions(commentOrPost);
-  // console.log('============', actions)
+  
+  console.log('============', useActions(commentOrPost))
   // console.log('=====commentOrPost=======', commentOrPost)
   // const { inContext } = useContext(DiscussionContext);
   const authenticatedUser = getAuthenticatedUser();
