@@ -14,6 +14,7 @@ import { useAlertBannerVisible } from '../../data/hooks';
 import { selectAuthorAvatars } from '../data/selectors';
 import messages from './messages';
 import { postShape } from './proptypes';
+import iconLock from '../../../assets/lock.svg'
 
 export function PostAvatar({
   post, authorLabel, fromPostLink, read,
@@ -110,15 +111,14 @@ function PostHeader({
                   style={{height:'20px' , width:'20px'}}
                 />
                 <span>{post.author}</span>
-                  {post.pinned &&  <div><span className='tag-filter tag-pin'><i class="bi bi-pin-angle"></i></span></div>}
-                  {post.closed &&  <div><span className='tag-filter  tag-close'>Đã đóng</span></div> }
-
-                  <div><span className='tag-filter tag-total'>Tổng quan</span></div>
+                  {post.closed &&  <div><span className='tag-filter '>
+                      <img src={iconLock} alt='lock' />
+                    </span></div> }
                   {post.pinned && <div><span className='tag-filter tag-total'>Đang theo dõi</span></div>}
                 </div>
                 <div>
                     {/* <PostActionsBar /> */}
-                    <ActionsDropdown commentOrPost={post} actionHandlers={actionHandlers}   />
+                    <ActionsDropdown viewPost commentOrPost={post} actionHandlers={actionHandlers}   />
                 </div>
             </div>
     </div>

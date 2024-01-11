@@ -150,9 +150,16 @@ function CommentEditor({
                 {intl.formatMessage(messages.commentError)}
               </Form.Control.Feedback>
             )}
-          <PostPreviewPane htmlNode={values.comment} />
-          <div className="d-flex py-2 justify-content-end">
-            <Button
+          {/* <PostPreviewPane htmlNode={values.comment} /> */}
+          <div className="d-flex py-2 justify-content-end" style={{gap:'10px'}}>
+          <button className="btn-primary-custom-outline"  onClick={() => handleCloseEditor(resetForm)}  >
+                        <span>Huỷ bỏ</span>
+               </button>
+
+             <button className="btn-primary-custom "  onClick={handleSubmit}  >
+             <span>Trả lời</span>
+               </button>
+            {/* <Button
               variant="outline-primary"
               onClick={() => handleCloseEditor(resetForm)}
             >
@@ -167,7 +174,7 @@ function CommentEditor({
               className="ml-2"
               variant="primary"
               onClick={handleSubmit}
-            />
+            /> */}
           </div>
         </Form>
       )}

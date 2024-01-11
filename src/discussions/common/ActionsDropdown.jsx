@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { logError } from '@edx/frontend-platform/logging';
 import {
-  Button, Dropdown, Icon, IconButton, ModalPopup, useToggle,Modal, InputSelect , InputText
+  Button, Dropdown, Icon, IconButton, ModalPopup, useToggle,Modal, InputSelect , InputText , DropdownButton
 } from '@edx/paragon';
 import { MoreHoriz } from '@edx/paragon/icons';
 
@@ -17,7 +17,17 @@ import messages from '../messages';
 import { postShape } from '../posts/post/proptypes';
 import { inBlackoutDateRange, useActions } from '../utils';
 import { DiscussionContext } from './context';
-
+import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
+import iconEdit from '../../assets/edit.svg'
+import iconTrash from '../../assets/trash.svg'
+import iconReport from '../../assets/report.svg'
+import iconClose from '../../assets/closePost.svg'
+import iconUnpin from '../../assets/notPin.svg'
+import iconPin from '../../assets/ghim.svg'
+import iconFollowing from '../../assets/following.svg'
+import iconUnfollwing from '../../assets/unfollowing.svg'
+import iconUMarkAnswered from '../../assets/unMarkAnswered.svg'
+import iconMarkAnswered from '../../assets/markAnswered.svg'
 
 import { resetReport, setDetails, setType, addReports } from './data/slice';
 function ActionsDropdown({
@@ -25,12 +35,17 @@ function ActionsDropdown({
   commentOrPost,
   disabled,
   actionHandlers,
+  viewPost
 }) {
   const [isOpen, open, close] = useToggle(false);
   const [target, setTarget] = useState(null);
   const actions = useActions(commentOrPost);
-  const { inContext } = useContext(DiscussionContext);
+//  console.log('==========', commentOrPost)
+  const authenticatedUser = getAuthenticatedUser();
+
+  const isUserCreated = commentOrPost.author === authenticatedUser.username
   const handleActions = (action) => {
+
     const actionFunction = actionHandlers[action];
     if (actionFunction) {
       actionFunction();
@@ -39,10 +54,24 @@ function ActionsDropdown({
     }
   };
   const blackoutDateRange = useSelector(selectBlackoutDate);
+
   // Find and remove edit action if in blackout date range.
   if (inBlackoutDateRange(blackoutDateRange)) {
     actions.splice(actions.findIndex(action => action.id === 'edit'), 1);
   }
+ 
+
+  if (isUserCreated || authenticatedUser.administrator  ){
+    actions.splice(actions.findIndex(action => action.id === 'report'), 1)
+  }
+  if(!isUserCreated){
+    const indexOfEdit = actions.findIndex(action => action.id === 'edit');
+    if (indexOfEdit !== -1) {
+      actions.splice(indexOfEdit, 1);
+    }
+  }
+  
+
 
   // model report 
   const [modelReport , setModalReport] = useState(false)
@@ -69,6 +98,16 @@ function ActionsDropdown({
     
     dispatch(resetReport())
   }
+// console.log('============', actions)
+const [isDelete , setIsDelete] = useState(false)
+useEffect(()=>{
+  if (isOpen){
+    setIsDelete(false)
+  }
+},[isOpen])
+
+
+
 
   return (
     <>
@@ -79,42 +118,109 @@ function ActionsDropdown({
         iconAs={Icon}
         disabled={disabled}
         size="sm"
+        className='action-dropdown'
         ref={setTarget}
       />
+
       <ModalPopup
         onClose={close}
         positionRef={target}
         isOpen={isOpen}
-        placement={inContext ? 'left' : 'auto-start'}
+        // placement={inContext ? 'left' : 'auto-start'}
+        hasArrow
+        placement='right'
       >
         <div
           className="bg-white p-1 shadow d-flex flex-column"
           data-testid="actions-dropdown-modal-popup"
         >
-          {actions.map(action => (
-            <React.Fragment key={action.id}>
-              {action.action === ContentActions.DELETE
-              && <Dropdown.Divider />}
-             <Dropdown.Item
-                as={Button}
-                variant="tertiary"
-                size="inline"
-                // onClick={() => {
-                //   close();
-                //   handleActions(action);
-                // }}
-                onClick={() => {
-                  close();
-                  const actionHandler = action.id !== 'report' ? handleActions : handlerModalReport;
-                  actionHandler(action.action);
-                }}
-                className="d-flex justify-content-start py-1.5 mr-4"
-              >
-                <Icon src={action.icon} className="mr-1" /> {intl.formatMessage(action.label)}
-              </Dropdown.Item>
+          {!commentOrPost.threadId && <Dropdown.Item  onClick={()=> {
+               close()
+            handleActions('best')}}>
               
-            </React.Fragment>
-          ))}
+           { authenticatedUser.administrator && !viewPost  && (!commentOrPost.best   ? <>
+            <img src={iconMarkAnswered} alt='mark_answered' />
+            <span>Chọn bài hay nhất</span>
+           </>  : <>
+           <img src={iconUMarkAnswered} alt='un_mark_answered' />
+           <span>Bỏ bài hay nhất</span>
+           </>)}
+          </Dropdown.Item> }
+          {actions.map(action => {
+            if (action.id !== 'copy-link' && action.id !== "reopen" && action.id !== 'delete'){
+              return (
+                <div key={action.id}>
+                 <Dropdown.Item
+                    as={Button}
+                    variant="tertiary"
+                    size="inline"
+                    // onClick={() => {
+                    //   close();
+                    //   handleActions(action);
+                    // }}
+                    onClick={() => {
+                      close();
+                      const actionHandler = action.id !== 'report' ? handleActions : handlerModalReport;
+                      actionHandler(action.action);
+                    }}
+                    className="d-flex justify-content-start py-1.5 mr-4"
+                  >
+                    {/* <Icon src={action.icon} className="mr-1" /> */}
+                    {action.id =='edit' && <img src={iconEdit} alt='edit' />}
+                    {/* {action.id =='delete' && <img src={iconTrash} alt='remove' />} */}
+                    {action.id =="report" && <img src={iconReport} alt='report' />}
+                    {action.id =="close" && <img src={iconClose} alt='close' />}
+                    {action.id =="unpin" && <img src={iconUnpin} alt='unpin' />}
+                    {action.id =="pin" && <img src={iconPin} alt='pin' />}
+                    {action.id == 'answer' || action.id == 'endorse' && <img src={iconMarkAnswered} alt='mark_answered' />}
+                    {action.id == "unanswer" || action.id == 'unendorse' && <img src={iconUMarkAnswered} alt='un_mark_answered' />}
+                    <span style={{color : `${action.id =='delete' ? '#D82C0D' : ''}`}}> {intl.formatMessage(action.label)}</span>
+                  </Dropdown.Item>
+                </div>
+              )
+            }
+          })}
+            {authenticatedUser.administrator && (!isDelete ? <div>
+              <Dropdown.Item 
+                      as={Button}
+                    variant="tertiary"
+                    size="inline" onClick={()=>setIsDelete(true)}
+                    className="d-flex justify-content-start py-1.5 mr-4" > 
+                      <img src={iconTrash} alt='remove' />
+                      <span style={{color : ` #D82C0D`}}> {intl.formatMessage(messages.deleteAction)}</span>
+                    </Dropdown.Item> 
+              </div>
+                    : 
+                    <div className='d-flex'>
+              <Dropdown.Item as={Button}
+                    variant="tertiary"
+                    size="inline" 
+                    onClick={()=>handleActions('delete')}>
+                      <span style={{color : ` #D82C0D`}}>Chắc chắc</span>
+                    </Dropdown.Item>
+              <Dropdown.Item  as={Button}
+                    variant="tertiary"
+                    size="inline"
+                    onClick={()=>setIsDelete(false)}
+                    >Không</Dropdown.Item>
+            </div>)}
+            {!authenticatedUser.administrator  && 
+             <Dropdown.Item as={Button}                    
+                   variant="tertiary"
+                   className="d-flex justify-content-start py-1.5 mr-4" 
+                    size="inline"  onClick={()=>{
+              close()
+              handleActions('following')
+            }} >
+               {commentOrPost.following ? <>
+                <img src={iconUnfollwing} alt='unfollowing' />
+                <span>Bỏ theo dõi</span>
+               </> : <>
+               <img src={iconFollowing} alt='following' />
+               <span>Theo dõi</span>
+                  </>}
+            </Dropdown.Item> }
+           
         </div>
       </ModalPopup>
 
@@ -157,6 +263,7 @@ ActionsDropdown.propTypes = {
 
 ActionsDropdown.defaultProps = {
   disabled: false,
+  viewPost : false
 };
 
 export default injectIntl(ActionsDropdown);

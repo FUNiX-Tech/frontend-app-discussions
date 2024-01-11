@@ -9,6 +9,7 @@ import { injectIntl } from '@edx/frontend-platform/i18n';
 import timeLocale from '../../common/time-locale';
 import LikeButton from '../../posts/post/LikeButton';
 import { editComment } from '../data/thunks';
+import iconClock from '../../posts/post/assets/ph_clock-bold.svg'
 
 function CommentIcons({
   comment,
@@ -24,8 +25,11 @@ function CommentIcons({
         onClick={handleLike}
         voted={comment.voted}
       />
-      <div className="d-flex flex-fill text-gray-500 justify-content-end" title={comment.createdAt}>
-        {timeago.format(comment.createdAt, 'time-locale')}
+      <div className="d-flex flex-fill text-gray-500 justify-content-end time-post" title={comment.createdAt}>
+        <span title={comment.createdAt} className="">
+          <img src={iconClock} alt='clock' />
+           <span> {timeago.format(comment.createdAt, 'time-locale')}</span>
+        </span>
       </div>
     </div>
   );

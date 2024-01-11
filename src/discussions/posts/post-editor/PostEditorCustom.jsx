@@ -13,7 +13,7 @@ import React, {
   import { useIntl } from '@edx/frontend-platform/i18n';
   import { AppContext } from '@edx/frontend-platform/react';
   import {
-    Button, Card, Form, Spinner, StatefulButton, InputSelect
+    Button, Card, Form, Spinner, StatefulButton, InputSelect, OverlayTrigger, Tooltip
   } from '@edx/paragon';
   import { Help, Post } from '@edx/paragon/icons';
   
@@ -45,9 +45,12 @@ import React, {
   import { fetchAllCourseEnroll , fetchAllCourseTopics } from '../../courses/data/thunks';
   import { useRouteMatch } from 'react-router-dom';
 import { ALL_ROUTES } from '../../../data/constants';
+import { history } from "@edx/frontend-platform";
+import { TootlipTextTitle } from '../../../components/TooltipText';
 
 const PostEditorCustom = ({editExisting, onClose})=>{
     const intl = useIntl();
+    const [showTooltip, setShowTooltip] = useState(false);
     const { authenticatedUser } = useContext(AppContext);
     const dispatch = useDispatch();
     const editorRef = useRef(null);
@@ -261,7 +264,7 @@ const PostEditorCustom = ({editExisting, onClose})=>{
   
     const postEditorId = `post-editor-${editExisting ? postId : 'new'}`;
   
-
+   
     return (
         <Formik
       enableReinitialize
@@ -278,81 +281,12 @@ const PostEditorCustom = ({editExisting, onClose})=>{
         handleChange,
         resetForm,
       }) => (
-        <Form className="m-4 card p-4 post-form" onSubmit={handleSubmit}>
-          <h3 className="mb-3">
-            {editExisting
-              ? intl.formatMessage(messages.editPostHeading)
-              : intl.formatMessage(messages.addPostHeading)}
-          </h3>
-          <Form.RadioSet
-            name="postType"
-            className="d-flex flex-row flex-wrap"
-            value={values.postType}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            aria-label={intl.formatMessage(messages.postTitle)}
-          >
-         <InputSelect
-            name="course"
-            label={intl.formatMessage(messages.titleCouse)}
-            value={courseId}
-            options={courseEnroll}
-            onChange={(e)=>setCourse_id(e)}
-          />
-          </Form.RadioSet>
-          <div className="d-flex flex-row my-4.5 justify-content-between">
-            <Form.Group className="w-100 m-0">
-              <Form.Control
-                className="m-0"
-                name="topic"
-                as="select"
-                value={values.topic}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                aria-describedby="topicAreaInput"
-                floatingLabel={intl.formatMessage(messages.topicArea)}
-                disabled={inContext}
-              >
-                {nonCoursewareTopicsNew?.map(topic => (
-                  <option
-                    key={topic.id}
-                    value={topic.id}
-                  >{topic.name || intl.formatMessage(messages.unnamedSubTopics)}
-                  </option>
-                ))}
-                {coursewareTopicsNew?.map(categoryObj => (
-                  <optgroup label={categoryObj.name || intl.formatMessage(messages.unnamedTopics)} key={categoryObj.id}>
-                    {categoryObj.topics?.map(subtopic => (
-                      <option key={subtopic.id} value={subtopic.id}>
-                        {subtopic.name || intl.formatMessage(messages.unnamedSubTopics)}
-                      </option>
-                    ))}
-                  </optgroup>
-                ))}
-              </Form.Control>
-            </Form.Group>
-            {canSelectCohort(values.topic) && (
-              <Form.Group className="w-100 ml-3 mb-0">
-                <Form.Control
-                  className="m-0"
-                  name="cohort"
-                  as="select"
-                  value={values.cohort}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  aria-describedby="cohortAreaInput"
-                  floatingLabel={intl.formatMessage(messages.cohortVisibility)}
-                >
-                  <option value="default">{intl.formatMessage(messages.cohortVisibilityAllLearners)}</option>
-                  {cohorts.map(cohort => (
-                    <option key={cohort.id} value={cohort.id}>{cohort.name}</option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            )}
-          </div>
-         
-          <div className="d-flex flex-row my-4.5 justify-content-between">
+        <Form className="post-form" onSubmit={handleSubmit}>
+         <div className="d-flex flex-row mb-4 justify-content-between">
+          <div className='container-editor position-relative w-100' >
+          {showTooltip && <div className='container-tooltip' style={{height:'112px'}}>
+              <TootlipTextTitle />
+            </div>}
             <Form.Group
               className="w-100 m-0"
               isInvalid={isFormikFieldInvalid('title', {
@@ -365,13 +299,20 @@ const PostEditorCustom = ({editExisting, onClose})=>{
                 name="title"
                 type="text"
                 onChange={handleChange}
-                onBlur={handleBlur}
+                onBlur={(e)=>{
+                  handleBlur(e)
+                  setShowTooltip(false)
+                }}
+                onFocus={(e)=>{
+                  setShowTooltip(true)
+                }}
                 aria-describedby="titleInput"
                 floatingLabel={intl.formatMessage(messages.postTitle)}
                 value={values.title}
               />
               <FormikErrorFeedback name="title" />
             </Form.Group>
+          </div>
             {canDisplayEditReason && (
               <Form.Group
                 className="w-100 ml-3 mb-0"
@@ -400,7 +341,8 @@ const PostEditorCustom = ({editExisting, onClose})=>{
             )}
           </div>
           <div className="mb-2">
-            <TinyMCEEditor
+
+    <TinyMCEEditor
               onInit={
                 /* istanbul ignore next: TinyMCE is mocked so this cannot be easily tested */
                 (_, editor) => {
@@ -411,13 +353,15 @@ const PostEditorCustom = ({editExisting, onClose})=>{
               value={values.comment}
               onEditorChange={formikCompatibleHandler(handleChange, 'comment')}
               onBlur={formikCompatibleHandler(handleBlur, 'comment')}
+              isPost
             />
+            
             <FormikErrorFeedback name="comment" />
           </div>
 
-          <PostPreviewPane htmlNode={values.comment} isPost editExisting={editExisting} />
+          {/* <PostPreviewPane htmlNode={values.comment} isPost editExisting={editExisting} /> */}
 
-          <div className="d-flex flex-row mt-n4.5 w-75 text-primary">
+          {/* <div className="d-flex flex-row mt-n4.5 w-75 text-primary">
             {!editExisting && (
               <>
                 <Form.Group>
@@ -445,16 +389,16 @@ const PostEditorCustom = ({editExisting, onClose})=>{
                 )}
               </>
             )}
-          </div>
+          </div> */}
 
-          <div className="d-flex justify-content-end mt-2.5">
+          <div className="d-flex justify-content-end mt-2.5" style={{gap:'10px'}}>
             {/* <Button
               variant="outline-primary"
               onClick={() => hideEditor(resetForm)}
             >
               {intl.formatMessage(messages.cancel)}
             </Button> */}
-            <StatefulButton
+            {/* <StatefulButton
               labels={{
                 default: intl.formatMessage(messages.submit),
                 pending: intl.formatMessage(messages.submitting),
@@ -463,7 +407,14 @@ const PostEditorCustom = ({editExisting, onClose})=>{
               className="ml-2"
               variant="primary"
               onClick={handleSubmit}
-            />
+            /> */}
+              <button className="btn-primary-custom-outline"  onClick={() =>   history.push(`/${courseId}/posts`)}  >
+                        <span>Huỷ bỏ</span>
+               </button>
+
+             <button className="btn-primary-custom " onClick={handleSubmit}  >
+                      {editExisting ? <span>Chỉnh sửa</span> : <span>Tạo bài</span>}  
+               </button>
           </div>
         </Form>
       )

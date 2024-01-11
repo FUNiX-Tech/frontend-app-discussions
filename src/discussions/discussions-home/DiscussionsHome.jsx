@@ -10,7 +10,7 @@ import {
 import { LearningHeader as Header } from '@edx/frontend-component-header';
 import { getConfig } from '@edx/frontend-platform';
 
-import { PostActionsBar } from '../../components';
+import { PostActionsBar, Search } from '../../components';
 import { CourseTabsNavigation } from '../../components/NavigationBar';
 import { ALL_ROUTES, DiscussionProvider, RequestStatus, Routes } from '../../data/constants';
 import { DiscussionContext } from '../common/context';
@@ -36,6 +36,7 @@ import ActionNavbar from '../../dashboard/ActionNavbar';
 import Footer from '../../footer/Footer';
 import { PostsView } from '../posts';
 import { TopicsView } from '../topics';
+import PostEditorCustom from '../posts/post-editor/PostEditorCustom';
 
 
 
@@ -109,6 +110,7 @@ export default function DiscussionsHome() {
         {!inContext && <CourseTabsNavigation activeTab="discussion" courseId={courseId} />}
         <div>
           <ActionNavbar courseTitle={courseTitle} />
+          
         </div>
         {!inContext && (
           <Route
@@ -119,7 +121,8 @@ export default function DiscussionsHome() {
 
         <div >
 
-          <Switch>
+         <div className='container' style={{maxWidth:'700px', minHeight:'700px'}}>
+         <Switch>
               <Route path={Routes.COMMENTS.PATH} >
                     <div className='container'>
                       <DiscussionContent />
@@ -133,6 +136,10 @@ export default function DiscussionsHome() {
               <Route path={Routes.DASHBOARD.PATH} >
                     <Dashboard />
               </Route>
+              <Route path={Routes.POSTS.CREATE_POSTS} >
+                   <PostEditorCustom />
+                    
+              </Route>
               {configStatus === RequestStatus.SUCCESSFUL && !isCourseUrl && (
                 <Redirect
                     from={Routes.DISCUSSIONS.PATH}
@@ -143,7 +150,9 @@ export default function DiscussionsHome() {
             />
           )}
 
+
           </Switch>
+         </div>
          
         </div>
         </div>

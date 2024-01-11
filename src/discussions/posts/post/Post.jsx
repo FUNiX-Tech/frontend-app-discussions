@@ -42,17 +42,21 @@ function Post({
   const postURL = new URL(`${getConfig().PUBLIC_PATH}${courseId}/posts/${post.id}`, window.location.origin);
 
   const actionHandlers = {
+   
+    [ContentActions.FOLLOWING] : ()=>dispatch(updateExistingThread(post.id, {following: !post.following})),
     [ContentActions.EDIT_CONTENT]: () => history.push({
       ...location,
       pathname: `${location.pathname}/edit`,
     }),
-    [ContentActions.DELETE]: showDeleteConfirmation,
+    [ContentActions.DELETE]: ()=>dispatch(removeThread(post.id)),
     [ContentActions.CLOSE]: () => {
       if (post.closed) {
         dispatch(updateExistingThread(post.id, { closed: false }));
-      } else if (reasonCodesEnabled) {
-        showClosePostModal();
-      } else {
+      } 
+      // else if (reasonCodesEnabled) {
+      //   showClosePostModal();
+      // } 
+      else {
         dispatch(updateExistingThread(post.id, { closed: true }));
       }
     },
@@ -64,9 +68,9 @@ function Post({
   const getTopicCategoryName = topicData => (
     topicData.usageKey ? getTopicSubsection(topicData.usageKey)?.displayName : topicData.categoryId
   );
-
+    // console.log('=========', post)
   return (
-    <div className="d-flex flex-column w-100 mw-100 border-top" data-testid={`post-${post.id}`}>
+    <div className="d-flex flex-column w-100 mw-100 card px-3 py-2" data-testid={`post-${post.id}`}>
  
       <DeleteConfirmation
         isOpen={isDeleting}

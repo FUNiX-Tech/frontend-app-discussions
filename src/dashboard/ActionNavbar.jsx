@@ -12,13 +12,21 @@ import dashboardActiveIcon from './assets/dashboardActive.svg'
 import './dashboard.scss'
 import PostEditorCustom from "../discussions/posts/post-editor/PostEditorCustom";
 import { useSelector } from "react-redux";
+import { Search } from "../components";
+import iconSearch from '../../src/assets/fe_search.svg'
+import { history } from "@edx/frontend-platform";
+import PostFilterBar from "../discussions/posts/post-filter-bar/PostFilterBar";
+import PostFilterBarCustom from "../discussions/posts/post-filter-bar/PostFilterBarCustom";
+
 
 
 
 const ActionNavbar = ({courseTitle})=>{
-    const [isOpen, open, close] = useToggle(false);
+
     const [title , setTitle] = useState('')
-    
+    const [isSearch, setIsSearch] = useState(false) 
+    const [target, setTarget] = useState(null);
+
     const { params, url } = useRouteMatch(ALL_ROUTES);
     const {
         courseId,postId
@@ -30,44 +38,71 @@ const ActionNavbar = ({courseTitle})=>{
         if (postId && threads[postId]){
             const post  = threads[postId] 
             setTitle(post.title ? post.title :'')
+            setIsSearch(false)
         }
     
     },[postId, threads])
    
-    const handlerClose = ()=>{
-        close()
+
+    const handlerSearch = ()=>{
+        setIsSearch(true)
+    }
+    const hanlderCloseSearch = ()=>{
+        setIsSearch(false)
+    }
+
+    const handlerCreatePost = ()=>{
+        history.push(`/${courseId}/create-post`);
     }
 
     return (
-        <div className="container py-4" style={{ maxWidth:'700px'}}>
-           <div className="d-flex justify-content-between" style={{height:'37px'}}>
-                <div className="action-navbar-link">
+        <div    className="container py-4 position-relative" style={{ maxWidth:'700px', height:'92px'}}>
+          {!isSearch ?  <div ref={setTarget} className="d-flex justify-content-between">
+                <div className="action-navbar-link"  style={{height:'37px'}}>
                     <Link to={`/${courseId}/dashboard`}>
                         <img src ={url == `/${courseId}` ? dashboardActiveIcon  :  dashboardIcon} alt='dashboard' width='16px' height='16px' />
-                        <span>Đại sảnh</span>
                     </Link>
+
                     {url.includes('posts') && <Link to={`/${courseId}/posts`}>
                         {postId ? <img src={rightIcon} alt="right" style={{padding:'0px'}} /> : <img src={vectorIcon} alt="vector" />}
-                        <span>{courseTitle}</span>
+                       {postId ? <span>...</span> :  <span>{courseTitle}</span>}
                     </Link>}
+
                     {postId && <Link to=''><img src={vectorIcon} alt="vector" />
                         <span>{title}</span>
                     </Link> }
+                    
+                    {url.includes('create-post') && <Link to={`/${courseId}/posts`}>
+                        {postId ? <img src={rightIcon} alt="right" style={{padding:'0px'}} /> : <img src={vectorIcon} alt="vector" />}
+                        <span>Tạo thảo luận mới</span>
+                    </Link>}
                 </div>
                 <div>
-                    {!postId && <>
-                        <button className="btn-primary-custom " onClick={open}  >
-                        <span>Tạo bài đăng</span>
-                    </button>
-                    <ModalLayer isOpen={isOpen} onClose={close}>
-                        <PostEditorCustom onClose={handlerClose} />
-                    </ModalLayer>
-                    </> }
+               
+                    {!postId && <div className="d-flex align-items-center">
+                      <div>
+                         {/* <PostFilterBar /> */}
+                         <PostFilterBarCustom target={target} />
+                      </div>
+                        <div>
+                            <button onClick={handlerSearch} className="btn">
+                                    <span>
+                                        <img src={iconSearch} alt='search' />
+                                    </span>
+                            </button>
+                        <button className="btn-primary-custom " onClick={handlerCreatePost}  >
+                            <span>Tạo bài đăng</span>
+                        </button>
                     
- 
-                
+                        </div>
+
+                    </div> }        
                 </div>
-           </div>
+           
+           </div> : !postId && <><Search close={hanlderCloseSearch} />
+                    </>}
+
+           
         </div>
     )
 }

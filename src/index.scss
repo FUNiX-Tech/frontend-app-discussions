@@ -206,6 +206,7 @@ header {
 #courseTabsNavigation {
   font-size: 18px;
   font-family: Inter, Helvetica Neue, Arial, sans-serif;
+  margin-bottom: 0px !important;
 
   // .container-xl {
   //   padding-left: 31px;
@@ -574,6 +575,21 @@ html:root {
   }
 }
 
+.btn-primary-custom-outline {
+  background: none !important;
+  border: 1px solid #0086ff;
+  border-radius: 6px;
+  padding: 6px 16px;
+  &:hover {
+    background-color: #eff7ff !important;
+  }
+  span {
+    color: #0086ff;
+    line-height: 20px;
+    font-weight: 600;
+    size: 16px;
+  }
+}
 
 
 // css course clone udacity
@@ -666,5 +682,82 @@ a{
   }
   .active {
     background-color: #007AE6 !important;
+  }
+}
+.text-no-result{
+  font-family: Roboto arial sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color : #2c3744
+}
+
+.tox-tinymce{
+  min-height:380px !important ;
+}
+
+.err-text{
+  background: #FFF5F5;
+  margin-top: 10px;
+  display: flex;
+  padding: 0px 5px;
+  align-items: center;
+  gap: 5px;
+  span { 
+    font-size: 12px;
+    color :#D82C0D;
+  }
+
+}
+
+.action-dropdown{
+  &:hover{
+    background: #F1F2F3 !important;
+    border-radius: 5px !important;
+    color:  #576F8A !important;
+  }
+  &:focus{
+    border: none !important;
+    border-radius: 5px !important;
+    box-shadow: none !important;
+  }
+  &::before {
+    content: none !important;
+  }
+  &::after{
+    content: none !important;
+  }
+
+}
+
+.dropdown-item{
+  
+  &:focus {
+    background: none !important;
+  }
+  &::before{
+    content: none !important;
+  }
+  &:hover{
+    background: #f0eeed !important;
+  }
+}
+
+.like-icon{
+  cursor: pointer;
+}
+
+.container-answer{
+ background: #5AA447 !important;
+ height: 40px !important;
+  
+}
+.mark-answer{
+  gap:10px;
+  span{
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #fff
   }
 }

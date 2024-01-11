@@ -100,16 +100,16 @@ function PostsList({ posts, topics, intl }) {
       {postInstances(pinnedPosts)} 
      {postInstances(unpinnedPosts)}
       {posts?.length === 0 && loadingStatus === RequestStatus.SUCCESSFUL && <NoResults />}
-      <div className='container-btn-page'>
+     {posts?.length > 0 &&  <div className='container-btn-page'>
         
-         <Button disabled={numberPage == 1} className='btn-number-page'  onClick={() => loadThreads(topics, (numberPage -1))} >
-          <img src={leftIcon} alt='left' />
-        </Button> 
-           {btnNumberPages}
-          <Button disabled={numberPage == totalPages}  className='btn-number-page' style={{padding:'0'}} onClick={() => loadThreads(topics, nextPage)} >
-          <img src={rightIcon} alt='right' />
-        </Button>
-      </div>
+        <Button disabled={numberPage == 1} className='btn-number-page'  onClick={() => loadThreads(topics, (numberPage -1))} >
+         <img src={leftIcon} alt='left' />
+       </Button> 
+          {btnNumberPages}
+         <Button disabled={numberPage == totalPages}  className='btn-number-page' style={{padding:'0'}} onClick={() => loadThreads(topics, nextPage)} >
+         <img src={rightIcon} alt='right' />
+       </Button>
+     </div>}
       {/* {loadingStatus === RequestStatus.IN_PROGRESS ? (
         <div className="d-flex justify-content-center p-4">
           <Spinner animation="border" variant="primary" size="lg" />

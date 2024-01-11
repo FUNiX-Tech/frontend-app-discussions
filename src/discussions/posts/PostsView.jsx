@@ -17,10 +17,11 @@ import PostsList from './PostsList';
 function AllPostsList() {
   const posts = useSelector(selectAllThreads).filter((element) => element !== undefined);
   
-  return (<div className='container ' style={{maxWidth:'700px'}}>
-      <div >
-     <PostsList posts={posts} topics={null} />
-  </div>
+  return (<div className='container ' style={{maxWidth:'700px' , minHeight:'700px' }}>
+    
+   <div className='d-flex flex-column' style={{gap:'10px'}}>
+    <PostsList posts={posts} topics={null} />
+  </div> 
   </div>);
 }
 

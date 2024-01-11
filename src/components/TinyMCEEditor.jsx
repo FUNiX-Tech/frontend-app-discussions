@@ -7,7 +7,7 @@ import { useParams } from 'react-router';
 import tinymce from 'tinymce/tinymce';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { ActionRow, AlertModal, Button } from '@edx/paragon';
+import { ActionRow, AlertModal, Button, OverlayTrigger, Tooltip } from '@edx/paragon';
 
 import { MAX_UPLOAD_FILE_SIZE } from '../data/constants';
 import messages from '../discussions/messages';
@@ -39,8 +39,16 @@ import edxBrandCss from '!!raw-loader!sass-loader!../index.scss';
 import contentCss from '!!raw-loader!tinymce/skins/content/default/content.min.css';
 // eslint-disable-next-line import/no-unresolved
 import contentUiCss from '!!raw-loader!tinymce/skins/ui/oxide/content.min.css';
+import './search.scss'
+import TootlipText from './TooltipText';
+
+
 
 /* istanbul ignore next */
+export default function TinyMCEEditor(props) {
+
+  const [showTooltip, setShowTooltip] = useState(false);
+  /* istanbul ignore next */
 const setup = (editor) => {
   editor.ui.registry.addButton('openedx_code', {
     icon: 'sourcecode',
@@ -54,10 +62,19 @@ const setup = (editor) => {
       editor.execCommand('mceCodeEditor');
     },
   });
+  editor.on('focus' ,()=>{
+    setShowTooltip(true)
+   
+  });
+  editor.on('blur', () => {
+    setShowTooltip(false);
+  });
+  
+  
 };
 
-/* istanbul ignore next */
-export default function TinyMCEEditor(props) {
+
+
   // note that skin and content_css is disabled to avoid the normal
   // loading process and is instead loaded as a string via content_style
 
@@ -93,8 +110,15 @@ export default function TinyMCEEditor(props) {
     contentStyle = '';
   }
 
+
+
+
   return (
-    <>
+    <div className='container-editor position-relative'>
+
+     {showTooltip && props.isPost && <div className='container-tooltip'>
+      <TootlipText />
+    </div>}
       <Editor
         init={{
           skin: false,
@@ -119,11 +143,15 @@ export default function TinyMCEEditor(props) {
           body_class: 'm-2 text-editor',
           default_link_target: '_blank',
           target_list: false,
+          placeholder:'Nhập nội dung' ,
           images_upload_handler: uploadHandler,
           setup,
         }}
         {...props}
+
       />
+
+    
       <AlertModal
         title={intl.formatMessage(messages.imageWarningModalTitle)}
         isOpen={showImageWarning}
@@ -141,7 +169,7 @@ export default function TinyMCEEditor(props) {
           {intl.formatMessage(messages.imageWarningMessage)}
         </p>
       </AlertModal>
-    </>
+    </div>
 
   );
 }

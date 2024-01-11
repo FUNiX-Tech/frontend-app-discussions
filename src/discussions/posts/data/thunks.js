@@ -158,7 +158,7 @@ export function fetchThread(threadId, courseId, isDirectLinkPost = false) {
   return async (dispatch) => {
     try {
       dispatch(fetchThreadRequest({ threadId }));
-      const data = await getThread(threadId, courseId);
+      const data = await getThread(threadId, courseId);   
       if (isDirectLinkPost) {
         dispatch(fetchThreadByDirectLinkSuccess({ ...normaliseThreads(camelCaseObject(data)), page: 1 }));
       } else {
@@ -236,7 +236,7 @@ export function createNewThread({
 }
 
 export function updateExistingThread(threadId, {
-  flagged, voted, read, topicId, type, title, content, following, closed, pinned, closeReasonCode, editReasonCode, report
+  flagged, voted, read, topicId, type, title, content, following, closed, pinned, closeReasonCode, editReasonCode, report, best
 }) {
   return async (dispatch) => {
     try {
@@ -254,6 +254,7 @@ export function updateExistingThread(threadId, {
         pinned,
         editReasonCode,
         closeReasonCode,
+        best
       }));
       const data = await updateThread(threadId, {
         flagged,
@@ -268,7 +269,8 @@ export function updateExistingThread(threadId, {
         pinned,
         editReasonCode,
         closeReasonCode,
-        report
+        report,
+        best
       });
       dispatch(updateThreadSuccess(camelCaseObject(data)));
     } catch (error) {
