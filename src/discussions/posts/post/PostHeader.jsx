@@ -118,7 +118,7 @@ function PostHeader({
                 </div>
                 <div>
                     {/* <PostActionsBar /> */}
-                    <ActionsDropdown commentOrPost={post} actionHandlers={actionHandlers}   />
+                    <ActionsDropdown viewPost commentOrPost={post} actionHandlers={actionHandlers}   />
                 </div>
             </div>
     </div>

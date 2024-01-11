@@ -35,6 +35,7 @@ function ActionsDropdown({
   commentOrPost,
   disabled,
   actionHandlers,
+  viewPost
 }) {
   const [isOpen, open, close] = useToggle(false);
   const [target, setTarget] = useState(null);
@@ -137,7 +138,7 @@ useEffect(()=>{
                close()
             handleActions('best')}}>
               
-           { authenticatedUser.administrator  && (!commentOrPost.best   ? <>
+           { authenticatedUser.administrator && !viewPost  && (!commentOrPost.best   ? <>
             <img src={iconMarkAnswered} alt='mark_answered' />
             <span>Chọn bài hay nhất</span>
            </>  : <>
@@ -262,6 +263,7 @@ ActionsDropdown.propTypes = {
 
 ActionsDropdown.defaultProps = {
   disabled: false,
+  viewPost : false
 };
 
 export default injectIntl(ActionsDropdown);
