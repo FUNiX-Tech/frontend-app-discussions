@@ -73,7 +73,7 @@ function PostLink({
   const postURL = new URL(`${getConfig().PUBLIC_PATH}${post.courseId}/posts/${post.id}`, window.location.origin);
 
   const actionHandlers = {
-    [ContentActions.BEST] : ()=>dispatch(updateExistingThread(post.id , {best : !post.best})),
+
     [ContentActions.FOLLOWING] : ()=>dispatch(updateExistingThread(post.id, {following: !post.following})),
     [ContentActions.EDIT_CONTENT]: () => history.push({
       pathname: `${url}/${post.id}/edit`,
@@ -100,10 +100,10 @@ function PostLink({
       <div className='d-flex align-items-center justify-content-between'>
         <div >
 
-          {post.best && <div className='tag-mark-answer '>
+          {post.hasEndorsed && <div className='tag-mark-answer '>
               <img src={iconUnion} alt='answer' width='16px' height='16px'/>
             </div>}
-          <div className='d-flex' style={{gap:'8px', marginLeft:`${post.best ? '58px' : '0px'}`}}>
+          <div className='d-flex' style={{gap:'8px', marginLeft:`${post.hasEndorsed ? '58px' : '0px'}`}}>
             {post.closed && <img src={iconClose} alt='close' />}
             {post.pinned && <img src={iconPin} alt='pin' width='16px' height='16px' />}
             {/* <div><span className='tag-filter tag-total'>Tổng quan</span></div> */}

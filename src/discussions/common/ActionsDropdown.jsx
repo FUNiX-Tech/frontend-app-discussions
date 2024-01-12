@@ -134,20 +134,9 @@ useEffect(()=>{
           className="bg-white p-1 shadow d-flex flex-column"
           data-testid="actions-dropdown-modal-popup"
         >
-          {!commentOrPost.threadId && <Dropdown.Item  onClick={()=> {
-               close()
-            handleActions('best')}}>
-              
-           { authenticatedUser.administrator && !viewPost  && (!commentOrPost.best   ? <>
-            <img src={iconMarkAnswered} alt='mark_answered' />
-            <span>Chọn bài hay nhất</span>
-           </>  : <>
-           <img src={iconUMarkAnswered} alt='un_mark_answered' />
-           <span>Bỏ bài hay nhất</span>
-           </>)}
-          </Dropdown.Item> }
+
           {actions.map(action => {
-            if (action.id !== 'copy-link' && action.id !== "reopen" && action.id !== 'delete'){
+            if (action.id !== 'copy-link' && action.id !== "reopen" && action.id !== 'delete' && action.id !== 'unreport'){
               return (
                 <div key={action.id}>
                  <Dropdown.Item
@@ -172,8 +161,8 @@ useEffect(()=>{
                     {action.id =="close" && <img src={iconClose} alt='close' />}
                     {action.id =="unpin" && <img src={iconUnpin} alt='unpin' />}
                     {action.id =="pin" && <img src={iconPin} alt='pin' />}
-                    {action.id == 'answer' || action.id == 'endorse' && <img src={iconMarkAnswered} alt='mark_answered' />}
-                    {action.id == "unanswer" || action.id == 'unendorse' && <img src={iconUMarkAnswered} alt='un_mark_answered' />}
+                    {(action.id == 'answer' || action.id == 'endorse') && <img src={iconMarkAnswered} alt='mark_answered' />}
+                    {(action.id == "unanswer" || action.id == 'unendorse' )&& <img src={iconUMarkAnswered} alt='un_mark_answered' />}
                     <span style={{color : `${action.id =='delete' ? '#D82C0D' : ''}`}}> {intl.formatMessage(action.label)}</span>
                   </Dropdown.Item>
                 </div>

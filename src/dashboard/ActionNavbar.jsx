@@ -68,7 +68,7 @@ const ActionNavbar = ({courseTitle})=>{
                        {postId ? <span>...</span> :  <span>{courseTitle}</span>}
                     </Link>}
 
-                    {postId && <Link to=''><img src={vectorIcon} alt="vector" />
+                    {postId && <Link to='#'><img src={vectorIcon} alt="vector" />
                         <span>{title}</span>
                     </Link> }
                     
@@ -82,7 +82,7 @@ const ActionNavbar = ({courseTitle})=>{
                     {!postId && <div className="d-flex align-items-center">
                       <div>
                          {/* <PostFilterBar /> */}
-                         <PostFilterBarCustom target={target} />
+                         {/* <PostFilterBarCustom target={target} /> */}
                       </div>
                         <div>
                             <button onClick={handlerSearch} className="btn">

@@ -99,14 +99,14 @@ function Comment({
           <div className="sr-only" role="heading" aria-level="3"> {intl.formatMessage(messages.replies, { count: inlineReplies.length })}</div>
           <div className="d-flex flex-column" role="list">
             {/* Pass along intl since component used here is the one before it's injected with `injectIntl` */}
-            {inlineReplies.map(inlineReply => (
+            {/* {inlineReplies.map(inlineReply => (
               <Reply
                 reply={inlineReply}
                 postType={postType}
                 key={inlineReply.id}
                 intl={intl}
               />
-            ))}
+            ))} */}
           </div>
           {hasMorePages && (
           <Button
