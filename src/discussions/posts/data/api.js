@@ -153,7 +153,7 @@ export async function updateThread(threadId, {
   editReasonCode,
   closeReasonCode,
   report,
-  best,
+
   selectedTags
 } = {}) {
   const url = `${getThreadsApiUrl()}${threadId}/`;
@@ -171,7 +171,7 @@ export async function updateThread(threadId, {
     editReasonCode,
     closeReasonCode,
     report,
-    best ,
+  
     selectedTags
   });
   const { data } = await getAuthenticatedHttpClient()

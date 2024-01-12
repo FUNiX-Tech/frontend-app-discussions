@@ -55,7 +55,7 @@ const PostEditorCustom = ({editExisting, onClose})=>{
     const [showTooltipTag, setShowTooltipTag] = useState(false)
 
     const arrTags = ['Tổng quan' , 'marketing', 'lab']
-    const [selectedTags, setSelectedTags] = useState([]);
+    const [selectedTags, setSelectedTags] = useState(["Tổng quan"]);
 
     const { authenticatedUser } = useContext(AppContext);
     const dispatch = useDispatch();
@@ -393,7 +393,6 @@ const PostEditorCustom = ({editExisting, onClose})=>{
             <span>Thêm thẻ :</span>
             <div className='d-flex px-2' style={{gap:'5px'}}>
              {arrTags.map((tag, index) =>{
-
               return (
                 <div key={index}  onClick={() => handleClick(tag)}>
                   <span className={`tag-post ${selectedTags.includes(tag)  ? 'check' : ''}`} >

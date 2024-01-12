@@ -68,7 +68,7 @@ const ActionNavbar = ({courseTitle})=>{
                        {postId ? <span>...</span> :  <span>{courseTitle}</span>}
                     </Link>}
 
-                    {postId && <Link to=''><img src={vectorIcon} alt="vector" />
+                    {postId && <Link to='#'><img src={vectorIcon} alt="vector" />
                         <span>{title}</span>
                     </Link> }
                     
