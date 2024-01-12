@@ -47,10 +47,15 @@ import React, {
 import { ALL_ROUTES } from '../../../data/constants';
 import { history } from "@edx/frontend-platform";
 import { TootlipTextTitle } from '../../../components/TooltipText';
+import iconCheck from '../../../assets/Check_Circle.svg'
 
 const PostEditorCustom = ({editExisting, onClose})=>{
     const intl = useIntl();
     const [showTooltip, setShowTooltip] = useState(false);
+
+    const arrTags = ['Tổng quan' , 'marketing', 'lab']
+    const [selectedTags, setSelectedTags] = useState([]);
+
     const { authenticatedUser } = useContext(AppContext);
     const dispatch = useDispatch();
     const editorRef = useRef(null);
@@ -70,6 +75,13 @@ const PostEditorCustom = ({editExisting, onClose})=>{
     const coursewareTopics = useSelector(selectCoursewareTopics);
     const cohorts = useSelector(selectCourseCohorts);
     const post = useSelector(selectThread(postId));
+    useEffect(()=>{
+
+      if(post){
+        setSelectedTags(post.tags)
+      }
+
+    },[post])
     const userHasModerationPrivileges = useSelector(selectUserHasModerationPrivileges);
     const userIsGroupTa = useSelector(selectUserIsGroupTa);
     const settings = useSelector(selectDivisionSettings);
@@ -178,6 +190,7 @@ const PostEditorCustom = ({editExisting, onClose})=>{
     // null stands for no cohort restriction ("All learners" option)
     const selectedCohort = (cohort) => (cohort === 'default' ? null : cohort);
     const submitForm = async (values, { resetForm }) => {
+  
       if (editExisting) {
         await dispatchSubmit(updateExistingThread(postId, {
           topicId: values.topic,
@@ -185,6 +198,7 @@ const PostEditorCustom = ({editExisting, onClose})=>{
           title: values.title,
           content: values.comment,
           editReasonCode: values.editReasonCode || undefined,
+          selectedTags : selectedTags
         }));
       } else {
         const cohort = canSelectCohort(values.topic) ? selectedCohort(values.cohort) : undefined;
@@ -199,6 +213,7 @@ const PostEditorCustom = ({editExisting, onClose})=>{
           anonymous: allowAnonymous ? values.anonymous : undefined,
           anonymousToPeers: allowAnonymousToPeers ? values.anonymousToPeers : undefined,
           cohort,
+          selectedTags : selectedTags
         }));
         onClose()
       }
@@ -208,9 +223,7 @@ const PostEditorCustom = ({editExisting, onClose})=>{
       }
       hideEditor(resetForm);
   
-      // if (course_id !== courseId){
-      //   window.location.href = `/discussions/${course_id}/posts`
-      // }
+
     };
   
     useEffect(() => {
@@ -263,8 +276,22 @@ const PostEditorCustom = ({editExisting, onClose})=>{
     });
   
     const postEditorId = `post-editor-${editExisting ? postId : 'new'}`;
+    
+
+    const handleClick = (tag) => {
+     
+      const index = selectedTags.indexOf(tag);
   
-   
+      if (index === -1) {
+        setSelectedTags([...selectedTags, tag]);
+      } else {
+        const newTags = [...selectedTags];
+        newTags.splice(index, 1);
+        setSelectedTags(newTags);
+      }
+    };
+    // console.log('==================', post.tags)
+  
     return (
         <Formik
       enableReinitialize
@@ -358,56 +385,24 @@ const PostEditorCustom = ({editExisting, onClose})=>{
             
             <FormikErrorFeedback name="comment" />
           </div>
+          <div className='py-3 d-flex border-bottom'>
+            <span>Thêm thẻ :</span>
+            <div className='d-flex px-2' style={{gap:'5px'}}>
+             {arrTags.map((tag, index) =>{
 
-          {/* <PostPreviewPane htmlNode={values.comment} isPost editExisting={editExisting} /> */}
-
-          {/* <div className="d-flex flex-row mt-n4.5 w-75 text-primary">
-            {!editExisting && (
-              <>
-                <Form.Group>
-                  <Form.Checkbox
-                    name="follow"
-                    checked={values.follow}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    className="mr-4.5"
-                  >
-                    {intl.formatMessage(messages.followPost)}
-                  </Form.Checkbox>
-                </Form.Group>
-                {allowAnonymousToPeers && (
-                <Form.Group>
-                  <Form.Checkbox
-                    name="anonymousToPeers"
-                    checked={values.anonymousToPeers}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  >
-                    {intl.formatMessage(messages.anonymousToPeersPost)}
-                  </Form.Checkbox>
-                </Form.Group>
-                )}
-              </>
-            )}
-          </div> */}
-
-          <div className="d-flex justify-content-end mt-2.5" style={{gap:'10px'}}>
-            {/* <Button
-              variant="outline-primary"
-              onClick={() => hideEditor(resetForm)}
-            >
-              {intl.formatMessage(messages.cancel)}
-            </Button> */}
-            {/* <StatefulButton
-              labels={{
-                default: intl.formatMessage(messages.submit),
-                pending: intl.formatMessage(messages.submitting),
-              }}
-              state={submitting ? 'pending' : 'default'}
-              className="ml-2"
-              variant="primary"
-              onClick={handleSubmit}
-            /> */}
+              return (
+                <div key={index}  onClick={() => handleClick(tag)}>
+                  <span className={`tag-post ${selectedTags.includes(tag)  ? 'check' : ''}`} >
+                  {selectedTags.includes(tag)  && <img src={iconCheck} alt='checked' />}
+                    {tag}
+                  </span>
+                </div>
+              )
+             })}
+     
+            </div>
+          </div>
+          <div className="d-flex justify-content-end mt-3" style={{gap:'10px'}}>
               <button className="btn-primary-custom-outline"  onClick={() =>   history.push(`/${courseId}/posts`)}  >
                         <span>Huỷ bỏ</span>
                </button>

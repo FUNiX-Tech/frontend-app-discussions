@@ -101,6 +101,7 @@ export async function postThread(
     cohort,
     anonymous,
     anonymousToPeers,
+    selectedTags
   } = {},
 ) {
   const postData = snakeCaseObject({
@@ -113,6 +114,7 @@ export async function postThread(
     anonymous,
     anonymousToPeers,
     groupId: cohort,
+    selectedTags
   });
 
   const { data } = await getAuthenticatedHttpClient()
@@ -151,7 +153,8 @@ export async function updateThread(threadId, {
   editReasonCode,
   closeReasonCode,
   report,
-  best
+  best,
+  selectedTags
 } = {}) {
   const url = `${getThreadsApiUrl()}${threadId}/`;
   const patchData = snakeCaseObject({
@@ -168,7 +171,8 @@ export async function updateThread(threadId, {
     editReasonCode,
     closeReasonCode,
     report,
-    best
+    best ,
+    selectedTags
   });
   const { data } = await getAuthenticatedHttpClient()
     .patch(url, patchData, { headers: { 'Content-Type': 'application/merge-patch+json' } });
