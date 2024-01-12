@@ -46,12 +46,13 @@ import React, {
   import { useRouteMatch } from 'react-router-dom';
 import { ALL_ROUTES } from '../../../data/constants';
 import { history } from "@edx/frontend-platform";
-import { TootlipTextTitle } from '../../../components/TooltipText';
+import { TootlipTextTag, TootlipTextTitle } from '../../../components/TooltipText';
 import iconCheck from '../../../assets/Check_Circle.svg'
 
 const PostEditorCustom = ({editExisting, onClose})=>{
     const intl = useIntl();
     const [showTooltip, setShowTooltip] = useState(false);
+    const [showTooltipTag, setShowTooltipTag] = useState(false)
 
     const arrTags = ['Tổng quan' , 'marketing', 'lab']
     const [selectedTags, setSelectedTags] = useState([]);
@@ -291,7 +292,6 @@ const PostEditorCustom = ({editExisting, onClose})=>{
       }
     };
     // console.log('==================', post.tags)
-  
     return (
         <Formik
       enableReinitialize
@@ -385,7 +385,11 @@ const PostEditorCustom = ({editExisting, onClose})=>{
             
             <FormikErrorFeedback name="comment" />
           </div>
-          <div className='py-3 d-flex border-bottom'>
+
+          <div  onMouseOver={() => setShowTooltipTag(true)}  onMouseOut={() => setShowTooltipTag(false)} tabIndex={0} className=' position-relative py-3 d-flex border-bottom'>
+              {showTooltipTag &&   <div className='container-tooltip' style={{height:'65px'}} >
+              <TootlipTextTag />
+            </div>}
             <span>Thêm thẻ :</span>
             <div className='d-flex px-2' style={{gap:'5px'}}>
              {arrTags.map((tag, index) =>{

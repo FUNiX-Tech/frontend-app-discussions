@@ -10,6 +10,14 @@ export const TootlipTextTitle = ()=>{
     </div>
 }
 
+
+export const TootlipTextTag = ()=>{
+    return <div>
+        <span>Qua việc sử dụng các thẻ, bạn có thể tối ưu hóa trải nghiệm đọc và tìm kiếm của độc giả</span>
+    </div>
+}
+
+
 const TootlipText = ()=>{
     
 
