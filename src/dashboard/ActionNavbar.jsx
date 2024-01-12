@@ -82,7 +82,7 @@ const ActionNavbar = ({courseTitle})=>{
                     {!postId && <div className="d-flex align-items-center">
                       <div>
                          {/* <PostFilterBar /> */}
-                         <PostFilterBarCustom target={target} />
+                         {/* <PostFilterBarCustom target={target} /> */}
                       </div>
                         <div>
                             <button onClick={handlerSearch} className="btn">

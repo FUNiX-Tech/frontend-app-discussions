@@ -137,10 +137,6 @@ useEffect(()=>{
 
           {actions.map(action => {
             if (action.id !== 'copy-link' && action.id !== "reopen" && action.id !== 'delete' && action.id !== 'unreport'){
-              if (action.id == 'unanswer'){
-
-                console.log('=========', action)
-              }
               return (
                 <div key={action.id}>
                  <Dropdown.Item
