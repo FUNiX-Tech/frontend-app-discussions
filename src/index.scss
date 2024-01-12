@@ -761,3 +761,28 @@ a{
     color: #fff
   }
 }
+
+.check{
+  color: #576F8A !important;
+}
+
+.tag-post{
+  flex-grow: 0;
+  // font-family: Roboto;
+  font-size: 0.8rem;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.05;
+  letter-spacing: normal;
+  text-align: right;
+  padding: 3px 5px 3px 5px;
+  border-radius: 2px;
+  background-color: #F1F2F3;
+  display: flex;
+  gap:3px;
+  &:hover{
+    cursor: pointer;
+  }
+  
+}

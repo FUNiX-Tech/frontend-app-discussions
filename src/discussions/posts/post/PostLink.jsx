@@ -92,7 +92,7 @@ function PostLink({
     [ContentActions.PIN]: () => dispatch(updateExistingThread(post.id, { pinned: !post.pinned })),
     [ContentActions.REPORT]: () => dispatch(updateExistingThread(post.id, { flagged: !post.abuseFlagged , report:reportSelector})),
   };
-// console.log('==========', post.best)
+// console.log('==========', post)
 
   return (
     <>
@@ -106,8 +106,9 @@ function PostLink({
           <div className='d-flex' style={{gap:'8px', marginLeft:`${post.best ? '58px' : '0px'}`}}>
             {post.closed && <img src={iconClose} alt='close' />}
             {post.pinned && <img src={iconPin} alt='pin' width='16px' height='16px' />}
-            <div><span className='tag-filter tag-total'>Tổng quan</span></div>
+            {/* <div><span className='tag-filter tag-total'>Tổng quan</span></div> */}
             {post.following && <div><span className='tag-filter tag-total'>Đang theo dõi</span></div>}
+            {post.tags?.map((tag, index) => <div key={index}><span className='tag-filter tag-total'>{tag}</span></div>)}
           </div>
         </div>
         <div className=''>

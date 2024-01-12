@@ -203,6 +203,7 @@ export function createNewThread({
   anonymous,
   anonymousToPeers,
   cohort,
+  selectedTags 
 }) {
   return async (dispatch) => {
     try {
@@ -216,12 +217,14 @@ export function createNewThread({
         anonymous,
         anonymousToPeers,
         cohort,
+        selectedTags
       }));
       const data = await postThread(courseId, topicId, type, title, content, {
         cohort,
         following,
         anonymous,
         anonymousToPeers,
+        selectedTags
       });
       dispatch(postThreadSuccess(camelCaseObject(data)));
     } catch (error) {
@@ -236,8 +239,9 @@ export function createNewThread({
 }
 
 export function updateExistingThread(threadId, {
-  flagged, voted, read, topicId, type, title, content, following, closed, pinned, closeReasonCode, editReasonCode, report, best
+  flagged, voted, read, topicId, type, title, content, following, closed, pinned, closeReasonCode, editReasonCode, report, best , selectedTags
 }) {
+
   return async (dispatch) => {
     try {
       dispatch(updateThreadRequest({
@@ -254,7 +258,8 @@ export function updateExistingThread(threadId, {
         pinned,
         editReasonCode,
         closeReasonCode,
-        best
+        best ,
+        selectedTags
       }));
       const data = await updateThread(threadId, {
         flagged,
@@ -270,7 +275,8 @@ export function updateExistingThread(threadId, {
         editReasonCode,
         closeReasonCode,
         report,
-        best
+        best ,
+        selectedTags
       });
       dispatch(updateThreadSuccess(camelCaseObject(data)));
     } catch (error) {

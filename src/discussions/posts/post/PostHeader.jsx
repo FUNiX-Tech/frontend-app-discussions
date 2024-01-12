@@ -114,7 +114,7 @@ function PostHeader({
                   {post.closed &&  <div><span className='tag-filter '>
                       <img src={iconLock} alt='lock' />
                     </span></div> }
-                  {post.pinned && <div><span className='tag-filter tag-total'>Đang theo dõi</span></div>}
+                  {post.following && <div><span className='tag-filter tag-total'>Đang theo dõi</span></div>}
                 </div>
                 <div>
                     {/* <PostActionsBar /> */}
