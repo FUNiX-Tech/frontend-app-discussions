@@ -185,7 +185,7 @@ useEffect(()=>{
                     variant="tertiary"
                     size="inline" 
                     onClick={()=>handleActions('delete')}>
-                      <span style={{color : ` #D82C0D`}}>Chắc chắc</span>
+                      <span style={{color : ` #D82C0D`}}>Chắc chắn</span>
                     </Dropdown.Item>
               <Dropdown.Item  as={Button}
                     variant="tertiary"
