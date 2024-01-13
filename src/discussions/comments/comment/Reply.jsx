@@ -65,7 +65,7 @@ function Reply({
             <Avatar />
           </div>
           <div className="w-100">
-            <AlertBanner content={reply} intl={intl} />
+            {/* <AlertBanner content={reply} intl={intl} /> */}
           </div>
         </div>
       )}

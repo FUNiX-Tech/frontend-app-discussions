@@ -83,7 +83,7 @@ function Post({
           hideDeleteConfirmation();
         }}
       />
-      <AlertBanner content={post} />
+      {/* <AlertBanner content={post} /> */}
       <PostHeader post={post} actionHandlers={actionHandlers} />
       <div className="d-flex">
         <HTMLLoader htmlNode={post.renderedBody} id="post" />

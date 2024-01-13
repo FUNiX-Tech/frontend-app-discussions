@@ -83,7 +83,7 @@ function Comment({
         />
         <EndorsedAlertBanner postType={postType} content={comment} />
         <div className="d-flex flex-column px-3 py-2">
-          <AlertBanner content={comment} />
+          {/* <AlertBanner content={comment} /> */}
           <CommentHeader comment={comment} actionHandlers={actionHandlers} postType={postType} />
           {isEditing
             ? (
