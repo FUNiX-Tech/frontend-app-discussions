@@ -18,7 +18,6 @@ jobs:
           script: |
             tutor images build mfe --no-cache
             echo -e "y\n\n\n\n\n\ny" | tutor local launch
-            docker push 848839979695.dkr.ecr.ap-southeast-1.amazonaws.com/mfe:15.0.7
       - name: Send noti
         uses: 8398a7/action-slack@v3
         with:
