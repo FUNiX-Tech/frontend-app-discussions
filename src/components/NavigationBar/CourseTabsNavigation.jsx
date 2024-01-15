@@ -62,6 +62,9 @@ function CourseTabsNavigation({
             {tabs.map(({ url, title, slug }, index) => {
               const resumeUrl = courseInRun ? courseInRun.url : url;
               const href = index === 0 ? resumeUrl : url;
+              if (index > 0) {
+                return <a></a>;
+              }
               return (
                 <a
                   key={slug}
